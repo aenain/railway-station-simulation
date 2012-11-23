@@ -1,0 +1,8 @@
+/build/
+/bin/
+/dist/
+/doc/javadoc/
+/nbproject/private/
+/traces/**/*.html
+/traces/**/*.txt
+/*.html
