@@ -4,8 +4,8 @@
  */
 package railwaystation.infrastructure;
 
-import desmoj.core.simulator.Model;
 import desmoj.core.simulator.ProcessQueue;
+import railwaystation.RailwayStation;
 import railwaystation.person.Passenger;
 
 /**
@@ -16,7 +16,7 @@ public class Train extends Region {
     protected ProcessQueue<Passenger> gettingOutPassengers, gettingInPassengers;
     protected Integer otherPassengerCount;
 
-    public Train(Model owner, String name) {
+    public Train(RailwayStation owner, String name) {
         super(owner, name, Infrastructure.TRAIN_CAPACITY);
         otherPassengerCount = 100;
         gettingOutPassengers = new ProcessQueue(owner, name + "-getting-out-passengers", true, true);

@@ -4,8 +4,8 @@
  */
 package railwaystation.infrastructure;
 
-import desmoj.core.simulator.Model;
 import java.util.ArrayList;
+import railwaystation.RailwayStation;
 
 /**
  *
@@ -24,12 +24,12 @@ public class Infrastructure {
             PLATFORM_CAPACITY = Integer.MAX_VALUE, // close enough to the inf.
             TRAIN_CAPACITY = Integer.MAX_VALUE;
     protected Region entryRegion, waitingRoom, firstSubway;
-    protected Model station;
+    protected RailwayStation station;
     protected CashDeskRegion cashDeskRegion;
     protected ServingRegion informationDeskRegion;
     protected ArrayList<Platform> platforms;
 
-    public Infrastructure(Model station) {
+    public Infrastructure(RailwayStation station) {
         entryRegion = null;
         firstSubway = null;
         this.station = station;

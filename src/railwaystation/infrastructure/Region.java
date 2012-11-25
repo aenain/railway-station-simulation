@@ -4,10 +4,10 @@
  */
 package railwaystation.infrastructure;
 
-import desmoj.core.simulator.Model;
 import desmoj.core.simulator.ProcessQueue;
 import desmoj.core.simulator.SimProcess;
 import java.util.LinkedList;
+import railwaystation.RailwayStation;
 import railwaystation.person.Person;
 
 /**
@@ -21,7 +21,7 @@ public class Region extends SimProcess implements Visitable {
     protected LinkedList<Region> adjacentRegions;
     protected String name;
 
-    public Region(Model owner, String name, Integer capacity) {
+    public Region(RailwayStation owner, String name, Integer capacity) {
         super(owner, name, true);
         this.name = name;
         people = new ProcessQueue(owner, name + "-people", true, true);

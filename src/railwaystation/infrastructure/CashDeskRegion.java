@@ -4,8 +4,8 @@
  */
 package railwaystation.infrastructure;
 
-import desmoj.core.simulator.Model;
 import java.util.LinkedList;
+import railwaystation.RailwayStation;
 import railwaystation.person.Passenger;
 import railwaystation.person.Person;
 
@@ -14,7 +14,7 @@ import railwaystation.person.Person;
  * @author artur
  */
 public class CashDeskRegion extends ServingRegion {
-    public CashDeskRegion(Model owner, String name, Integer capacity) {
+    public CashDeskRegion(RailwayStation owner, String name, Integer capacity) {
         super(owner, name, capacity);
     }
 

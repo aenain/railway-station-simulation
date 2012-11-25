@@ -6,6 +6,7 @@ package railwaystation.infrastructure;
 
 import desmoj.core.simulator.Model;
 import java.util.LinkedList;
+import railwaystation.RailwayStation;
 import railwaystation.person.Person;
 
 /**
@@ -16,7 +17,7 @@ public class ServingRegion extends Region {
     protected Model owner;
     protected LinkedList<Desk> desks;
 
-    public ServingRegion(Model owner, String name, Integer capacity) {
+    public ServingRegion(RailwayStation owner, String name, Integer capacity) {
         super(owner, name, capacity);
         this.owner = owner;
     }

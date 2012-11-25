@@ -5,10 +5,14 @@
 package railwaystation;
 
 import desmoj.core.simulator.Model;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import railwaystation.infrastructure.CashDeskRegion;
 import railwaystation.infrastructure.Infrastructure;
 import railwaystation.infrastructure.Region;
 import railwaystation.infrastructure.ServingRegion;
+import railwaystation.visualisation.MainFrame;
 
 /**
  *
@@ -19,6 +23,25 @@ public class RailwayStation extends Model {
 
     public RailwayStation() {
         super(null, "railway-station", true, true);
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        RailwayStation station = new RailwayStation();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainFrame frame = new MainFrame();
+                JLabel label = frame.addTextLabel("Testowy napis", Color.BLACK, Color.RED);
+                frame.animateTextLabel(label);
+                frame.setVisible(true);
+                JPanel platform1 = frame.addPlatform(1);
+            }
+        });
+    }
+
+    protected void buildInfrastructure() {
         infrastructure = new Infrastructure(this);
         infrastructure.createPlatforms(Infrastructure.PLATFORM_COUNT);
 
@@ -41,25 +64,20 @@ public class RailwayStation extends Model {
         infrastructure.bindRegions(hall, informationDeskRegion);
         infrastructure.bindRegions(hall, cashDeskRegion);
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-    }
 
     @Override
     public String description() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "TODO! description of the simulation.";
     }
 
     @Override
     public void doInitialSchedules() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void init() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        buildInfrastructure();
+        // throw new UnsupportedOperationException("Not supported yet.");
     }
 }

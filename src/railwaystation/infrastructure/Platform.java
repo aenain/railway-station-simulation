@@ -4,14 +4,14 @@
  */
 package railwaystation.infrastructure;
 
-import desmoj.core.simulator.Model;
+import railwaystation.RailwayStation;
 
 /**
  *
  * @author artur
  */
 public class Platform extends Region {
-    public Platform(Model owner, String name) {
+    public Platform(RailwayStation owner, String name) {
         super(owner, name, Infrastructure.PLATFORM_CAPACITY);
     }
 }
