@@ -5,14 +5,10 @@
 package railwaystation;
 
 import desmoj.core.simulator.Model;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import railwaystation.infrastructure.CashDeskRegion;
 import railwaystation.infrastructure.Infrastructure;
 import railwaystation.infrastructure.Region;
 import railwaystation.infrastructure.ServingRegion;
-import railwaystation.visualisation.MainFrame;
 
 /**
  *
@@ -29,16 +25,6 @@ public class RailwayStation extends Model {
      */
     public static void main(String[] args) {
         RailwayStation station = new RailwayStation();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MainFrame frame = new MainFrame();
-                JLabel label = frame.addTextLabel("Testowy napis", Color.BLACK, Color.RED);
-                frame.animateTextLabel(label);
-                frame.setVisible(true);
-                JPanel platform1 = frame.addPlatform(1);
-            }
-        });
     }
 
     protected void buildInfrastructure() {
