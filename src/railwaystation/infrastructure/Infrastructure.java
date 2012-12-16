@@ -89,7 +89,7 @@ public class Infrastructure {
         Platform platform = null;
 
         for (Integer i = 1; i <= platformCount; i++) {
-            subway = new Region(station, "subway-" + i.toString(), SUBWAY_CAPACITY);
+            subway = new Region(station, "tunnel-" + i.toString(), SUBWAY_CAPACITY);
             if (i == 1) {
                 firstSubway = subway;
             }
@@ -98,10 +98,15 @@ public class Infrastructure {
                 bindRegions(subway, previousSubway);
                 bindRegions(subway, platform);
             }
-            platform = new Platform(station, "platform-" + i.toString());
+            platform = new Platform(station, i);
             platforms.add(platform);
             bindRegions(platform, subway);
         }
+    }
+
+    // 1..platforms.count
+    public Platform getPlatform(int i) {
+        return platforms.get(i + 1); // indices starts from 0
     }
 
     public void bindWithPlatforms(Region region) {
