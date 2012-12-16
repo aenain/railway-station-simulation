@@ -6,13 +6,11 @@ package railwaystation;
 
 import desmoj.core.simulator.Model;
 import desmoj.core.simulator.TimeSpan;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,37 +49,7 @@ public class RailwayStation extends Model {
         }
 
         public void read() {
-            InputStreamReader inputReader = null;
-            BufferedReader bufferedReader = null;
-
-            try {
-                String line;
-                StringBuilder builder = new StringBuilder();
-                inputReader = new InputStreamReader(stream);
-                bufferedReader = new BufferedReader(inputReader);
-
-                while((line = bufferedReader.readLine()) != null) {
-                    builder.append(line);
-                }
-
-                try {
-                    this.config = new JSONObject(builder.toString());
-                } catch (JSONException ex) {
-                    System.err.println("error reading configuration json");
-                }
-
-            } catch (IOException ex) {
-                System.err.println("error reading configuration stream");
-            } finally {
-                try {
-                    if (bufferedReader != null) {
-                        bufferedReader.close();
-                    }
-                    if (inputReader != null) {
-                        inputReader.close();
-                    }
-                } catch (IOException ex) {}
-            }
+            this.config = railwaystation.io.JSONReader.read(stream);
         }
 
         public void setParameters() {
