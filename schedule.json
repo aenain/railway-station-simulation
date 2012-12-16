@@ -1,0 +1,2384 @@
+{
+  "trains": [
+    {
+      "symbol": "TLK 13511",
+      "arrival_at": "04:16",
+      "departure_at": "04:21",
+      "from": "Warszawa Zachodnia",
+      "to": "Zakopane",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "23121",
+      "arrival_at": "04:55",
+      "departure_at": null,
+      "from": "Sędziszów",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 32102",
+      "arrival_at": "05:24",
+      "departure_at": "05:33",
+      "from": "Kraków Płaszów",
+      "to": "Lublin",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4014",
+      "arrival_at": "05:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 63200",
+      "arrival_at": "05:50",
+      "departure_at": "05:55",
+      "from": "Wrocław Główny",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "14",
+      "arrival_at": "05:58",
+      "departure_at": null,
+      "from": "Tarnów",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "30216",
+      "arrival_at": "06:30",
+      "departure_at": "06:32",
+      "from": "Oświęcim",
+      "to": "Wieliczka Rynek-Kop.",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "30110",
+      "arrival_at": "06:38",
+      "departure_at": null,
+      "from": "Wieliczka Rynek-Kop.",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4016",
+      "arrival_at": "06:47",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "23127",
+      "arrival_at": "07:10",
+      "departure_at": null,
+      "from": "Sędziszów",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "5024",
+      "arrival_at": "07:26",
+      "departure_at": null,
+      "from": "Zakopane",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "iRb 34900",
+      "arrival_at": "07:35",
+      "departure_at": "07:45",
+      "from": "Rzeszów Główny",
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "910",
+      "arrival_at": "07:42",
+      "departure_at": "07:43",
+      "from": "Wieliczka Rynek-Kop.",
+      "to": "Trzebinia",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "30220",
+      "arrival_at": "08:06",
+      "departure_at": "08:07",
+      "from": "Oświęcim",
+      "to": "Wieliczka Rynek-Kop.",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 33100",
+      "arrival_at": "08:11",
+      "departure_at": null,
+      "from": "Rzeszów Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "23129",
+      "arrival_at": "08:15",
+      "departure_at": null,
+      "from": "Kielce",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "43421 ORLIK",
+      "arrival_at": "08:33",
+      "departure_at": "08:34",
+      "from": "Częstochowa Osobowa",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "iRb 43901",
+      "arrival_at": "08:40",
+      "departure_at": "08:50",
+      "from": "Katowice",
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "30222",
+      "arrival_at": "09:06",
+      "departure_at": "09:07",
+      "from": "Oświęcim",
+      "to": "Wieliczka Rynek-Kop.",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4024",
+      "arrival_at": "09:12",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 38110",
+      "arrival_at": "09:19",
+      "departure_at": "09:24",
+      "from": "Kraków Płaszów",
+      "to": "Szczecin Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "43432",
+      "arrival_at": "09:29",
+      "departure_at": null,
+      "from": "Bielsko Biała Główna",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4324",
+      "arrival_at": "09:37",
+      "departure_at": null,
+      "from": "Katowice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "iRb 34902",
+      "arrival_at": "09:45",
+      "departure_at": "09:55",
+      "from": "Rzeszów Główny",
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 23100",
+      "arrival_at": "10:00",
+      "departure_at": "10:11",
+      "from": "Lublin",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4028",
+      "arrival_at": "10:12",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 35100",
+      "arrival_at": "10:35",
+      "departure_at": "10:40",
+      "from": "Kraków Płaszów",
+      "to": "Olsztyn Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "iRb 43903",
+      "arrival_at": "10:40",
+      "departure_at": "10:50",
+      "from": "Katowice",
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4030",
+      "arrival_at": "10:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "EX 1313",
+      "arrival_at": "10:51",
+      "departure_at": "10:56",
+      "from": "Warszawa Wschodnia",
+      "to": "Zakopane",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4032",
+      "arrival_at": "11:12",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 83202",
+      "arrival_at": "11:20",
+      "departure_at": null,
+      "from": "Kołobrzeg",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 35102",
+      "arrival_at": "11:34",
+      "departure_at": "11:42",
+      "from": "Kraków Płaszów",
+      "to": "Gdynia Główna",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "EX 1317",
+      "arrival_at": "11:54",
+      "departure_at": null,
+      "from": "Warszawa Wschodnia",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4036",
+      "arrival_at": "12:12",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "30226",
+      "arrival_at": "12:32",
+      "departure_at": "12:33",
+      "from": "Oświęcim",
+      "to": "Wieliczka Rynek-Kop.",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 73104",
+      "arrival_at": "12:34",
+      "departure_at": null,
+      "from": "Poznań Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "20",
+      "arrival_at": "12:43",
+      "departure_at": null,
+      "from": "Tarnów",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 63108",
+      "arrival_at": "13:00",
+      "departure_at": null,
+      "from": "Wrocław Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "iRb 43909",
+      "arrival_at": "13:15",
+      "departure_at": "13:25",
+      "from": "Katowice",
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "IR 36122",
+      "arrival_at": "13:46",
+      "departure_at": "13:50",
+      "from": "Kraków Płaszów",
+      "to": "Węgliniec",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "43438",
+      "arrival_at": "13:56",
+      "departure_at": null,
+      "from": "Wadowice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "30124",
+      "arrival_at": "14:18",
+      "departure_at": null,
+      "from": "Wieliczka Rynek-Kop.",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4046",
+      "arrival_at": "14:43",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "iRb 43913",
+      "arrival_at": "15:20",
+      "departure_at": "15:35",
+      "from": "Katowice",
+      "to": "Przemyśl Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 33108",
+      "arrival_at": "15:25",
+      "departure_at": null,
+      "from": "Przemyśl Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4910",
+      "arrival_at": "15:43",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "124",
+      "arrival_at": "16:12",
+      "departure_at": null,
+      "from": "Rzeszów Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4332",
+      "arrival_at": "16:36",
+      "departure_at": null,
+      "from": "Katowice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4914",
+      "arrival_at": "16:43",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 13107",
+      "arrival_at": "17:08",
+      "departure_at": "17:13",
+      "from": "Warszawa Zachodnia",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 83100",
+      "arrival_at": "17:25",
+      "departure_at": null,
+      "from": "Szczecin Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "30236",
+      "arrival_at": "17:52",
+      "departure_at": "17:53",
+      "from": "Oświęcim",
+      "to": "Wieliczka Rynek-Kop.",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 33110",
+      "arrival_at": "17:57",
+      "departure_at": null,
+      "from": "Rzeszów Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "iRb 34916",
+      "arrival_at": "18:15",
+      "departure_at": "18:25",
+      "from": "Rzeszów Główny",
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "EX 3112",
+      "arrival_at": "18:35",
+      "departure_at": "18:40",
+      "from": "Zakopane",
+      "to": "Warszawa Wschodnia",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4336",
+      "arrival_at": "18:36",
+      "departure_at": null,
+      "from": "Katowice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "66124",
+      "arrival_at": "18:47",
+      "departure_at": null,
+      "from": "Nowy Sącz",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 83110",
+      "arrival_at": "19:06",
+      "departure_at": "19:11",
+      "from": "Szczecin Główny",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "30132",
+      "arrival_at": "19:16",
+      "departure_at": "19:25",
+      "from": "Wieliczka Rynek-Kop.",
+      "to": "Oświęcim",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "22120",
+      "arrival_at": "19:19",
+      "departure_at": null,
+      "from": "Zakopane",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4926",
+      "arrival_at": "19:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "23242",
+      "arrival_at": "20:20",
+      "departure_at": null,
+      "from": "Ostrowiec Świętokrz.",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4340",
+      "arrival_at": "20:39",
+      "departure_at": null,
+      "from": "Katowice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "EIC 1305",
+      "arrival_at": "20:50",
+      "departure_at": null,
+      "from": "Warszawa Wschodnia",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "2224",
+      "arrival_at": "21:00",
+      "departure_at": null,
+      "from": "Krynica",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "22122",
+      "arrival_at": "21:14",
+      "departure_at": null,
+      "from": "Zakopane",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4934",
+      "arrival_at": "21:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "30136",
+      "arrival_at": "22:28",
+      "departure_at": "22:29",
+      "from": "Wieliczka Rynek-Kop.",
+      "to": "Trzebinia",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4936",
+      "arrival_at": "22:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 33112",
+      "arrival_at": "22:59",
+      "departure_at": null,
+      "from": "Przemyśl Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 83102",
+      "arrival_at": "23:13",
+      "departure_at": null,
+      "from": "Kołobrzeg",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 83108",
+      "arrival_at": "23:15",
+      "departure_at": null,
+      "from": "Kołobrzeg",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 31103",
+      "arrival_at": "04:16",
+      "departure_at": "04:21",
+      "from": "Kraków Płaszów",
+      "to": "Warszawa Wschodnia",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "10",
+      "arrival_at": "04:56",
+      "departure_at": null,
+      "from": "Bochnia",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "12",
+      "arrival_at": "05:29",
+      "departure_at": null,
+      "from": "Tarnów",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 38106",
+      "arrival_at": "05:49",
+      "departure_at": "06:05",
+      "from": "Kraków Płaszów",
+      "to": "Szczecin Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "23123",
+      "arrival_at": "05:54",
+      "departure_at": null,
+      "from": "Sędziszów",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "5022",
+      "arrival_at": "06:02",
+      "departure_at": null,
+      "from": "Sucha Beskidzka",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 33102",
+      "arrival_at": "06:33",
+      "departure_at": null,
+      "from": "Przemyśl Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "D 403 SILESIA",
+      "arrival_at": "06:41",
+      "departure_at": null,
+      "from": "Bohumin",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 83200",
+      "arrival_at": "06:54",
+      "departure_at": null,
+      "from": "Szczecin Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 53202",
+      "arrival_at": "07:19",
+      "departure_at": "07:24",
+      "from": "Gdynia Główna",
+      "to": "Zakopane",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "18",
+      "arrival_at": "07:31",
+      "departure_at": null,
+      "from": "Tarnów",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4320",
+      "arrival_at": "07:36",
+      "departure_at": "07:38",
+      "from": "Katowice",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4018",
+      "arrival_at": "07:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "120",
+      "arrival_at": "08:08",
+      "departure_at": null,
+      "from": "Rzeszów Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4020",
+      "arrival_at": "08:12",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "2220",
+      "arrival_at": "08:15",
+      "departure_at": null,
+      "from": "Nowy Sącz",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 13101",
+      "arrival_at": "08:40",
+      "departure_at": null,
+      "from": "Warszawa Wschodnia",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4022",
+      "arrival_at": "08:43",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "23240",
+      "arrival_at": "09:09",
+      "departure_at": null,
+      "from": "Ostrowiec Świętokrz.",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "30114",
+      "arrival_at": "09:12",
+      "departure_at": "09:14",
+      "from": "Wieliczka Rynek-Kop.",
+      "to": "Oświęcim",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 13111",
+      "arrival_at": "09:20",
+      "departure_at": null,
+      "from": "Łódź Kaliska",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "122",
+      "arrival_at": "09:36",
+      "departure_at": null,
+      "from": "Rzeszów Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4026",
+      "arrival_at": "09:43",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 33104",
+      "arrival_at": "09:59",
+      "departure_at": null,
+      "from": "Przemyśl Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "30116",
+      "arrival_at": "10:07",
+      "departure_at": "10:08",
+      "from": "Wieliczka Rynek-Kop.",
+      "to": "Oświęcim",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 31106",
+      "arrival_at": "10:25",
+      "departure_at": "10:30",
+      "from": "Kraków Płaszów",
+      "to": "Warszawa Zachodnia",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4326",
+      "arrival_at": "10:36",
+      "departure_at": null,
+      "from": "Katowice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "iRb 43907",
+      "arrival_at": "10:40",
+      "departure_at": "10:50",
+      "from": "Katowice",
+      "to": "Przemyśl Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "66120",
+      "arrival_at": "10:49",
+      "departure_at": null,
+      "from": "Krynica",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 83204",
+      "arrival_at": "11:06",
+      "departure_at": null,
+      "from": "Świnoujście",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 23104",
+      "arrival_at": "11:15",
+      "departure_at": null,
+      "from": "Zamość",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "911",
+      "arrival_at": "11:26",
+      "departure_at": null,
+      "from": "Trzebinia",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4034",
+      "arrival_at": "11:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "43230",
+      "arrival_at": "11:56",
+      "departure_at": null,
+      "from": "Wadowice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "23143",
+      "arrival_at": "12:25",
+      "departure_at": null,
+      "from": "Kielce",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 31104",
+      "arrival_at": "12:33",
+      "departure_at": "12:45",
+      "from": "Kraków Płaszów",
+      "to": "Białystok",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4038",
+      "arrival_at": "12:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "EX 1315",
+      "arrival_at": "12:56",
+      "departure_at": null,
+      "from": "Warszawa Wschodnia",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 33106",
+      "arrival_at": "13:01",
+      "departure_at": null,
+      "from": "Przemyśl Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4042",
+      "arrival_at": "13:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "IR 63120 ŁUŻYCE",
+      "arrival_at": "13:55",
+      "departure_at": "13:57",
+      "from": "Węgliniec",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 13504",
+      "arrival_at": "14:04",
+      "departure_at": "14:09",
+      "from": "Białystok",
+      "to": "Zakopane",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "30230",
+      "arrival_at": "14:34",
+      "departure_at": "14:35",
+      "from": "Oświęcim",
+      "to": "Wieliczka Rynek-Kop.",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "IR 13122 STEFAN STARZYŃSKI",
+      "arrival_at": "15:07",
+      "departure_at": null,
+      "from": "Warszawa Wschodnia",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 73102",
+      "arrival_at": "15:22",
+      "departure_at": null,
+      "from": "Poznań Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "30128",
+      "arrival_at": "15:38",
+      "departure_at": "15:41",
+      "from": "Wieliczka Rynek-Kop.",
+      "to": "Oświęcim",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 53106",
+      "arrival_at": "15:59",
+      "departure_at": null,
+      "from": "Gdynia Główna",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 32100",
+      "arrival_at": "16:22",
+      "departure_at": "16:27",
+      "from": "Kraków Płaszów",
+      "to": "Lublin",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "22",
+      "arrival_at": "16:41",
+      "departure_at": null,
+      "from": "Tarnów",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "iRb 34912",
+      "arrival_at": "17:00",
+      "departure_at": "17:15",
+      "from": "Rzeszów Główny",
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "24",
+      "arrival_at": "17:18",
+      "departure_at": null,
+      "from": "Tarnów",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "4918",
+      "arrival_at": "17:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "23147",
+      "arrival_at": "17:54",
+      "departure_at": null,
+      "from": "Kielce",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 53100",
+      "arrival_at": "18:07",
+      "departure_at": "18:12",
+      "from": "Olsztyn Główny",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "912",
+      "arrival_at": "18:28",
+      "departure_at": "18:36",
+      "from": "Kraków Płaszów",
+      "to": "Trzebinia",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "iRb 43919",
+      "arrival_at": "18:35",
+      "departure_at": "18:45",
+      "from": "Katowice",
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4922",
+      "arrival_at": "18:42",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "43434",
+      "arrival_at": "19:05",
+      "departure_at": null,
+      "from": "Wadowice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "IR 63124 GALICJA",
+      "arrival_at": "19:11",
+      "departure_at": null,
+      "from": "Jelenia Góra",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 53102",
+      "arrival_at": "19:19",
+      "departure_at": "19:24",
+      "from": "Gdynia Główna",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "30240",
+      "arrival_at": "19:35",
+      "departure_at": "19:36",
+      "from": "Oświęcim",
+      "to": "Wieliczka Rynek-Kop.",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 33200",
+      "arrival_at": "20:13",
+      "departure_at": null,
+      "from": "Przemyśl Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 23102",
+      "arrival_at": "20:30",
+      "departure_at": "20:35",
+      "from": "Lublin",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "4930",
+      "arrival_at": "20:45",
+      "departure_at": null,
+      "from": "Kraków Balice",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 63102",
+      "arrival_at": "20:59",
+      "departure_at": null,
+      "from": "Wrocław Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "30134",
+      "arrival_at": "21:09",
+      "departure_at": "21:10",
+      "from": "Wieliczka Rynek-Kop.",
+      "to": "Oświęcim",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "30420",
+      "arrival_at": "21:32",
+      "departure_at": null,
+      "from": "Oświęcim",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "126",
+      "arrival_at": "22:03",
+      "departure_at": null,
+      "from": "Rzeszów Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "IR 13126 JAN MATEJKO",
+      "arrival_at": "22:31",
+      "departure_at": null,
+      "from": "Warszawa Wschodnia",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 83106",
+      "arrival_at": "22:56",
+      "departure_at": "23:01",
+      "from": "Szczecin Główny",
+      "to": "Kraków Płaszów",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "TLK 35202",
+      "arrival_at": "23:05",
+      "departure_at": "23:16",
+      "from": "Zakopane",
+      "to": "Gdynia Główna",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "128",
+      "arrival_at": "23:14",
+      "departure_at": null,
+      "from": "Rzeszów Główny",
+      "to": null,
+      "platform": null,
+      "rail": null,
+      "type": "arrival"
+    },
+    {
+      "symbol": "TLK 36200",
+      "arrival_at": "23:17",
+      "departure_at": "23:22",
+      "from": "Kraków Płaszów",
+      "to": "Wrocław Główny",
+      "platform": null,
+      "rail": null,
+      "type": "transit"
+    },
+    {
+      "symbol": "3420",
+      "arrival_at": null,
+      "departure_at": "03:40",
+      "from": null,
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "30410",
+      "arrival_at": null,
+      "departure_at": "04:35",
+      "from": null,
+      "to": "Oświęcim",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "414",
+      "arrival_at": null,
+      "departure_at": "05:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 38102",
+      "arrival_at": null,
+      "departure_at": "05:50",
+      "from": null,
+      "to": "Kołobrzeg",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "416",
+      "arrival_at": null,
+      "departure_at": "06:03",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 33101",
+      "arrival_at": null,
+      "departure_at": "06:09",
+      "from": null,
+      "to": "Przemyśl Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "32140",
+      "arrival_at": null,
+      "departure_at": "07:10",
+      "from": null,
+      "to": "Kielce",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "420",
+      "arrival_at": null,
+      "departure_at": "07:30",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "EIC 3104",
+      "arrival_at": null,
+      "departure_at": "07:48",
+      "from": null,
+      "to": "Warszawa Wschodnia",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "422",
+      "arrival_at": null,
+      "departure_at": "08:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "34433",
+      "arrival_at": null,
+      "departure_at": "08:11",
+      "from": null,
+      "to": "Wadowice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 36102",
+      "arrival_at": null,
+      "departure_at": "08:15",
+      "from": null,
+      "to": "Wrocław Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "426",
+      "arrival_at": null,
+      "departure_at": "09:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "IR 36120",
+      "arrival_at": null,
+      "departure_at": "09:24",
+      "from": null,
+      "to": "Jelenia Góra",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 33103",
+      "arrival_at": null,
+      "departure_at": "09:32",
+      "from": null,
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "33122",
+      "arrival_at": null,
+      "departure_at": "10:18",
+      "from": null,
+      "to": "Zakopane",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 33105",
+      "arrival_at": null,
+      "departure_at": "11:22",
+      "from": null,
+      "to": "Przemyśl Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "3428",
+      "arrival_at": null,
+      "departure_at": "11:38",
+      "from": null,
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "438",
+      "arrival_at": null,
+      "departure_at": "12:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 33107",
+      "arrival_at": null,
+      "departure_at": "14:00",
+      "from": null,
+      "to": "Przemyśl Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "66125",
+      "arrival_at": null,
+      "departure_at": "14:04",
+      "from": null,
+      "to": "Krynica",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "3432",
+      "arrival_at": null,
+      "departure_at": "14:24",
+      "from": null,
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 36108",
+      "arrival_at": null,
+      "departure_at": "14:53",
+      "from": null,
+      "to": "Wrocław Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "4410",
+      "arrival_at": null,
+      "departure_at": "15:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "125",
+      "arrival_at": null,
+      "departure_at": "15:13",
+      "from": null,
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 37104",
+      "arrival_at": null,
+      "departure_at": "15:49",
+      "from": null,
+      "to": "Poznań Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "3436",
+      "arrival_at": null,
+      "departure_at": "16:23",
+      "from": null,
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "EX 31418",
+      "arrival_at": null,
+      "departure_at": "16:40",
+      "from": null,
+      "to": "Warszawa Wschodnia",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "32146",
+      "arrival_at": null,
+      "departure_at": "16:48",
+      "from": null,
+      "to": "Skarżysko-Kamienna",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 36100",
+      "arrival_at": null,
+      "departure_at": "16:53",
+      "from": null,
+      "to": "Wrocław Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 38202",
+      "arrival_at": null,
+      "departure_at": "17:26",
+      "from": null,
+      "to": "Kołobrzeg",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "34241",
+      "arrival_at": null,
+      "departure_at": "18:30",
+      "from": null,
+      "to": "Bielsko Biała Główna",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "129",
+      "arrival_at": null,
+      "departure_at": "18:51",
+      "from": null,
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "4426",
+      "arrival_at": null,
+      "departure_at": "19:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "32148",
+      "arrival_at": null,
+      "departure_at": "19:10",
+      "from": null,
+      "to": "Kielce",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 31100",
+      "arrival_at": null,
+      "departure_at": "20:08",
+      "from": null,
+      "to": "Warszawa Wschodnia",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "3440",
+      "arrival_at": null,
+      "departure_at": "20:20",
+      "from": null,
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "213",
+      "arrival_at": null,
+      "departure_at": "20:45",
+      "from": null,
+      "to": "Wieliczka Rynek-Kop.",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "17",
+      "arrival_at": null,
+      "departure_at": "21:04",
+      "from": null,
+      "to": "Tarnów",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "32126",
+      "arrival_at": null,
+      "departure_at": "21:35",
+      "from": null,
+      "to": "Sędziszów",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "4436",
+      "arrival_at": null,
+      "departure_at": "21:56",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "19",
+      "arrival_at": null,
+      "departure_at": "22:30",
+      "from": null,
+      "to": "Tarnów",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "11",
+      "arrival_at": null,
+      "departure_at": "04:30",
+      "from": null,
+      "to": "Tarnów",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 38108",
+      "arrival_at": null,
+      "departure_at": "05:00",
+      "from": null,
+      "to": "Kołobrzeg",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "2221",
+      "arrival_at": null,
+      "departure_at": "05:30",
+      "from": null,
+      "to": "Krynica",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "30213",
+      "arrival_at": null,
+      "departure_at": "05:33",
+      "from": null,
+      "to": "Wieliczka Rynek-Kop.",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "3424",
+      "arrival_at": null,
+      "departure_at": "06:23",
+      "from": null,
+      "to": "Katowice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "418",
+      "arrival_at": null,
+      "departure_at": "07:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "121",
+      "arrival_at": null,
+      "departure_at": "07:35",
+      "from": null,
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "33120",
+      "arrival_at": null,
+      "departure_at": "07:45",
+      "from": null,
+      "to": "Zakopane",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "IR 31122",
+      "arrival_at": null,
+      "departure_at": "07:58",
+      "from": null,
+      "to": "Warszawa Wschodnia",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 33201",
+      "arrival_at": null,
+      "departure_at": "08:14",
+      "from": null,
+      "to": "Przemyśl Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "424",
+      "arrival_at": null,
+      "departure_at": "08:30",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "428",
+      "arrival_at": null,
+      "departure_at": "09:30",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "34435",
+      "arrival_at": null,
+      "departure_at": "09:46",
+      "from": null,
+      "to": "Wadowice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "430",
+      "arrival_at": null,
+      "departure_at": "10:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 38100",
+      "arrival_at": null,
+      "departure_at": "10:19",
+      "from": null,
+      "to": "Szczecin Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "432",
+      "arrival_at": null,
+      "departure_at": "10:30",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "2223",
+      "arrival_at": null,
+      "departure_at": "10:51",
+      "from": null,
+      "to": "Krynica",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "434",
+      "arrival_at": null,
+      "departure_at": "11:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "436",
+      "arrival_at": null,
+      "departure_at": "11:30",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "123",
+      "arrival_at": null,
+      "departure_at": "12:06",
+      "from": null,
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 37102",
+      "arrival_at": null,
+      "departure_at": "12:39",
+      "from": null,
+      "to": "Poznań Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "442",
+      "arrival_at": null,
+      "departure_at": "13:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "32120",
+      "arrival_at": null,
+      "departure_at": "13:50",
+      "from": null,
+      "to": "Sędziszów",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "446",
+      "arrival_at": null,
+      "departure_at": "14:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "34231",
+      "arrival_at": null,
+      "departure_at": "14:28",
+      "from": null,
+      "to": "Wadowice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 32104",
+      "arrival_at": null,
+      "departure_at": "14:49",
+      "from": null,
+      "to": "Zamość",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 35106",
+      "arrival_at": null,
+      "departure_at": "15:00",
+      "from": null,
+      "to": "Gdańsk Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "32144",
+      "arrival_at": null,
+      "departure_at": "15:10",
+      "from": null,
+      "to": "Kielce",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "15",
+      "arrival_at": null,
+      "departure_at": "15:43",
+      "from": null,
+      "to": "Tarnów",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "4414",
+      "arrival_at": null,
+      "departure_at": "16:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "2225",
+      "arrival_at": null,
+      "departure_at": "16:25",
+      "from": null,
+      "to": "Nowy Sącz",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "5540",
+      "arrival_at": null,
+      "departure_at": "16:29",
+      "from": null,
+      "to": "Zakopane",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "30414",
+      "arrival_at": null,
+      "departure_at": "16:46",
+      "from": null,
+      "to": "Oświęcim",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "127",
+      "arrival_at": null,
+      "departure_at": "16:50",
+      "from": null,
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "4418",
+      "arrival_at": null,
+      "departure_at": "17:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 33111",
+      "arrival_at": null,
+      "departure_at": "17:31",
+      "from": null,
+      "to": "Przemyśl Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "4422",
+      "arrival_at": null,
+      "departure_at": "18:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 38204",
+      "arrival_at": null,
+      "departure_at": "18:17",
+      "from": null,
+      "to": "Świnoujście",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "66127",
+      "arrival_at": null,
+      "departure_at": "18:26",
+      "from": null,
+      "to": "Nowy Sącz",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "5543",
+      "arrival_at": null,
+      "departure_at": "18:54",
+      "from": null,
+      "to": "Sucha Beskidzka",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "IR 31120",
+      "arrival_at": null,
+      "departure_at": "19:00",
+      "from": null,
+      "to": "Warszawa Wschodnia",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "4430",
+      "arrival_at": null,
+      "departure_at": "20:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 33113",
+      "arrival_at": null,
+      "departure_at": "20:08",
+      "from": null,
+      "to": "Rzeszów Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "66129",
+      "arrival_at": null,
+      "departure_at": "20:27",
+      "from": null,
+      "to": "Nowy Sącz",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 33109",
+      "arrival_at": null,
+      "departure_at": "20:40",
+      "from": null,
+      "to": "Przemyśl Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "4434",
+      "arrival_at": null,
+      "departure_at": "21:00",
+      "from": null,
+      "to": "Kraków Balice",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "TLK 38200",
+      "arrival_at": null,
+      "departure_at": "21:36",
+      "from": null,
+      "to": "Szczecin Główny",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "D 402 SILESIA",
+      "arrival_at": null,
+      "departure_at": "22:04",
+      "from": null,
+      "to": "Bohumin",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "32128",
+      "arrival_at": null,
+      "departure_at": "22:48",
+      "from": null,
+      "to": "Sędziszów",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    },
+    {
+      "symbol": "21",
+      "arrival_at": null,
+      "departure_at": "23:06",
+      "from": null,
+      "to": "Bochnia",
+      "platform": null,
+      "rail": null,
+      "type": "departure"
+    }
+  ]
+}
