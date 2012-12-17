@@ -66,6 +66,7 @@ public class TimeTable {
                     }
                     train.setArrivalAt(arrivalAt);
                     train.setDepartureAt(departureAt);
+                    train.setInternalArrivalDuration(station.internalArrivalDuration);
 
                     train.setSource(raw.optString("from", null));
                     train.setDestination(raw.optString("to", null));

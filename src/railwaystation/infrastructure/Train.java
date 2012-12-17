@@ -44,6 +44,10 @@ public class Train extends Region {
         this.departureAt = departureAt;
     }
 
+    public void setInternalArrivalDuration(TimeSpan internalArrival) {
+        this.internalArrival = internalArrival;
+    }
+
     public void setSource(String source) {
         this.source = source;
     }
