@@ -20,7 +20,6 @@ import railwaystation.person.Passenger;
  * @author artur
  */
 public class Train extends Region {
-    public static final TimeSpan DEFAULT_PLATFORM_WAITING_TIME = new TimeSpan(10, TimeUnit.MINUTES);
     protected ProcessQueue<Passenger> gettingOutPassengers, gettingInPassengers;
     protected Integer passengerCount;
     protected Platform platform, realPlatform;

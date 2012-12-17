@@ -32,7 +32,7 @@ public class RailwayStation extends Model {
     public double complainingProbability, havingCompanionProbability, havingTicketProbability, shareOfVisitors;
     public int platformCount, cashDeskCount, infoDeskCount, waitingRoomCapacity;
     public int minArrivingPassengerCount, maxArrivingPassengerCount, minDeparturingPassengerCount, maxDeparturingPassengerCount; // per train
-    public TimeSpan internalArrivalDuration; // ride from semaphore to the platform
+    public TimeSpan internalArrivalDuration, defaultPlatformWaitingTime; // ride from semaphore to the platform | how long should a train wait for passengers on a platform
     public TimeSpan minSellingTicketTime, maxSellingTicketTime, minServingInformationTime, maxServingInformationTime;
     
     public CrowdSpeed crowdSpeed;
@@ -81,6 +81,7 @@ public class RailwayStation extends Model {
                 maxDeparturingPassengerCount = config.optInt("max_departuring_passenger_count", 800);
 
                 internalArrivalDuration = new TimeSpan(config.optInt("internal_arrival_time", 5), TimeUnit.MINUTES);
+                defaultPlatformWaitingTime = new TimeSpan(config.optInt("default_platform_waiting_time", 10), TimeUnit.MINUTES);
 
                 minSellingTicketTime = new TimeSpan(config.optInt("min_selling_ticket_time", 5), TimeUnit.MINUTES);
                 maxSellingTicketTime = new TimeSpan(config.optInt("max_selling_ticket_time", 10), TimeUnit.MINUTES);

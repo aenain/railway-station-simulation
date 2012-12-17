@@ -6,6 +6,7 @@
     "min_coming_time_span_without_ticket": 25,
     "max_coming_time_span_without_ticket": 50,
     "internal_arrival_time": 5,
+    "default_platform_waiting_time": 10,
     "min_arriving_passenger_count": 10,
     "max_arriving_passenger_count": 200,
     "min_departuring_passenger_count": 10,
