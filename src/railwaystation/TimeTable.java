@@ -58,15 +58,15 @@ public class TimeTable {
                     }
                     else if (type.equals("arrival")) {
                         arrivalAt = parseTime(raw.getString("arrival_at"));
-                        departureAt = TimeOperations.add(arrivalAt, station.defaultPlatformWaitingTime);
+                        departureAt = TimeOperations.add(arrivalAt, station.config.defaultPlatformWaitingTime);
                     }
                     else if (type.equals("departure")) {
                         departureAt = parseTime(raw.getString("departure_at"));
-                        arrivalAt = TimeOperations.subtract(departureAt, station.defaultPlatformWaitingTime);
+                        arrivalAt = TimeOperations.subtract(departureAt, station.config.defaultPlatformWaitingTime);
                     }
                     train.setArrivalAt(arrivalAt);
                     train.setDepartureAt(departureAt);
-                    train.setInternalArrivalDuration(station.internalArrivalDuration);
+                    train.setInternalArrivalDuration(station.config.internalArrivalDuration);
 
                     train.setSource(raw.optString("from", null));
                     train.setDestination(raw.optString("to", null));
@@ -76,7 +76,7 @@ public class TimeTable {
 
                     train.setTrack(track);
                     // TODO! wygenerowanie tablicy z liczba towarzyszy
-                    train.activate(TimeOperations.subtract(arrivalAt, station.externalDelayInfoSpan));
+                    train.activate(TimeOperations.subtract(arrivalAt, station.config.externalDelayInfoSpan));
                 }
             } catch (JSONException ex) {
                 System.err.println("error generating trains.");
