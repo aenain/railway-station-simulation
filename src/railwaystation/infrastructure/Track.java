@@ -20,8 +20,9 @@ public class Track {
 
     public Track(Platform platform, int number) {
         String name = "rail-" + Integer.toString(platform.number)+ "-" + Integer.toString(number);
-        this.trains = new ProcessQueue(platform.station, name, true, true);
+        this.trains = new ProcessQueue(platform.station, name + "-trains", true, true);
         this.platform = platform;
+        this.number = number;
     }
 
     public Platform getPlatform() {
@@ -52,7 +53,7 @@ public class Track {
 
         try {
             data.put("platform", platform.number);
-            data.put("rail", platform.number);
+            data.put("rail", number);
             data.put("count", trains.length() - 1);
             platform.station.registerVisualizationEvent("waiting-trains-change", data);
         } catch (JSONException ex) {
