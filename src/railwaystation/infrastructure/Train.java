@@ -29,7 +29,7 @@ public class Train extends Region {
     protected String source, destination;
 
     public Train(RailwayStation owner, String name) {
-        super(owner, name, Infrastructure.TRAIN_CAPACITY);
+        super(owner, name, Infrastructure.MAX_CAPACITY);
         passengerCount = 100;
         gettingOutPassengers = new ProcessQueue(owner, name + "-getting-out-passengers", true, true);
         gettingInPassengers = new ProcessQueue(owner, name + "-getting-in-passengers", true, true);
@@ -76,7 +76,9 @@ public class Train extends Region {
     protected void informAboutExternalDelay() {
         externalDelay = station.generateExternalDelay();
         station.sendDelayNotification(this);
-        registerTrainChange();
+        if (trainChanged()) {
+            registerTrainChange();
+        }
         hold(TimeOperations.add(TimeOperations.subtract(arrivalAt, internalArrival), externalDelay));
     }
 
@@ -84,9 +86,11 @@ public class Train extends Region {
         realSemaphoreArrivalAt = presentTime();
         realTrack = station.getBestTrack(this);
         realPlatform = realTrack.getPlatform();
+
+        boolean trackEmpty = realTrack.isEmpty();
         realTrack.addTrain(this);
 
-        if (! realTrack.isEmpty()) {
+        if (! trackEmpty) {
             passivate(); // czeka przy semaforze na mozliwosc wjazdu na peron
         }
     }
@@ -115,6 +119,8 @@ public class Train extends Region {
     public void departure() {
         totalDelay = TimeOperations.diff(presentTime(), departureAt);
         registerPlatformDeparture();
+        hold(internalArrival);
+        leaveTrack();
     }
 
     public void leaveTrack() {
@@ -143,6 +149,7 @@ public class Train extends Region {
             delay.put("internal", totalDelayInSeconds - externalDelayInSeconds);
             data.put("delay", delay);
             data.put("train", name);
+            data.put("duration", internalArrival.getTimeRounded(TimeUnit.SECONDS));
             station.registerVisualizationEvent("train-platform-departure", data);
         } catch (JSONException ex) {
             System.err.println("error building event: train-platform-departure");
@@ -160,12 +167,21 @@ public class Train extends Region {
             data.put("train", name);
             data.put("platform", realPlatform.number);
             data.put("rail", realTrack.number);
+            data.put("from", source);
+            data.put("to", destination);
             data.put("duration", internalArrival.getTimeRounded(TimeUnit.SECONDS));
             data.put("count", passengerCount);
             station.registerVisualizationEvent("train-semaphore-departure", data);
         } catch (JSONException ex) {
             System.err.println("error building event: train-semaphore-departure");
         }
+    }
+
+    // if it's delayed or it's platform has changed
+    protected boolean trainChanged() {
+        return TimeSpan.ZERO.compareTo(externalDelay) < 0 ||
+               TimeSpan.ZERO.compareTo(semaphoreDelay) < 0 ||
+               !(realPlatform == null || platform.equals(realPlatform));
     }
 
     protected void registerTrainChange() {
