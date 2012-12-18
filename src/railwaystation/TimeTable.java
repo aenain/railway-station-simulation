@@ -24,6 +24,7 @@ import railwaystation.infrastructure.Train;
 public class TimeTable {
     protected LinkedList<Train> trains;
     protected JSONArray rawTrains;
+    protected String stationName;
 
     public TimeTable() {
         trains = new LinkedList();
@@ -32,6 +33,7 @@ public class TimeTable {
     public void readSchedule(File schedule) {
         JSONObject data = railwaystation.io.JSONReader.read(schedule);
         try {
+            this.stationName = data.getString("station");
             this.rawTrains = data.getJSONArray("trains");
         } catch (JSONException ex) {
             System.err.println("error getting trains out of the schedule.");
@@ -72,9 +74,9 @@ public class TimeTable {
                     train.setInternalArrivalDuration(station.config.internalArrivalDuration);
 
                     source = raw.optString("from", null);
-                    if (source == null) { source = RailwayStation.STATION_NAME; }
+                    if (source == null) { source = stationName; }
                     destination = raw.optString("to", null);
-                    if (destination == null) { destination = RailwayStation.STATION_NAME; }
+                    if (destination == null) { destination = stationName; }
 
                     train.setSource(source);
                     train.setDestination(destination);

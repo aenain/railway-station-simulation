@@ -36,8 +36,7 @@ import railwaystation.infrastructure.Train;
 public class RailwayStation extends Model {
     public static final String CONFIG_FILENAME = "config.json",
                                OUTPUT_FILENAME = "output.json",
-                               SCHEDULE_FILENAME = "schedule.json",
-                               STATION_NAME = "Kraków Główny";
+                               SCHEDULE_FILENAME = "schedule.json";
 
     public static final TimeInstant START_TIME = new TimeInstant(0, TimeUnit.HOURS),
                                     STOP_TIME = new TimeInstant(24, TimeUnit.HOURS);
