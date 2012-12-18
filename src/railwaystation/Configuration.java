@@ -7,6 +7,7 @@ package railwaystation;
 import desmoj.core.simulator.TimeSpan;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -21,7 +22,7 @@ public class Configuration {
     protected int minArrivingPassengerCount, maxArrivingPassengerCount, minDeparturingPassengerCount, maxDeparturingPassengerCount; // per train
     protected TimeSpan internalArrivalDuration, defaultPlatformWaitingTime, minExternalDelay, maxExternalDelay; // ride from semaphore to the platform | how long should a train wait for passengers on a platform
     protected TimeSpan minSellingTicketTime, maxSellingTicketTime, minServingInformationTime, maxServingInformationTime;
-    
+
     protected CrowdSpeed crowdSpeed;
     protected SchedulingAlgorithm schedulingAlgorithm;
 
@@ -40,42 +41,46 @@ public class Configuration {
     public void setParameters() {
         if (config == null) { read(); }
 
-        minGoToWaitingRoom = new TimeSpan(config.optInt("go_to_waiting_room_min_time_span", 20), TimeUnit.MINUTES);
-        maxGoToPlatform = new TimeSpan(config.optInt("go_to_platform_max_time_span", 10), TimeUnit.MINUTES);
-        externalDelayInfoSpan = new TimeSpan(config.optInt("external_delay_info_time_span", 30), TimeUnit.MINUTES);
+        try {
+            minGoToWaitingRoom = new TimeSpan(config.getInt("go_to_waiting_room_min_time_span"), TimeUnit.MINUTES);
+            maxGoToPlatform = new TimeSpan(config.getInt("go_to_platform_max_time_span"), TimeUnit.MINUTES);
+            externalDelayInfoSpan = new TimeSpan(config.getInt("external_delay_info_time_span"), TimeUnit.MINUTES);
 
-        minComingTimeWithTicket = new TimeSpan(config.optInt("min_coming_time_span_with_ticket", 15), TimeUnit.MINUTES);
-        maxComingTimeWithTicket = new TimeSpan(config.optInt("max_coming_time_span_with_ticket", 45), TimeUnit.MINUTES);
-        minComingTimeWithoutTicket = new TimeSpan(config.optInt("min_coming_time_span_without_ticket", 25), TimeUnit.MINUTES);
-        maxComingTimeWithoutTicket = new TimeSpan(config.optInt("max_coming_time_span_without_ticket", 50), TimeUnit.MINUTES);
+            minComingTimeWithTicket = new TimeSpan(config.getInt("min_coming_time_span_with_ticket"), TimeUnit.MINUTES);
+            maxComingTimeWithTicket = new TimeSpan(config.getInt("max_coming_time_span_with_ticket"), TimeUnit.MINUTES);
+            minComingTimeWithoutTicket = new TimeSpan(config.getInt("min_coming_time_span_without_ticket"), TimeUnit.MINUTES);
+            maxComingTimeWithoutTicket = new TimeSpan(config.getInt("max_coming_time_span_without_ticket"), TimeUnit.MINUTES);
 
-        complainingProbability = config.optInt("average_probability_of_complaining", 15) / 100.0;
-        havingCompanionProbability = config.optInt("average_probability_of_having_companion", 25) / 100.0;
-        havingTicketProbability = config.optInt("average_probability_of_having_ticket", 50) / 100.0;
-        shareOfVisitors = config.optInt("average_share_of_visitors", 25) / 100.0;
+            complainingProbability = config.getInt("average_probability_of_complaining") / 100.0;
+            havingCompanionProbability = config.getInt("average_probability_of_having_companion") / 100.0;
+            havingTicketProbability = config.getInt("average_probability_of_having_ticket") / 100.0;
+            shareOfVisitors = config.getInt("average_share_of_visitors") / 100.0;
 
-        platformCount = config.optInt("platform_count", 4);
-        infoDeskCount = config.optInt("info_desk_count", 2);
-        cashDeskCount = config.optInt("cash_desk_count", 6);
-        waitingRoomCapacity = config.optInt("waiting_room_capacity", 1000);
+            platformCount = config.getInt("platform_count");
+            infoDeskCount = config.getInt("info_desk_count");
+            cashDeskCount = config.getInt("cash_desk_count");
+            waitingRoomCapacity = config.getInt("waiting_room_capacity");
 
-        minArrivingPassengerCount = config.optInt("min_arriving_passenger_count", 10);
-        maxArrivingPassengerCount = config.optInt("max_arriving_passenger_count", 800);
-        minDeparturingPassengerCount = config.optInt("min_departuring_passenger_count", 10);
-        maxDeparturingPassengerCount = config.optInt("max_departuring_passenger_count", 800);
+            minArrivingPassengerCount = config.getInt("min_arriving_passenger_count");
+            maxArrivingPassengerCount = config.getInt("max_arriving_passenger_count");
+            minDeparturingPassengerCount = config.getInt("min_departuring_passenger_count");
+            maxDeparturingPassengerCount = config.getInt("max_departuring_passenger_count");
 
-        internalArrivalDuration = new TimeSpan(config.optInt("internal_arrival_time", 5), TimeUnit.MINUTES);
-        defaultPlatformWaitingTime = new TimeSpan(config.optInt("default_platform_waiting_time", 10), TimeUnit.MINUTES);
-        minExternalDelay = new TimeSpan(config.optInt("min_external_delay", 0), TimeUnit.MINUTES);
-        maxExternalDelay = new TimeSpan(config.optInt("max_external_delay", 60), TimeUnit.MINUTES);
+            internalArrivalDuration = new TimeSpan(config.getInt("internal_arrival_time"), TimeUnit.MINUTES);
+            defaultPlatformWaitingTime = new TimeSpan(config.getInt("default_platform_waiting_time"), TimeUnit.MINUTES);
+            minExternalDelay = new TimeSpan(config.getInt("min_external_delay"), TimeUnit.MINUTES);
+            maxExternalDelay = new TimeSpan(config.getInt("max_external_delay"), TimeUnit.MINUTES);
 
-        minSellingTicketTime = new TimeSpan(config.optInt("min_selling_ticket_time", 5), TimeUnit.MINUTES);
-        maxSellingTicketTime = new TimeSpan(config.optInt("max_selling_ticket_time", 10), TimeUnit.MINUTES);
-        minServingInformationTime = new TimeSpan(config.optInt("min_serving_information_time", 5), TimeUnit.MINUTES);
-        maxServingInformationTime = new TimeSpan(config.optInt("max_serving_information_time", 15), TimeUnit.MINUTES);
+            minSellingTicketTime = new TimeSpan(config.getInt("min_selling_ticket_time"), TimeUnit.MINUTES);
+            maxSellingTicketTime = new TimeSpan(config.getInt("max_selling_ticket_time"), TimeUnit.MINUTES);
+            minServingInformationTime = new TimeSpan(config.getInt("min_serving_information_time"), TimeUnit.MINUTES);
+            maxServingInformationTime = new TimeSpan(config.getInt("max_serving_information_time"), TimeUnit.MINUTES);
 
-        /*
-            crowdSpeed, schedulingAlgorithm
-         */
+            /*
+                crowdSpeed, schedulingAlgorithm
+             */
+        } catch (JSONException ex) {
+            System.err.println("error parsing json configuration");
+        }
     }
 }
