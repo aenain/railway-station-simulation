@@ -20,6 +20,7 @@ import railwaystation.person.Passenger;
  * @author artur
  */
 public class Train extends Region {
+    public static enum Type { arrival, departure, transit };
     protected ProcessQueue<Passenger> gettingOutPassengers, gettingInPassengers;
     protected Integer passengerCount;
     protected Platform platform, realPlatform;
@@ -27,12 +28,17 @@ public class Train extends Region {
     protected TimeInstant arrivalAt, departureAt, realSemaphoreArrivalAt; // scheduled
     protected TimeSpan externalDelay = TimeSpan.ZERO, semaphoreDelay = TimeSpan.ZERO, totalDelay = TimeSpan.ZERO, internalArrival;
     protected String source, destination;
+    protected Type type;
 
     public Train(RailwayStation owner, String name) {
         super(owner, name, Infrastructure.MAX_CAPACITY);
         passengerCount = 100;
         gettingOutPassengers = new ProcessQueue(owner, name + "-getting-out-passengers", true, true);
         gettingInPassengers = new ProcessQueue(owner, name + "-getting-in-passengers", true, true);
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public void setArrivalAt(TimeInstant arrivalAt) {
@@ -187,6 +193,7 @@ public class Train extends Region {
     protected void registerTrainChange() {
         JSONObject data = new JSONObject();
         JSONObject platforms = new JSONObject();
+        TimeInstant scheduledAt;
 
         try {
             platforms.put("old", platform.number);
@@ -199,8 +206,12 @@ public class Train extends Region {
             data.put("from", source);
             data.put("to", destination);
 
-            // TODO! rethink this.
-            data.put("scheduledAt", TimeTable.timeToString(departureAt, "minutes"));
+            if (type == Type.arrival) {
+                scheduledAt = arrivalAt;
+            } else {
+                scheduledAt = departureAt;
+            }
+            data.put("scheduledAt", TimeTable.timeToString(scheduledAt, "minutes"));
 
             long delayInSeconds = TimeOperations.add(externalDelay, semaphoreDelay).getTimeRounded(TimeUnit.SECONDS);
             data.put("delay", delayInSeconds);

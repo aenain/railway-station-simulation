@@ -55,14 +55,17 @@ public class TimeTable {
                     if (type.equals("transit")) {
                         arrivalAt = parseTime(raw.getString("arrival_at"));
                         departureAt = parseTime(raw.getString("departure_at"));
+                        train.setType(Train.Type.transit);
                     }
                     else if (type.equals("arrival")) {
                         arrivalAt = parseTime(raw.getString("arrival_at"));
                         departureAt = TimeOperations.add(arrivalAt, station.config.defaultPlatformWaitingTime);
+                        train.setType(Train.Type.arrival);
                     }
                     else if (type.equals("departure")) {
                         departureAt = parseTime(raw.getString("departure_at"));
                         arrivalAt = TimeOperations.subtract(departureAt, station.config.defaultPlatformWaitingTime);
+                        train.setType(Train.Type.departure);
                     }
                     train.setArrivalAt(arrivalAt);
                     train.setDepartureAt(departureAt);
