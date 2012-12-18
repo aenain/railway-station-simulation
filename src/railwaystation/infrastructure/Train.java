@@ -81,9 +81,9 @@ public class Train extends Region {
 
     protected void informAboutExternalDelay() {
         externalDelay = station.generateExternalDelay();
-        station.sendDelayNotification(this);
         if (trainChanged()) {
             registerTrainChange();
+            station.sendDelayNotification(this);
         }
         hold(TimeOperations.add(TimeOperations.subtract(arrivalAt, internalArrival), externalDelay));
     }
