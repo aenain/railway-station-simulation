@@ -9,7 +9,6 @@ import desmoj.core.simulator.TimeOperations;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +42,8 @@ public class TimeTable {
         JSONObject raw;
         Train train;
         TimeInstant arrivalAt = null, departureAt = null;
-        String type;
+        String type, source, destination;
+        int platformNumber;
 
         if (rawTrains != null) {
             try {
@@ -68,10 +68,19 @@ public class TimeTable {
                     train.setDepartureAt(departureAt);
                     train.setInternalArrivalDuration(station.config.internalArrivalDuration);
 
-                    train.setSource(raw.optString("from", null));
-                    train.setDestination(raw.optString("to", null));
+                    source = raw.optString("from", null);
+                    if (source == null) { source = RailwayStation.STATION_NAME; }
+                    destination = raw.optString("to", null);
+                    if (destination == null) { destination = RailwayStation.STATION_NAME; }
 
-                    Platform platform = station.getInfrastructure().getPlatform(raw.optInt("platform", 1));
+                    train.setSource(source);
+                    train.setDestination(destination);
+
+                    platformNumber = raw.optInt("platform", 1);
+
+                    // TODO! cos wymyslic, zeby to przestawiac na inne perony lepiej
+                    if (station.config.platformCount < platformNumber) { platformNumber = 1; }
+                    Platform platform = station.getInfrastructure().getPlatform(platformNumber);
                     Track track = platform.getTrack(raw.optInt("rail", 1));
 
                     train.setTrack(track);
@@ -85,7 +94,7 @@ public class TimeTable {
     }
 
     public static TimeInstant parseTime(String time) {
-        if (Pattern.matches("^[0-9]{2}:[0-9]$", time)) {
+        if (time.matches("^[0-9]{2}:[0-9]{2}$")) {
             String[] parts = time.split(":");
             long minutes = Integer.parseInt(parts[0]) * 60 + Integer.parseInt(parts[1]);
             return new TimeInstant(minutes, TimeUnit.MINUTES);
