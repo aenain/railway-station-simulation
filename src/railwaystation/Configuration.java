@@ -17,7 +17,7 @@ import org.json.JSONObject;
 public class Configuration {
     protected TimeSpan minGoToWaitingRoom, maxGoToPlatform, externalDelayInfoSpan;
     protected TimeSpan minComingTimeWithTicket, maxComingTimeWithTicket, minComingTimeWithoutTicket, maxComingTimeWithoutTicket;
-    protected double complainingProbability, havingCompanionProbability, havingTicketProbability, shareOfVisitors;
+    protected double complainingProbability, havingCompanionProbability, havingTicketProbability, shareOfVisitors, externalDelayProbability;
     protected int platformCount, cashDeskCount, infoDeskCount, waitingRoomCapacity;
     protected int minArrivingPassengerCount, maxArrivingPassengerCount, minDeparturingPassengerCount, maxDeparturingPassengerCount; // per train
     protected TimeSpan internalArrivalDuration, defaultPlatformWaitingTime, minExternalDelay, maxExternalDelay; // ride from semaphore to the platform | how long should a train wait for passengers on a platform
@@ -55,6 +55,7 @@ public class Configuration {
             havingCompanionProbability = config.getInt("average_probability_of_having_companion") / 100.0;
             havingTicketProbability = config.getInt("average_probability_of_having_ticket") / 100.0;
             shareOfVisitors = config.getInt("average_share_of_visitors") / 100.0;
+            externalDelayProbability = config.getInt("average_probability_of_external_delay") / 100.0;
 
             platformCount = config.getInt("platform_count");
             infoDeskCount = config.getInt("info_desk_count");
