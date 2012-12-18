@@ -12,17 +12,8 @@ import railwaystation.RailwayStation;
  * @author artur
  */
 public class Infrastructure {
+    public static final Integer MAX_CAPACITY = Integer.MAX_VALUE;
 
-    public static final Integer PLATFORM_COUNT = 4,
-            WAITING_ROOM_CAPACITY = 10000,
-            HALL_CAPACITY = 1000,
-            CASH_DESKS_CAPACITY = 500,
-            CASH_DESK_COUNT = 10,
-            INFO_DESKS_CAPACITY = 100,
-            INFO_DESK_COUNT = 3,
-            SUBWAY_CAPACITY = 5000,
-            PLATFORM_CAPACITY = Integer.MAX_VALUE, // close enough to the inf.
-            TRAIN_CAPACITY = Integer.MAX_VALUE;
     protected Region entryRegion, waitingRoom, firstSubway;
     protected RailwayStation station;
     protected CashDeskRegion cashDeskRegion;
@@ -89,7 +80,7 @@ public class Infrastructure {
         Platform platform = null;
 
         for (Integer i = 1; i <= platformCount; i++) {
-            subway = new Region(station, "tunnel-" + i.toString(), SUBWAY_CAPACITY);
+            subway = new Region(station, "tunnel-" + i.toString(), MAX_CAPACITY);
             if (i == 1) {
                 firstSubway = subway;
             }
@@ -99,6 +90,7 @@ public class Infrastructure {
                 bindRegions(subway, platform);
             }
             platform = new Platform(station, i);
+            platform.buildTracks();
             platforms.add(platform);
             bindRegions(platform, subway);
         }
@@ -106,7 +98,8 @@ public class Infrastructure {
 
     // 1..platforms.count
     public Platform getPlatform(int i) {
-        return platforms.get(i + 1); // indices starts from 0
+        if (i == 0) { i = 1; }
+        return platforms.get(i - 1); // indices starts from 0
     }
 
     public void bindWithPlatforms(Region region) {
