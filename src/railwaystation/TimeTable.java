@@ -18,8 +18,8 @@ import railwaystation.infrastructure.Train;
 
 /**
  *
- * @author artur
- * klasa reprezentujaca rozklad jazdy, generuje pociagi i je schedule'uje odpowiednio
+ * @author artur klasa reprezentujaca rozklad jazdy, generuje pociagi i je
+ * schedule'uje odpowiednio
  */
 public class TimeTable {
 
@@ -77,20 +77,24 @@ public class TimeTable {
                     train.setInternalArrivalDuration(station.config.internalArrivalDuration);
 
                     source = raw.optString("from", null);
-                    if (source == null) { source = stationName; }
+                    if (source == null) {
+                        source = stationName;
+                    }
                     destination = raw.optString("to", null);
-                    if (destination == null) { destination = stationName; }
+                    if (destination == null) {
+                        destination = stationName;
+                    }
 
                     train.setSource(source);
                     train.setDestination(destination);
 
                     platformNumber = raw.optInt("platform", 1);
-
                     // TODO! cos wymyslic, zeby to przestawiac na inne perony lepiej
-                    if (station.config.platformCount < platformNumber) { platformNumber = 1; }
+                    if (station.config.platformCount < platformNumber) {
+                        platformNumber = 1;
+                    }
                     Platform platform = station.getInfrastructure().getPlatform(platformNumber);
                     Track track = platform.getTrack(raw.optInt("rail", 1));
-
                     train.setTrack(track);
 
                     train.activate(TimeOperations.subtract(arrivalAt, station.config.externalDelayInfoSpan));
