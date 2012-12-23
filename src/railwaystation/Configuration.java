@@ -34,6 +34,22 @@ public class Configuration {
         this.config = null;
     }
 
+    public int getMinArrivingPassengerCount() {
+        return minArrivingPassengerCount;
+    }
+
+    public int getMaxArrivingPassengerCount() {
+        return maxArrivingPassengerCount;
+    }
+
+    public int getMinDeparturingPassengerCount() {
+        return minDeparturingPassengerCount;
+    }
+
+    public int getMaxDeparturingPassengerCount() {
+        return maxDeparturingPassengerCount;
+    }
+
     public void read() {
         this.config = railwaystation.io.JSONReader.read(stream);
     }

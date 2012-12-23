@@ -22,9 +22,11 @@ import railwaystation.infrastructure.Train;
  * klasa reprezentujaca rozklad jazdy, generuje pociagi i je schedule'uje odpowiednio
  */
 public class TimeTable {
+
     protected LinkedList<Train> trains;
     protected JSONArray rawTrains;
     protected String stationName;
+    protected RailwayStation station;
 
     public TimeTable() {
         trains = new LinkedList();
@@ -47,27 +49,28 @@ public class TimeTable {
         String type, source, destination;
         int platformNumber;
 
+        this.station = station;
+
         if (rawTrains != null) {
             try {
                 for (int i = 0; i < rawTrains.length(); i++) {
                     raw = rawTrains.getJSONObject(i);
                     train = new Train(station, raw.optString("symbol", "train-" + Integer.toString(i)));
-                    // ustaw atrybuty i passivate go na czas do arrival_at - external_delay_info_time_span
+                    trains.add(train);
+
                     type = raw.optString("type", "");
                     if (type.equals("transit")) {
                         arrivalAt = parseTime(raw.getString("arrival_at"));
                         departureAt = parseTime(raw.getString("departure_at"));
-                        train.setType(Train.Type.transit);
-                    }
-                    else if (type.equals("arrival")) {
+                        train.setType(Train.Type.TRANSIT);
+                    } else if (type.equals("arrival")) {
                         arrivalAt = parseTime(raw.getString("arrival_at"));
                         departureAt = TimeOperations.add(arrivalAt, station.config.defaultPlatformWaitingTime);
-                        train.setType(Train.Type.arrival);
-                    }
-                    else if (type.equals("departure")) {
+                        train.setType(Train.Type.ARRIVAL);
+                    } else if (type.equals("departure")) {
                         departureAt = parseTime(raw.getString("departure_at"));
                         arrivalAt = TimeOperations.subtract(departureAt, station.config.defaultPlatformWaitingTime);
-                        train.setType(Train.Type.departure);
+                        train.setType(Train.Type.DEPARTURE);
                     }
                     train.setArrivalAt(arrivalAt);
                     train.setDepartureAt(departureAt);
@@ -89,7 +92,7 @@ public class TimeTable {
                     Track track = platform.getTrack(raw.optInt("rail", 1));
 
                     train.setTrack(track);
-                    // TODO! wygenerowanie tablicy z liczba towarzyszy
+
                     train.activate(TimeOperations.subtract(arrivalAt, station.config.externalDelayInfoSpan));
                 }
             } catch (JSONException ex) {

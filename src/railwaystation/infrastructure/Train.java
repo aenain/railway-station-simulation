@@ -20,9 +20,9 @@ import railwaystation.person.Passenger;
  * @author artur
  */
 public class Train extends Region {
-    public static enum Type { arrival, departure, transit };
     protected ProcessQueue<Passenger> gettingOutPassengers, gettingInPassengers;
     protected Integer passengerCount;
+    public static enum Type { ARRIVAL, DEPARTURE, TRANSIT };
     protected Platform platform, realPlatform;
     protected Track track, realTrack;
     protected TimeInstant arrivalAt, departureAt; // scheduled
@@ -40,6 +40,10 @@ public class Train extends Region {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public void setArrivalAt(TimeInstant arrivalAt) {
@@ -77,6 +81,26 @@ public class Train extends Region {
 
     public Track getTrack() {
         return track;
+    }
+
+    public int getMinDeparturingCount() {
+        if (type == Train.Type.ARRIVAL) { return 0; }
+        return station.config.getMinDeparturingPassengerCount();
+    }
+
+    public int getMaxDeparturingCount() {
+        if (type == Train.Type.ARRIVAL) { return 0; }
+        return station.config.getMaxDeparturingPassengerCount();
+    }
+
+    public int getMinArrivingCount() {
+        if (type == Train.Type.DEPARTURE) { return 0; }
+        return station.config.getMinArrivingPassengerCount();
+    }
+
+    public int getMaxArrivingCount() {
+        if (type == Train.Type.DEPARTURE) { return 0; }
+        return station.config.getMaxArrivingPassengerCount();
     }
 
     @Override
@@ -215,7 +239,7 @@ public class Train extends Region {
             data.put("from", source);
             data.put("to", destination);
 
-            if (type == Type.arrival) {
+            if (type == Type.ARRIVAL) {
                 scheduledAt = arrivalAt;
             } else {
                 scheduledAt = departureAt;

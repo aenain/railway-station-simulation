@@ -28,6 +28,7 @@ import railwaystation.infrastructure.Region;
 import railwaystation.infrastructure.ServingRegion;
 import railwaystation.infrastructure.Track;
 import railwaystation.infrastructure.Train;
+import railwaystation.person.Generator;
 
 /**
  *
@@ -50,6 +51,7 @@ public class RailwayStation extends Model {
     private JSONObject visualizationSummary;
     private InputStream inputStream;
     private OutputStream outputStream;
+    private Generator peopleGenerator;
 
     public RailwayStation() {
         super(null, "railway-station", true, true);
@@ -57,6 +59,7 @@ public class RailwayStation extends Model {
         visualizationSummary = new JSONObject();
         timeTable = new TimeTable();
         infrastructure = new Infrastructure(this);
+        peopleGenerator = new Generator(this);
     }
     /**
      * @param args the command line arguments
@@ -147,6 +150,7 @@ public class RailwayStation extends Model {
     @Override
     public void doInitialSchedules() {
         timeTable.generateTrains(this);
+        generatePeople();
     }
 
     @Override
@@ -201,6 +205,10 @@ public class RailwayStation extends Model {
         timeTable.readSchedule(schedule);
     }
 
+    public void generatePeople() {
+        for (Train train : timeTable.trains) {
+            peopleGenerator.generate(train);
+        }
     }
 
     public void sendDelayNotification(Train train) {

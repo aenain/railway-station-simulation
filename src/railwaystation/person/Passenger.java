@@ -8,18 +8,20 @@ import desmoj.core.simulator.Model;
 import java.util.LinkedList;
 import railwaystation.infrastructure.Path;
 import railwaystation.infrastructure.Region;
+import railwaystation.infrastructure.Train;
 
 /**
  *
  * @author artur
  */
 public class Passenger extends Person {
-
     protected LinkedList<Companion> companions;
+    protected Train train;
 
-    public Passenger(Model owner, String name) {
+    public Passenger(Model owner, String name, Train train) {
         super(owner, name);
         companions = new LinkedList();
+        this.train = train;
     }
 
     public void addCompanion(Companion companion) {
