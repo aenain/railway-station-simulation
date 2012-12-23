@@ -25,7 +25,8 @@ public class Train extends Region {
     protected Integer passengerCount;
     protected Platform platform, realPlatform;
     protected Track track, realTrack;
-    protected TimeInstant arrivalAt, departureAt, realSemaphoreArrivalAt; // scheduled
+    protected TimeInstant arrivalAt, departureAt; // scheduled
+    protected TimeInstant realSemaphoreArrivalAt;
     protected TimeSpan externalDelay = TimeSpan.ZERO, semaphoreDelay = TimeSpan.ZERO, totalDelay = TimeSpan.ZERO, internalArrival;
     protected String source, destination;
     protected Type type;
@@ -45,8 +46,16 @@ public class Train extends Region {
         this.arrivalAt = arrivalAt;
     }
 
+    public TimeInstant getArrivalAt() {
+        return arrivalAt;
+    }
+
     public void setDepartureAt(TimeInstant departureAt) {
         this.departureAt = departureAt;
+    }
+
+    public TimeInstant getDepartureAt() {
+        return departureAt;
     }
 
     public void setInternalArrivalDuration(TimeSpan internalArrival) {
@@ -80,7 +89,7 @@ public class Train extends Region {
     }
 
     protected void informAboutExternalDelay() {
-        externalDelay = station.generateExternalDelay();
+        externalDelay = station.dist.externalDelay();
         if (trainChanged()) {
             registerTrainChange();
             station.sendDelayNotification(this);

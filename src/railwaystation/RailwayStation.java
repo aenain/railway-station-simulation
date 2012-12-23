@@ -42,6 +42,7 @@ public class RailwayStation extends Model {
                                     STOP_TIME = new TimeInstant(24, TimeUnit.HOURS);
 
     public Configuration config;
+    public Distribution dist;
 
     private TimeTable timeTable;
     private Infrastructure infrastructure;
@@ -151,6 +152,8 @@ public class RailwayStation extends Model {
     @Override
     public void init() {
         readConfig();
+        initDistribution();
+
         buildInfrastructure();
         readSchedule();
     }
@@ -163,6 +166,11 @@ public class RailwayStation extends Model {
         try {
             inputStream.close();
         } catch (IOException ex) {}
+    }
+
+    private void initDistribution() {
+        dist = new Distribution(this);
+        dist.initStreams();
     }
 
     protected void buildInfrastructure() {
@@ -193,10 +201,6 @@ public class RailwayStation extends Model {
         timeTable.readSchedule(schedule);
     }
 
-
-    public TimeSpan generateExternalDelay() {
-        // TODO! sparametryzowac
-        return config.minExternalDelay;
     }
 
     public void sendDelayNotification(Train train) {
