@@ -14,6 +14,8 @@ import railwaystation.infrastructure.Region;
  * @author artur
  */
 public class Person extends SimProcess {
+    protected Type type;
+    public static enum Type { ARRIVING_PASSENGER, DEPARTURING_PASSENGER, TRANSIT_PASSENGER, VISITOR, ARRIVING_COMPANION, DEPARTURING_COMPANION };
     protected Path path;
 
     public Person(Model owner, String name, Path path) {
@@ -24,6 +26,14 @@ public class Person extends SimProcess {
     public Person(Model owner, String name) {
         super(owner, name, true);
         path = null;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public void setPath(Path path) {
