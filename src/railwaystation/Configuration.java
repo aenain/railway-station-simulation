@@ -18,7 +18,7 @@ public class Configuration {
     protected TimeSpan minGoToWaitingRoom, maxGoToPlatform, externalDelayInfoSpan;
     protected TimeSpan minCompanionComingTime, maxCompanionComingTime, minComingTimeWithTicket, maxComingTimeWithTicket, minComingTimeWithoutTicket, maxComingTimeWithoutTicket;
     protected double complainingProbability, havingCompanionProbability, havingTicketProbability, shareOfVisitors, externalDelayProbability;
-    protected int platformCount, cashDeskCount, infoDeskCount, waitingRoomCapacity;
+    protected int platformCount, cashDeskCount, infoDeskCount, waitingRoomCapacity, maxCompanionCount;
     protected int minArrivingPassengerCount, maxArrivingPassengerCount, minDeparturingPassengerCount, maxDeparturingPassengerCount; // per train
     protected TimeSpan internalArrivalDuration, defaultPlatformWaitingTime, minExternalDelay, maxExternalDelay; // ride from semaphore to the platform | how long should a train wait for passengers on a platform
     protected TimeSpan minSellingTicketTime, maxSellingTicketTime, minServingInformationTime, maxServingInformationTime;
@@ -55,6 +55,7 @@ public class Configuration {
 
             complainingProbability = config.getInt("average_probability_of_complaining") / 100.0;
             havingCompanionProbability = config.getInt("average_probability_of_having_companion") / 100.0;
+            maxCompanionCount = config.getInt("max_companion_count");
             havingTicketProbability = config.getInt("average_probability_of_having_ticket") / 100.0;
             shareOfVisitors = config.getInt("average_share_of_visitors") / 100.0;
             externalDelayProbability = config.getInt("average_probability_of_external_delay") / 100.0;
