@@ -5,6 +5,8 @@
     "max_coming_time_span_with_ticket": 30,
     "min_coming_time_span_without_ticket": 25,
     "max_coming_time_span_without_ticket": 50,
+    "min_companion_coming_time_span": 10,
+    "max_companion_coming_time_span": 20,
     "internal_arrival_time": 5,
     "default_platform_waiting_time": 10,
     "min_external_delay": 0,

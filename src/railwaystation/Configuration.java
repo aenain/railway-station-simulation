@@ -16,7 +16,7 @@ import org.json.JSONObject;
  */
 public class Configuration {
     protected TimeSpan minGoToWaitingRoom, maxGoToPlatform, externalDelayInfoSpan;
-    protected TimeSpan minComingTimeWithTicket, maxComingTimeWithTicket, minComingTimeWithoutTicket, maxComingTimeWithoutTicket;
+    protected TimeSpan minCompanionComingTime, maxCompanionComingTime, minComingTimeWithTicket, maxComingTimeWithTicket, minComingTimeWithoutTicket, maxComingTimeWithoutTicket;
     protected double complainingProbability, havingCompanionProbability, havingTicketProbability, shareOfVisitors, externalDelayProbability;
     protected int platformCount, cashDeskCount, infoDeskCount, waitingRoomCapacity;
     protected int minArrivingPassengerCount, maxArrivingPassengerCount, minDeparturingPassengerCount, maxDeparturingPassengerCount; // per train
@@ -46,6 +46,8 @@ public class Configuration {
             maxGoToPlatform = new TimeSpan(config.getInt("go_to_platform_max_time_span"), TimeUnit.MINUTES);
             externalDelayInfoSpan = new TimeSpan(config.getInt("external_delay_info_time_span"), TimeUnit.MINUTES);
 
+            minCompanionComingTime = new TimeSpan(config.getInt("min_companion_coming_time_span"), TimeUnit.MINUTES);
+            maxCompanionComingTime = new TimeSpan(config.getInt("max_companion_coming_time_span"), TimeUnit.MINUTES);
             minComingTimeWithTicket = new TimeSpan(config.getInt("min_coming_time_span_with_ticket"), TimeUnit.MINUTES);
             maxComingTimeWithTicket = new TimeSpan(config.getInt("max_coming_time_span_with_ticket"), TimeUnit.MINUTES);
             minComingTimeWithoutTicket = new TimeSpan(config.getInt("min_coming_time_span_without_ticket"), TimeUnit.MINUTES);
