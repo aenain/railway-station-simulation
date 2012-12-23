@@ -7,7 +7,6 @@ package railwaystation;
 import desmoj.core.simulator.Experiment;
 import desmoj.core.simulator.Model;
 import desmoj.core.simulator.TimeInstant;
-import desmoj.core.simulator.TimeSpan;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +29,7 @@ import railwaystation.infrastructure.ServingRegion;
 import railwaystation.infrastructure.Track;
 import railwaystation.infrastructure.Train;
 import railwaystation.person.Generator;
+import railwaystation.person.Person;
 
 /**
  *
@@ -211,12 +212,12 @@ public class RailwayStation extends Model {
         }
     }
 
-    public void sendDelayNotification(Train train) {
+    public void sendDelayNotification(Train train, LinkedList<Person> listeners) {
         // TODO! przekaz informacje zainteresowanym pasazerom
         
     }
 
-    public void sendPlatformChangeNotification(Train train) {
+    public void sendPlatformChangeNotification(Train train, LinkedList<Person> listeners) {
         // TODO! przekaz informacje zainteresowanym pasazerom
     }
 

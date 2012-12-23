@@ -8,21 +8,23 @@ import desmoj.core.simulator.ProcessQueue;
 import desmoj.core.simulator.TimeInstant;
 import desmoj.core.simulator.TimeOperations;
 import desmoj.core.simulator.TimeSpan;
+import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import org.json.JSONException;
 import org.json.JSONObject;
 import railwaystation.RailwayStation;
 import railwaystation.TimeTable;
 import railwaystation.person.Passenger;
+import railwaystation.person.Person;
 
 /**
  *
  * @author artur
  */
 public class Train extends Region {
-    protected ProcessQueue<Passenger> gettingOutPassengers, gettingInPassengers;
-    protected Integer passengerCount;
     public static enum Type { ARRIVAL, DEPARTURE, TRANSIT };
+    protected ProcessQueue<Passenger> passengers;
+    protected Integer otherPassengerCount;
     protected Platform platform, realPlatform;
     protected Track track, realTrack;
     protected TimeInstant arrivalAt, departureAt; // scheduled
@@ -30,12 +32,17 @@ public class Train extends Region {
     protected TimeSpan externalDelay = TimeSpan.ZERO, semaphoreDelay = TimeSpan.ZERO, totalDelay = TimeSpan.ZERO, internalArrival;
     protected String source, destination;
     protected Type type;
+    protected LinkedList<Person> listeners;
 
     public Train(RailwayStation owner, String name) {
         super(owner, name, Infrastructure.MAX_CAPACITY);
-        passengerCount = 100;
-        gettingOutPassengers = new ProcessQueue(owner, name + "-getting-out-passengers", true, true);
-        gettingInPassengers = new ProcessQueue(owner, name + "-getting-in-passengers", true, true);
+        otherPassengerCount = 100;
+        passengers = new ProcessQueue(owner, name + "-passengers", true, true);
+        listeners = new LinkedList();
+    }
+
+    public void addNotifyListener(Person person) {
+        listeners.add(person);
     }
 
     public void setType(Type type) {
@@ -83,6 +90,10 @@ public class Train extends Region {
         return track;
     }
 
+    public void addPassenger(Passenger passenger) {
+        passengers.insert(passenger);
+    }
+
     public int getMinDeparturingCount() {
         if (type == Train.Type.ARRIVAL) { return 0; }
         return station.config.getMinDeparturingPassengerCount();
@@ -116,7 +127,7 @@ public class Train extends Region {
         externalDelay = station.dist.externalDelay();
         if (trainChanged()) {
             registerTrainChange();
-            station.sendDelayNotification(this);
+            station.sendDelayNotification(this, listeners);
         }
         hold(TimeOperations.add(TimeOperations.subtract(arrivalAt, internalArrival), externalDelay));
     }
@@ -140,16 +151,23 @@ public class Train extends Region {
         registerSemaphoreDeparture();
         if (! realPlatform.equals(platform)) {
             registerTrainChange();
-            station.sendPlatformChangeNotification(this);
+            station.sendPlatformChangeNotification(this, listeners);
         }
         hold(internalArrival);
     }
 
     // transfer
     public void transferPassengers() {
-        // TODO! wysiadka przyjezdnych (utworzenie pasazerow + polaczenie ich z osobami towarzyszacymi)
-        // ile hold?
-        // registerPeopleChange()
+        Passenger passenger;
+        while (! passengers.isEmpty()) {
+            passenger = passengers.removeFirst();
+            hold(new TimeSpan(2, TimeUnit.SECONDS)); // czas wysiadania
+            registerPeopleChange();
+            // wstaw pasażera na peron, podepnij mu towarzyszy i ustal ścieżkę
+        }
+
+        // departuring passengers sie powinni pakowac
+
         if (presentTime().compareTo(departureAt) < 1) {
             hold(departureAt);
         }
@@ -167,13 +185,9 @@ public class Train extends Region {
         track = null;
     }
 
-    public void generatePassengers() {
-        // TODO!
-    }
-
     @Override
     public int count() {
-        return passengerCount;
+        return otherPassengerCount + passengers.size();
     }
 
     protected void registerPlatformDeparture() {
@@ -209,7 +223,7 @@ public class Train extends Region {
             data.put("from", source);
             data.put("to", destination);
             data.put("duration", internalArrival.getTimeRounded(TimeUnit.SECONDS));
-            data.put("count", passengerCount);
+            data.put("count", count());
             station.registerVisualizationEvent("train-semaphore-departure", data);
         } catch (JSONException ex) {
             System.err.println("error building event: train-semaphore-departure");

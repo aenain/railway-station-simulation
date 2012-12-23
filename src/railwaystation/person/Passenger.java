@@ -22,6 +22,7 @@ public class Passenger extends Person {
         super(owner, name);
         companions = new LinkedList();
         this.train = train;
+        train.addNotifyListener(this);
     }
 
     public void addCompanion(Companion companion) {
