@@ -4,7 +4,7 @@
  */
 package railwaystation.person;
 
-import desmoj.core.simulator.Model;
+import railwaystation.RailwayStation;
 import railwaystation.infrastructure.Path;
 
 /**
@@ -12,21 +12,20 @@ import railwaystation.infrastructure.Path;
  * @author artur
  */
 public class Companion extends Person {
-
     protected Passenger passenger;
 
-    public Companion(Model owner, String name, Path path) {
-        super(owner, name, path);
+    public Companion(RailwayStation station, String name, Path path) {
+        super(station, name, path);
         passenger = null;
     }
 
-    public Companion(Model owner, String name) {
-        super(owner, name);
+    public Companion(RailwayStation station, String name) {
+        super(station, name);
         passenger = null;
     }
 
-    public Companion(Model owner, String name, Passenger passenger) {
-        super(owner, name);
+    public Companion(RailwayStation station, String name, Passenger passenger) {
+        super(station, name);
         this.passenger = passenger;
     }
 

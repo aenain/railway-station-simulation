@@ -4,8 +4,8 @@
  */
 package railwaystation.person;
 
-import desmoj.core.simulator.Model;
 import desmoj.core.simulator.SimProcess;
+import railwaystation.RailwayStation;
 import railwaystation.infrastructure.Path;
 import railwaystation.infrastructure.Region;
 
@@ -14,17 +14,20 @@ import railwaystation.infrastructure.Region;
  * @author artur
  */
 public class Person extends SimProcess {
-    protected Type type;
     public static enum Type { ARRIVING_PASSENGER, DEPARTURING_PASSENGER, TRANSIT_PASSENGER, VISITOR, ARRIVING_COMPANION, DEPARTURING_COMPANION };
+    protected Type type;
     protected Path path;
+    protected RailwayStation station;
 
-    public Person(Model owner, String name, Path path) {
-        super(owner, name, true);
+    public Person(RailwayStation station, String name, Path path) {
+        super(station, name, true);
+        this.station = station;
         this.path = path;
     }
 
-    public Person(Model owner, String name) {
-        super(owner, name, true);
+    public Person(RailwayStation station, String name) {
+        super(station, name, true);
+        this.station = station;
         path = null;
     }
 
