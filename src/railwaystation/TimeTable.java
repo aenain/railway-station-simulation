@@ -105,6 +105,14 @@ public class TimeTable {
         }
     }
 
+    public void flushTrainEvents() {
+        for (Train train : trains) {
+            if (train.isOnPlatform()) {
+                train.stackPeopleChange();
+            }
+        }
+    }
+
     public static TimeInstant parseTime(String time) {
         if (time.matches("^[0-9]{2}:[0-9]{2}$")) {
             String[] parts = time.split(":");

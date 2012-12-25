@@ -33,12 +33,14 @@ public class Train extends Region {
     protected String source, destination;
     protected Type type;
     protected LinkedList<Person> listeners;
+    protected boolean onPlatform;
 
     public Train(RailwayStation owner, String name) {
         super(owner, name, Infrastructure.MAX_CAPACITY);
         otherPassengerCount = 100;
         passengers = new ProcessQueue(owner, name + "-passengers", true, true);
         listeners = new LinkedList();
+        onPlatform = false;
     }
 
     public void addNotifyListener(Person person) {
@@ -114,6 +116,14 @@ public class Train extends Region {
         return station.config.getMaxArrivingPassengerCount();
     }
 
+    public Platform getRealPlatform() {
+        return realPlatform;
+    }
+
+    public Platform getPlatform() {
+        return platform;
+    }
+
     @Override
     public void lifeCycle() {
         informAboutExternalDelay();
@@ -159,10 +169,12 @@ public class Train extends Region {
     // transfer
     public void transferPassengers() {
         Passenger passenger;
+        onPlatform = true;
+
         while (! passengers.isEmpty()) {
             passenger = passengers.removeFirst();
             hold(new TimeSpan(2, TimeUnit.SECONDS)); // czas wysiadania
-            registerPeopleChange();
+            passenger.activate();
             // wstaw pasażera na peron, podepnij mu towarzyszy i ustal ścieżkę
         }
 
@@ -177,7 +189,9 @@ public class Train extends Region {
         totalDelay = TimeOperations.diff(presentTime(), departureAt);
         registerPlatformDeparture();
         hold(internalArrival);
+        onPlatform = false;
         leaveTrack();
+        removePassengers();
     }
 
     public void leaveTrack() {
@@ -185,9 +199,24 @@ public class Train extends Region {
         track = null;
     }
 
+    public void removePassengers() {
+        for (Passenger passenger : passengers) {
+            passenger.cancel();
+        }
+
+        listeners.clear();
+        otherPassengerCount += passengers.size(); // to prevent people-change event from triggering
+
+        passengers.removeAll();
+    }
+
     @Override
     public int count() {
         return otherPassengerCount + passengers.size();
+    }
+
+    public boolean isOnPlatform() {
+        return onPlatform;
     }
 
     protected void registerPlatformDeparture() {

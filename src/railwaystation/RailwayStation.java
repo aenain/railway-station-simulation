@@ -152,6 +152,8 @@ public class RailwayStation extends Model {
     public void doInitialSchedules() {
         timeTable.generateTrains(this);
         generatePeople();
+
+        new CyclicPeopleChangeEvent(this).schedule(CyclicPeopleChangeEvent.INTERVAL);
     }
 
     @Override
@@ -201,6 +203,10 @@ public class RailwayStation extends Model {
         infrastructure.bindRegions(hall, cashDeskRegion);
     }
 
+    public TimeTable getTimeTable() {
+        return timeTable;
+    }
+
     public void readSchedule() {
         File schedule = new File(SCHEDULE_FILENAME);
         timeTable.readSchedule(schedule);
@@ -226,10 +232,14 @@ public class RailwayStation extends Model {
     }
 
     public void registerVisualizationEvent(String type, JSONObject data) {
+        registerVisualizationEvent(type, data, presentTime());
+    }
+
+    public void registerVisualizationEvent(String type, JSONObject data, TimeInstant at) {
         JSONObject event = new JSONObject();
 
         try {
-            event.put("at", presentTime().getTimeRounded(TimeUnit.SECONDS));
+            event.put("at", at.getTimeRounded(TimeUnit.SECONDS));
             event.put("type", type);
             event.put("data", data);
             visualizationEvents.put(event);

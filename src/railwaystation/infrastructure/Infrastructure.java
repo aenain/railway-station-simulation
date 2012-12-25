@@ -19,12 +19,14 @@ public class Infrastructure {
     protected CashDeskRegion cashDeskRegion;
     protected ServingRegion informationDeskRegion;
     protected ArrayList<Platform> platforms;
+    protected ArrayList<Region> subways;
 
     public Infrastructure(RailwayStation station) {
         entryRegion = null;
         firstSubway = null;
         this.station = station;
         platforms = new ArrayList();
+        subways = new ArrayList();
     }
 
     public Region createRegion(String name, int capacity) {
@@ -81,6 +83,8 @@ public class Infrastructure {
 
         for (Integer i = 1; i <= platformCount; i++) {
             subway = new Region(station, "tunnel-" + i.toString(), MAX_CAPACITY);
+            subways.add(subway);
+
             if (i == 1) {
                 firstSubway = subway;
             }
@@ -99,7 +103,13 @@ public class Infrastructure {
     // 1..platforms.count
     public Platform getPlatform(int i) {
         if (i == 0) { i = 1; }
-        return platforms.get(i - 1); // indices starts from 0
+        return platforms.get(i - 1); // indices start from 0
+    }
+
+    // 1..platforms.count
+    public Region getSubway(int i) {
+        if (i == 0) { i = 1; }
+        return subways.get(i - 1); // indices start from 0
     }
 
     public void bindWithPlatforms(Region region) {
@@ -109,5 +119,18 @@ public class Infrastructure {
     public void bindRegions(Region a, Region b) {
         a.bind(b);
         b.bind(a);
+    }
+
+    public void flushRegionEvents() {
+        for (Platform platform : platforms) {
+            platform.stackPeopleChange();
+        }
+        for (Region subway : subways) {
+            subway.stackPeopleChange();
+        }
+        if (entryRegion != null) { entryRegion.stackPeopleChange(); }
+        if (cashDeskRegion != null) { cashDeskRegion.stackPeopleChange(); }
+        if (informationDeskRegion != null) { informationDeskRegion.stackPeopleChange(); }
+        if (waitingRoom != null) { waitingRoom.stackPeopleChange(); }
     }
 }

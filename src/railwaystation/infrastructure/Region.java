@@ -23,6 +23,7 @@ public class Region extends SimProcess implements Visitable {
     protected LinkedList<Region> adjacentRegions;
     protected String name;
     protected RailwayStation station;
+    private int lastStackedCount;
 
     public Region(RailwayStation station, String name, Integer capacity) {
         super(station, name, true);
@@ -31,6 +32,7 @@ public class Region extends SimProcess implements Visitable {
         people.setQueueCapacity(capacity);
         adjacentRegions = new LinkedList();
         this.station = station;
+        lastStackedCount = 0;
     }
 
     @Override
@@ -69,11 +71,20 @@ public class Region extends SimProcess implements Visitable {
         return people.length();
     }
 
-    protected void registerPeopleChange() {
+    public void stackPeopleChange() {
+        int currentCount = count();
+
+        if (lastStackedCount != currentCount) {
+            registerPeopleChange(currentCount);
+            lastStackedCount = currentCount;
+        }
+    }
+
+    private void registerPeopleChange(int count) {
         JSONObject data = new JSONObject();
         try {
             data.put("region", getName());
-            data.put("count", count());
+            data.put("count", count);
             station.registerVisualizationEvent("people-change", data);
         } catch(JSONException ex) {
             System.err.println("error building event: people-change");
