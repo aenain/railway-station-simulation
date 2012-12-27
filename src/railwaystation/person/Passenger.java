@@ -6,8 +6,6 @@ package railwaystation.person;
 
 import java.util.LinkedList;
 import railwaystation.RailwayStation;
-import railwaystation.infrastructure.Path;
-import railwaystation.infrastructure.Region;
 import railwaystation.infrastructure.Train;
 
 /**
@@ -16,13 +14,23 @@ import railwaystation.infrastructure.Train;
  */
 public class Passenger extends Person {
     protected LinkedList<Companion> companions;
-    protected Train train;
+    protected boolean hasTicket;
+    protected boolean leadCompanions;
 
     public Passenger(RailwayStation station, String name, Train train) {
-        super(station, name);
+        super(station, name, train);
         companions = new LinkedList();
-        this.train = train;
+        hasTicket = false;
+        leadCompanions = false;
         train.addNotifyListener(this);
+    }
+
+    public void setTicketPossession(boolean hasTicket) {
+        this.hasTicket = hasTicket;
+    }
+
+    public boolean getTicketPossession() {
+        return hasTicket;
     }
 
     public void addCompanion(Companion companion) {
@@ -30,27 +38,56 @@ public class Passenger extends Person {
     }
 
     @Override
-    public void setPath(Path path) {
-        super.setPath(path);
-        for (Companion companion : companions) {
-            companion.setPath(path.clone());
+    public void reachDestination() {
+        LinkedList<Person> followers;
+        while (path.hasNextRegion()) {
+            followers = getFollowers();
+            if (path.getNextRegion().canPeopleEnter(followers.size() + 1)) {
+                currentRegion = path.getCurrentRegion();
+                currentRegion.personLeaves(this);
+                currentRegion.peopleLeave(followers);
+                path.goToNextRegion();
+                currentRegion = path.getCurrentRegion();
+                currentRegion.personEnters(this);
+                currentRegion.peopleEnter(followers);
+                hold(path.getCurrentRegionWalkingTime());
+            } else {
+                // jesli nie moze czekac w poczekalni, to niech czeka w hallu
+                futureActivities.addFirst(Activity.Type.WAIT_IN_HALL);
+                currentActivity.cancel();
+                path.cancel();
+            }
         }
     }
 
-    @Override
-    public void headToRegion(Region destination) {
-        super.headToRegion(destination);
-        for (Companion companion : companions) {
-            companion.headToRegion(destination);
+    public LinkedList<Person> getFollowers() {
+        LinkedList<Person> followers = new LinkedList();
+        if (leadCompanions) {
+            for (Companion companion : companions) {
+                if (companion.isFollowing()) {
+                    followers.add((Person)companion);
+                }
+            }
         }
+        return followers;
     }
 
     @Override
-    public Region goToNextRegion() {
-        Region nextRegion = super.goToNextRegion();
-        for (Companion companion : companions) {
-            companion.goToNextRegion();
+    public void createScenario() {
+        switch(type) {
+            case ARRIVING_PASSENGER:
+                futureActivities.add(Activity.Type.LEAVE_TRAIN);
+                futureActivities.add(Activity.Type.BIND_COMPANIONS);
+                futureActivities.add(Activity.Type.LEAVE_STATION);
+                futureActivities.add(Activity.Type.UNBIND_COMPANIONS);
+                break;
+            case DEPARTURING_PASSENGER:
+                futureActivities.add(Activity.Type.ENTER_STATION);
+                futureActivities.add(Activity.Type.BIND_COMPANIONS);
+                futureActivities.add(Activity.Type.WAIT_ON_PLATFORM);
+                futureActivities.add(Activity.Type.ENTER_TRAIN);
+                futureActivities.add(Activity.Type.UNBIND_COMPANIONS);
+                break;
         }
-        return nextRegion;
     }
 }

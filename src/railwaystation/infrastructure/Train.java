@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import railwaystation.RailwayStation;
 import railwaystation.TimeTable;
+import railwaystation.person.Companion;
 import railwaystation.person.Passenger;
 import railwaystation.person.Person;
 
@@ -33,12 +34,16 @@ public class Train extends Region {
     protected String source, destination;
     protected Type type;
     protected LinkedList<Person> listeners;
+    protected ProcessQueue<Passenger> passengersReadyToGetIn; // they are waiting on the right platform
+    protected ProcessQueue<Companion> companionsReadyForArrival; // they are waiting on the right platform
     protected boolean onPlatform;
 
     public Train(RailwayStation owner, String name) {
         super(owner, name, Infrastructure.MAX_CAPACITY);
         otherPassengerCount = 100;
         passengers = new ProcessQueue(owner, name + "-passengers", true, true);
+        passengersReadyToGetIn = new ProcessQueue(owner, name + "-passengers-ready-to-get-in", true, true);
+        companionsReadyForArrival = new ProcessQueue(owner, name + "-companions-ready-for-arrival", true, true);
         listeners = new LinkedList();
         onPlatform = false;
     }
@@ -94,6 +99,26 @@ public class Train extends Region {
 
     public void addPassenger(Passenger passenger) {
         passengers.insert(passenger);
+    }
+
+    public void addPassengerReadyToGetIn(Passenger passenger) {
+        passengersReadyToGetIn.insert(passenger);
+    }
+
+    public void removePassengerReadyToGetIn(Passenger passenger) {
+        passengersReadyToGetIn.remove(passenger);
+    }
+
+    public void addCompanionReadyForArrival(Companion companion) {
+        companionsReadyForArrival.insert(companion);
+    }
+
+    public void removeCompanionReadyForArrival(Companion companion) {
+        companionsReadyForArrival.remove(companion);
+    }
+
+    public ProcessQueue<Companion> getCompanionsReadyForArrival() {
+        return companionsReadyForArrival;
     }
 
     public int getMinDeparturingCount() {
@@ -173,12 +198,16 @@ public class Train extends Region {
 
         while (! passengers.isEmpty()) {
             passenger = passengers.removeFirst();
-            hold(new TimeSpan(2, TimeUnit.SECONDS)); // czas wysiadania
             passenger.activate();
-            // wstaw pasażera na peron, podepnij mu towarzyszy i ustal ścieżkę
+            hold(new TimeSpan(5, TimeUnit.SECONDS)); // czas wysiadania
         }
 
-        // departuring passengers sie powinni pakowac
+        while (! passengersReadyToGetIn.isEmpty()) {
+            passenger = passengersReadyToGetIn.removeFirst();
+            passengers.insert(passenger);
+            passenger.activate();
+            hold(new TimeSpan(5, TimeUnit.SECONDS)); // czas wsiadania
+        }
 
         if (presentTime().compareTo(departureAt) < 1) {
             hold(departureAt);
@@ -208,6 +237,7 @@ public class Train extends Region {
         otherPassengerCount += passengers.size(); // to prevent people-change event from triggering
 
         passengers.removeAll();
+        passengersReadyToGetIn.removeAll(); // it should be empty but just to make sure
     }
 
     @Override

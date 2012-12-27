@@ -5,72 +5,83 @@
 package railwaystation.person;
 
 import desmoj.core.simulator.SimProcess;
+import desmoj.core.simulator.TimeSpan;
+import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 import railwaystation.RailwayStation;
 import railwaystation.infrastructure.Path;
 import railwaystation.infrastructure.Region;
+import railwaystation.infrastructure.Train;
 
 /**
  *
  * @author artur
  */
 public class Person extends SimProcess {
-    public static enum Type { ARRIVING_PASSENGER, DEPARTURING_PASSENGER, TRANSIT_PASSENGER, VISITOR, ARRIVING_COMPANION, DEPARTURING_COMPANION };
+    public static enum Type {
+        ARRIVING_PASSENGER, DEPARTURING_PASSENGER, TRANSIT_PASSENGER, VISITOR, ARRIVING_COMPANION, DEPARTURING_COMPANION
+    };
     protected Type type;
     protected Path path;
+    protected Train train;
     protected RailwayStation station;
-
-    public Person(RailwayStation station, String name, Path path) {
-        super(station, name, true);
-        this.station = station;
-        this.path = path;
-    }
+    protected Activity currentActivity;
+    protected LinkedList<Activity.Type> futureActivities;
+    protected Region currentRegion;
 
     public Person(RailwayStation station, String name) {
         super(station, name, true);
         this.station = station;
-        path = null;
+        futureActivities = new LinkedList();
+    }
+
+    public Person(RailwayStation station, String name, Train train) {
+        super(station, name, true);
+        this.station = station;
+        this.train = train;
+        futureActivities = new LinkedList();
     }
 
     public void setType(Type type) {
         this.type = type;
     }
 
+    public void setCurrentRegion(Region region) {
+        currentRegion = region;
+    }
+
     public Type getType() {
         return type;
     }
 
-    public void setPath(Path path) {
-        this.path = path;
-    }
-
-    // przesuwa do następnego regionu i go zwraca
-    public Region goToNextRegion() {
-        Region region;
-
-        region = path.getCurrentRegion();
-        region.personLeaves(this);
-        path.goToNextRegion();
-
-        region = path.getCurrentRegion();
-        region.personEnters(this); // jeżeli nie może tam wejść, to idź gdzieś indziej...
-        
-        return region;
-    }
-
-    // zmienia cel wędrówki po dworcu
-    public void headToRegion(Region destination) {
-        path.changeDestination(destination);
-    }
-
-    public Path getPath() {
-        return path;
+    public void reachDestination() {
+        while (path.hasNextRegion()) {
+            if (path.getNextRegion().canPersonEnter()) {
+                path.getCurrentRegion().personLeaves(this);
+                path.goToNextRegion();
+                path.getCurrentRegion().personEnters(this);
+                hold(path.getCurrentRegionWalkingTime());
+            } else {
+                hold(new TimeSpan(1, TimeUnit.MINUTES));
+            }
+        }
     }
 
     @Override
     public void lifeCycle() {
-        // wywołania goToNextRegion() i headToRegion()
-        throw new UnsupportedOperationException("Not supported yet.");
+        createScenario();
+        startActivities();
     }
 
-    
+    public void createScenario() {
+        // do nothing at all.
+    }
+
+    public void startActivities() {
+        while (!futureActivities.isEmpty()) {
+            currentActivity = new Activity(this, futureActivities.removeFirst());
+            currentActivity.goToDestination();
+            currentActivity.start();
+        }
+    }
 }

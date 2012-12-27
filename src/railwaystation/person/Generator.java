@@ -64,9 +64,11 @@ public class Generator {
             for (int j = 0; j < companionCount; j++) {
                 companion = new Companion(station, train.getName() + "-departuring-passenger-" + i + "-companion-" + (j + 1), passenger);
                 companion.setType(Person.Type.DEPARTURING_COMPANION);
+                companion.activate();
                 passenger.addCompanion(companion);
             }
             hasTicket = station.dist.hasTicket();
+            passenger.setTicketPossession(hasTicket);
             passenger.activate(station.dist.passengerComingTime(train, hasTicket));
         }
     }

@@ -4,6 +4,7 @@
  */
 package railwaystation.infrastructure;
 
+import desmoj.core.simulator.TimeSpan;
 import java.util.LinkedList;
 
 /**
@@ -13,9 +14,11 @@ import java.util.LinkedList;
 public class Path {
     protected Region currentRegion;
     protected LinkedList<Region> regionsToVisit;
+    protected boolean cancelled;
 
     public Path(Region currentRegion) {
         this.currentRegion = currentRegion;
+        cancelled = false;
         regionsToVisit = new LinkedList();
     }
 
@@ -23,39 +26,58 @@ public class Path {
         regionsToVisit.add(nextRegion);
     }
 
-    public boolean reachedDestination() {
-        return regionsToVisit.isEmpty();
+    public boolean hasNextRegion() {
+        return !(cancelled || regionsToVisit.isEmpty());
     }
 
     public void goToNextRegion() {
-        if (! reachedDestination()) {
-            currentRegion = regionsToVisit.removeFirst();
-        }
+        currentRegion = regionsToVisit.removeFirst();
     }
 
-    public void changeDestination(Region destination) {
-        // TODO! jakos sprytniej zarzadzac lista regionsToVisit
-        regionsToVisit.clear();
-        regionsToVisit.add(destination);
+    public void cancel() {
+        cancelled = true;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
     }
 
     public Region getCurrentRegion() {
         return currentRegion;
     }
 
-    @Override
-    public Path clone() {
-        Path path = new Path(currentRegion);
-        for (Region toVisit : regionsToVisit) {
-            path.appendRegion(toVisit);
-        }
-        return path;
+    public Region getNextRegion() {
+        return regionsToVisit.getFirst();
     }
 
+    public TimeSpan getCurrentRegionWalkingTime() {
+        return currentRegion.getWalkingTime();
+    }
+
+    // TODO! computation of the path between two points
     public static Path findBetween(Region start, Region destination) {
         Path path = new Path(start);
-        // TODO! computation of the path between two points
-        path.appendRegion(destination);
+
+        // idzie z peronu do pomieszczenia w głównym budynku
+        if ((start instanceof Platform) && !(destination instanceof Platform)) {
+            Platform platform = (Platform)start;
+            Infrastructure infrastructure = platform.station.structure;
+            for (int i = platform.number; i > 0; i--) {
+                path.appendRegion(infrastructure.getSubway(i));
+            }
+        // idzie z głównego budynku na peron
+        } else if (!(start instanceof Platform) && (destination instanceof Platform)) {
+            Platform platform = (Platform)destination;
+            Infrastructure infrastructure = platform.station.structure;
+            for (int i = 1; i <= platform.number; i++) {
+                path.appendRegion(infrastructure.getSubway(i));
+            }
+        }
+
+        if (! start.equals(destination)) {
+            path.appendRegion(destination);
+        }
+
         return path;
     }
 }
