@@ -26,16 +26,4 @@ public class CashDeskRegion extends ServingRegion {
             desks.add(new CashDesk(owner, name + "-desk-" + i.toString(), this));
         }
     }
-
-    @Override
-    public boolean personEnters(Person person) {
-        boolean canEnter = super.personEnters(person);
-
-        // do kolejki ustaw tylko pasażerów
-        if (canEnter && person instanceof Passenger) {
-            getDeskWithShortestQueue().addPassenger((Passenger)person);
-        }
-
-        return canEnter;
-    }
 }

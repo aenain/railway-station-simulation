@@ -5,6 +5,7 @@
 package railwaystation.infrastructure;
 
 import desmoj.core.simulator.Model;
+import desmoj.core.simulator.TimeSpan;
 import java.util.LinkedList;
 import railwaystation.RailwayStation;
 import railwaystation.person.Person;
@@ -20,6 +21,7 @@ public class ServingRegion extends Region {
     public ServingRegion(RailwayStation owner, String name, Integer capacity) {
         super(owner, name, capacity);
         this.owner = owner;
+        walkingTime = TimeSpan.ZERO;
     }
 
     protected void initDesks(Integer count) {
@@ -30,16 +32,8 @@ public class ServingRegion extends Region {
         }
     }
 
-    @Override
-    public boolean personEnters(Person person) {
-        boolean canEnter = super.personEnters(person);
-
-        // do kolejki
-        if (canEnter) {
-            getDeskWithShortestQueue().addPerson(person);
-        }
-
-        return canEnter;
+    public void addPersonToShortestQueue(Person person) {
+        getDeskWithShortestQueue().addPerson(person);
     }
 
     protected Desk getDeskWithShortestQueue() {

@@ -6,7 +6,9 @@ package railwaystation.infrastructure;
 
 import desmoj.core.simulator.ProcessQueue;
 import desmoj.core.simulator.SimProcess;
+import desmoj.core.simulator.TimeSpan;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 import org.json.JSONException;
 import org.json.JSONObject;
 import railwaystation.RailwayStation;
@@ -23,7 +25,8 @@ public class Region extends SimProcess implements Visitable {
     protected LinkedList<Region> adjacentRegions;
     protected String name;
     protected RailwayStation station;
-    private int lastStackedCount;
+    protected int lastStackedCount;
+    protected TimeSpan walkingTime;
 
     public Region(RailwayStation station, String name, Integer capacity) {
         super(station, name, true);
@@ -33,11 +36,20 @@ public class Region extends SimProcess implements Visitable {
         adjacentRegions = new LinkedList();
         this.station = station;
         lastStackedCount = 0;
+        walkingTime = new TimeSpan(1, TimeUnit.MINUTES);
     }
 
     @Override
     public void lifeCycle() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setWalkingTime(TimeSpan walkingTime) {
+        this.walkingTime = walkingTime;
+    }
+
+    public TimeSpan getWalkingTime() {
+        return walkingTime;
     }
 
     @Override
@@ -46,13 +58,32 @@ public class Region extends SimProcess implements Visitable {
     }
 
     @Override
-    public boolean personEnters(Person person) {
-        if (people.size() < people.getQueueLimit()) {
-            people.insert(person);
-            return true;
+    public void peopleLeave(LinkedList<Person> leavingPeople) {
+        for (Person person : leavingPeople) {
+            personLeaves(person);
         }
+    }
 
-        return false;
+    @Override
+    public boolean canPersonEnter() {
+        return canPeopleEnter(1);
+    }
+
+    @Override
+    public boolean canPeopleEnter(int count) {
+        return (people.size() + count) <= people.getQueueLimit();
+    }
+
+    @Override
+    public void personEnters(Person person) {
+        people.insert(person);
+    }
+
+    @Override
+    public void peopleEnter(LinkedList<Person> enteringPeople) {
+        for (Person person : enteringPeople) {
+            personEnters(person);
+        }
     }
 
     public void bind(Region other) {
@@ -63,6 +94,7 @@ public class Region extends SimProcess implements Visitable {
         return adjacentRegions;
     }
 
+    @Override
     public String getName() {
         return name;
     }
