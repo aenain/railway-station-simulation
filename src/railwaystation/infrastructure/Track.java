@@ -54,7 +54,7 @@ public class Track {
         try {
             data.put("platform", platform.number);
             data.put("rail", number);
-            data.put("count", trains.length() - 1);
+            data.put("count", Math.max(0, trains.length() - 1));
             platform.station.registerVisualizationEvent("waiting-trains-change", data);
         } catch (JSONException ex) {
             System.err.println("error building event: waiting-trains-change");
