@@ -93,7 +93,7 @@ public class TimeTable {
                     if (station.config.platformCount < platformNumber) {
                         platformNumber = 1;
                     }
-                    Platform platform = station.getInfrastructure().getPlatform(platformNumber);
+                    Platform platform = station.structure.getPlatform(platformNumber);
                     Track track = platform.getTrack(raw.optInt("rail", 1));
                     train.setTrack(track);
 

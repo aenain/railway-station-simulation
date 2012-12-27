@@ -7,6 +7,7 @@ package railwaystation;
 import desmoj.core.simulator.Experiment;
 import desmoj.core.simulator.Model;
 import desmoj.core.simulator.TimeInstant;
+import desmoj.core.simulator.TimeSpan;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,9 +46,9 @@ public class RailwayStation extends Model {
 
     public Configuration config;
     public Distribution dist;
+    public Infrastructure structure;
 
     private TimeTable timeTable;
-    private Infrastructure infrastructure;
     private JSONArray visualizationEvents;
     private JSONObject visualizationSummary;
     private InputStream inputStream;
@@ -59,7 +60,7 @@ public class RailwayStation extends Model {
         visualizationEvents = new JSONArray();
         visualizationSummary = new JSONObject();
         timeTable = new TimeTable();
-        infrastructure = new Infrastructure(this);
+        structure = new Infrastructure(this);
         peopleGenerator = new Generator(this);
     }
     /**
@@ -139,10 +140,6 @@ public class RailwayStation extends Model {
         }
     }
 
-    public Infrastructure getInfrastructure() {
-        return infrastructure;
-    }
-
     @Override
     public String description() {
         return "TODO! description of the simulation.";
@@ -181,26 +178,27 @@ public class RailwayStation extends Model {
     }
 
     protected void buildInfrastructure() {
-        infrastructure.createPlatforms(config.platformCount);
+        structure.createPlatforms(config.platformCount);
 
-        Region hall = infrastructure.createRegion("hall", Infrastructure.MAX_CAPACITY);
-        infrastructure.setEntryRegion(hall);
+        Region hall = structure.createRegion("hall", Infrastructure.MAX_CAPACITY);
+        structure.setEntryRegion(hall);
 
-        ServingRegion informationDeskRegion = infrastructure.createServingRegion("info", Infrastructure.MAX_CAPACITY, config.infoDeskCount);
-        infrastructure.setInformationDeskRegion(informationDeskRegion);
+        ServingRegion informationDeskRegion = structure.createServingRegion("info", Infrastructure.MAX_CAPACITY, config.infoDeskCount);
+        structure.setInformationDeskRegion(informationDeskRegion);
 
-        CashDeskRegion cashDeskRegion = infrastructure.createCashDeskRegion("cash", Infrastructure.MAX_CAPACITY, config.cashDeskCount);
-        infrastructure.setCashDeskRegion(cashDeskRegion);
+        CashDeskRegion cashDeskRegion = structure.createCashDeskRegion("cash", Infrastructure.MAX_CAPACITY, config.cashDeskCount);
+        structure.setCashDeskRegion(cashDeskRegion);
 
-        Region waitingRoom = infrastructure.createRegion("waiting-room", config.waitingRoomCapacity);
-        infrastructure.setWaitingRoom(waitingRoom);
+        Region waitingRoom = structure.createRegion("waiting-room", config.waitingRoomCapacity);
+        waitingRoom.setWalkingTime(TimeSpan.ZERO);
+        structure.setWaitingRoom(waitingRoom);
 
         // polaczenia miedzy elementami infrastruktury dworcowej
-        infrastructure.bindRegions(hall, waitingRoom);
-        infrastructure.bindWithPlatforms(hall);
-        infrastructure.bindWithPlatforms(waitingRoom);
-        infrastructure.bindRegions(hall, informationDeskRegion);
-        infrastructure.bindRegions(hall, cashDeskRegion);
+        structure.bindRegions(hall, waitingRoom);
+        structure.bindWithPlatforms(hall);
+        structure.bindWithPlatforms(waitingRoom);
+        structure.bindRegions(hall, informationDeskRegion);
+        structure.bindRegions(hall, cashDeskRegion);
     }
 
     public TimeTable getTimeTable() {
