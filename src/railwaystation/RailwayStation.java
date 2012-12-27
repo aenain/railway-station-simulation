@@ -91,34 +91,34 @@ public class RailwayStation extends Model {
         try {
             // cash desks
             data = new JSONObject();
-            data.put("soldTickets", 1233);
-            data.put("averageWaitingTime", 120); // seconds
+            data.put("soldTickets", 0);
+            data.put("averageWaitingTime", 0); // seconds
             visualizationSummary.put("cashDesks", data);
 
             // info desks
             data = new JSONObject();
-            data.put("servedInformations", 2500);
-            data.put("complaints", 47);
-            data.put("averageWaitingTime", 120); // seconds
+            data.put("servedInformations", 0);
+            data.put("complaints", 0);
+            data.put("averageWaitingTime", 0); // seconds
             visualizationSummary.put("infoDesks", data);
 
             // people
             data = new JSONObject();
-            data.put("arriving", 5000);
-            data.put("departuring", 5100);
+            data.put("arriving", 0);
+            data.put("departuring", 0);
             visualizationSummary.put("passengers", data);
-            visualizationSummary.put("companions", 200);
-            visualizationSummary.put("visitors", 4700);
+            visualizationSummary.put("companions", 0);
+            visualizationSummary.put("visitors", 0);
 
             // trains
             trains = new JSONObject();
-            trains.put("count", 40);
+            trains.put("count", 0);
             trains.put("platformChanges", 0);
                 delays = new JSONObject();
                     averageDelays = new JSONObject();
-                    averageDelays.put("semaphore", 240); // seconds
+                    averageDelays.put("semaphore", 0); // seconds
                     averageDelays.put("platform", 0); // seconds
-                    averageDelays.put("external", 600); // seconds
+                    averageDelays.put("external", 0); // seconds
                 delays.put("average", averageDelays);
             trains.put("delay", delays);
             visualizationSummary.put("trains", trains);
