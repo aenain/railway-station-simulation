@@ -130,11 +130,11 @@ public class TimeTable {
         long seconds, minutes, hours = time.getTimeTruncated(TimeUnit.HOURS);
         if (precision.equals("minutes")) {
             minutes = time.getTimeRounded(TimeUnit.MINUTES) - hours * 60;
-            return String.format("%2d:%2d", hours, minutes);
+            return String.format("%02d:%02d", hours, minutes);
         } else {
             minutes = time.getTimeTruncated(TimeUnit.MINUTES) - hours * 60;
             seconds = time.getTimeRounded(TimeUnit.SECONDS) - (hours * 60 + minutes) * 60;
-            return String.format("%2d:%2d:%2d", hours, minutes, seconds);
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
         }
     }
 }
