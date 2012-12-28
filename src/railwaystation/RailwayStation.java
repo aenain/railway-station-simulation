@@ -151,7 +151,9 @@ public class RailwayStation extends Model {
         generatePeople();
         structure.activateDesks();
 
-        new CyclicPeopleChangeEvent(this).schedule(CyclicPeopleChangeEvent.INTERVAL);
+        CyclicPeopleChangeEvent event = new CyclicPeopleChangeEvent(this);
+        event.setSchedulingPriority(-1); // lower priority
+        event.schedule(CyclicPeopleChangeEvent.INTERVAL);
     }
 
     @Override

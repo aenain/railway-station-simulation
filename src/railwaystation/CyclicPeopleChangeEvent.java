@@ -8,7 +8,6 @@ import desmoj.core.simulator.ExternalEvent;
 import desmoj.core.simulator.TimeSpan;
 import java.util.concurrent.TimeUnit;
 import railwaystation.infrastructure.Infrastructure;
-import railwaystation.infrastructure.Train;
 
 /**
  *
@@ -31,7 +30,9 @@ public class CyclicPeopleChangeEvent extends ExternalEvent {
     public void eventRoutine() {
         infrastructure.flushRegionEvents();
         timeTable.flushTrainEvents();
-        new CyclicPeopleChangeEvent(station).schedule(INTERVAL);
+        CyclicPeopleChangeEvent event = new CyclicPeopleChangeEvent(station);
+        event.setSchedulingPriority(getSchedulingPriority());
+        event.schedule(INTERVAL);
     }
     
 }
