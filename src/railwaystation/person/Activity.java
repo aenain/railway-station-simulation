@@ -68,7 +68,6 @@ public class Activity {
     }
 
     public void start() {
-        System.err.println(person.getName() + ":" + TimeTable.timeToString(person.presentTime(), "seconds") + ":" + type);
         if (!isCancelled()) {
             state = State.DOING;
             Passenger passenger;
