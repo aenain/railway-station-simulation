@@ -50,6 +50,10 @@ public class Configuration {
         return maxDeparturingPassengerCount;
     }
 
+    public TimeSpan getMaxTimeToGoToPlatform() {
+        return maxGoToPlatform;
+    }
+
     public void read() {
         this.config = railwaystation.io.JSONReader.read(stream);
     }

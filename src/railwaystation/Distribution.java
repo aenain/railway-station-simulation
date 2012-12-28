@@ -22,6 +22,7 @@ public class Distribution {
     private final Configuration config;
     private final RailwayStation station;
     private DiscreteDistUniform comingSpanWithTicket, comingSpanWithoutTicket, companionComingSpan;
+    private DiscreteDistUniform sellingTicketTime, servingInformationTime;
     private DiscreteDistUniform companionCount, externalDelay;
     private BoolDistBernoulli havingTicket, havingCompanion, havingExternalDelay;
 
@@ -40,6 +41,8 @@ public class Distribution {
 
         havingExternalDelay = new BoolDistBernoulli(station, "having-external-delay", config.externalDelayProbability / 100.0, true, true);
         externalDelay = new DiscreteDistUniform(station, "external-delay", config.minExternalDelay.getTimeRounded(TimeUnit.MINUTES), config.maxExternalDelay.getTimeRounded(TimeUnit.MINUTES), true, true);
+        sellingTicketTime = new DiscreteDistUniform(station, "selling-ticket-time", config.minSellingTicketTime.getTimeRounded(TimeUnit.MINUTES), config.maxSellingTicketTime.getTimeRounded(TimeUnit.MINUTES), true, true);
+        servingInformationTime = new DiscreteDistUniform(station, "serving-information-time", config.minServingInformationTime.getTimeRounded(TimeUnit.MINUTES), config.maxServingInformationTime.getTimeRounded(TimeUnit.MINUTES), true, true);
     }
 
     public int companionCount() {
@@ -99,5 +102,13 @@ public class Distribution {
     public TimeInstant visitorComingTime() {
         // TODO!
         return null;
+    }
+
+    public TimeSpan sellingTicketTime() {
+        return sellingTicketTime.sampleTimeSpan(TimeUnit.MINUTES);
+    }
+
+    public TimeSpan servingInformationTime() {
+        return servingInformationTime.sampleTimeSpan(TimeUnit.MINUTES);
     }
 }
