@@ -56,25 +56,44 @@ public class Path {
 
     // TODO! computation of the path between two points
     public static Path findBetween(Region start, Region destination) {
+        Infrastructure structure = start.station.structure;
         Path path = new Path(start);
+        Region newStart, newDestination;
+
+        if ((start instanceof ServingRegion) || (start instanceof CashDeskRegion)) {
+            newStart = structure.getEntryRegion();
+            path.appendRegion(newStart);
+        } else {
+            newStart = start;
+        }
+
+        if ((destination instanceof ServingRegion) || (destination instanceof CashDeskRegion)) {
+            newDestination = structure.getEntryRegion();
+        } else {
+            newDestination = destination;
+        }
 
         // idzie z peronu do pomieszczenia w głównym budynku
-        if ((start instanceof Platform) && !(destination instanceof Platform)) {
-            Platform platform = (Platform)start;
-            Infrastructure infrastructure = platform.station.structure;
+        if ((newStart instanceof Platform) && !(newDestination instanceof Platform)) {
+            Platform platform = (Platform)newStart;
             for (int i = platform.number; i > 0; i--) {
-                path.appendRegion(infrastructure.getSubway(i));
-            }
-        // idzie z głównego budynku na peron
-        } else if (!(start instanceof Platform) && (destination instanceof Platform)) {
-            Platform platform = (Platform)destination;
-            Infrastructure infrastructure = platform.station.structure;
-            for (int i = 1; i <= platform.number; i++) {
-                path.appendRegion(infrastructure.getSubway(i));
+                path.appendRegion(structure.getSubway(i));
             }
         }
 
-        if (! start.equals(destination)) {
+        // idzie z głównego budynku na peron
+        if (!(newStart instanceof Platform) && (newDestination instanceof Platform)) {
+            Platform platform = (Platform)newDestination;
+            for (int i = 1; i <= platform.number; i++) {
+                path.appendRegion(structure.getSubway(i));
+            }
+        }
+
+        if (! newStart.equals(newDestination)) {
+            path.appendRegion(newDestination);
+        }
+
+        if (! newDestination.equals(destination)) {
             path.appendRegion(destination);
         }
 
