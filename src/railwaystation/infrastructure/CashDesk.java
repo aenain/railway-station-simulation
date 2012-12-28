@@ -5,7 +5,7 @@
 package railwaystation.infrastructure;
 
 import desmoj.core.simulator.Model;
-import railwaystation.person.Person;
+import desmoj.core.simulator.TimeSpan;
 
 /**
  *
@@ -17,7 +17,7 @@ public class CashDesk extends Desk {
     }
 
     @Override
-    public void addPerson(Person person) {
-        // do kasy w kolejce mogą się ustawić jedynie pasażerowie, więc nic nie rób
+    protected TimeSpan servingTime() {
+        return enclosingRegion.station.dist.sellingTicketTime();
     }
 }

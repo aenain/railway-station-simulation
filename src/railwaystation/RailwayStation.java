@@ -149,6 +149,7 @@ public class RailwayStation extends Model {
     public void doInitialSchedules() {
         timeTable.generateTrains(this);
         generatePeople();
+        structure.activateDesks();
 
         new CyclicPeopleChangeEvent(this).schedule(CyclicPeopleChangeEvent.INTERVAL);
     }

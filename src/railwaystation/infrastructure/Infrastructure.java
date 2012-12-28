@@ -121,6 +121,15 @@ public class Infrastructure {
         b.bind(a);
     }
 
+    public void activateDesks() {
+        for (Desk desk : cashDeskRegion.desks) {
+            desk.activate();
+        }
+        for (Desk desk : informationDeskRegion.desks) {
+            desk.activate();
+        }
+    }
+
     public void flushRegionEvents() {
         for (Platform platform : platforms) {
             platform.stackPeopleChange();

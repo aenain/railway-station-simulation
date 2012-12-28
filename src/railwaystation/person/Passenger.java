@@ -4,6 +4,8 @@
  */
 package railwaystation.person;
 
+import desmoj.core.simulator.TimeInstant;
+import desmoj.core.simulator.TimeOperations;
 import java.util.LinkedList;
 import railwaystation.RailwayStation;
 import railwaystation.infrastructure.Train;
@@ -36,6 +38,31 @@ public class Passenger extends Person {
     public void addCompanion(Companion companion) {
         companions.add(companion);
     }
+
+    public TimeInstant shouldGoToPlatformAt() {
+        // TODO! a delay'e?
+        return TimeOperations.subtract(train.getDepartureAt(), station.config.getMaxTimeToGoToPlatform());
+    }
+
+    @Override
+    public void waitInQueue() {
+        while (waiting && presentTime().compareTo(shouldGoToPlatformAt()) < 0) {
+            hold(shouldGoToPlatformAt());
+            // tu moze sprawdzac komunikaty czy cos
+        }
+        // nie zostal jeszcze obsluzony
+        if (waiting) {
+            currentDesk.removePerson(this);
+        }
+    }
+//
+//    @Override
+//    public void waitInWaitingRoom() {
+//        while (presentTime().compareTo(shouldGoToPlatformAt()) < 0) {
+//            hold(shouldGoToPlatformAt());
+//            // tu moze sprawdzac komunikaty czy cos
+//        }
+//    }
 
     @Override
     public void reachDestination() {
@@ -84,6 +111,7 @@ public class Passenger extends Person {
             case DEPARTURING_PASSENGER:
                 futureActivities.add(Activity.Type.ENTER_STATION);
                 futureActivities.add(Activity.Type.BIND_COMPANIONS);
+                futureActivities.add(Activity.Type.BUY_TICKET);
                 futureActivities.add(Activity.Type.WAIT_ON_PLATFORM);
                 futureActivities.add(Activity.Type.ENTER_TRAIN);
                 futureActivities.add(Activity.Type.UNBIND_COMPANIONS);

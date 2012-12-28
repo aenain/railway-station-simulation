@@ -9,6 +9,7 @@ import railwaystation.infrastructure.Infrastructure;
 import railwaystation.infrastructure.Path;
 import railwaystation.infrastructure.Platform;
 import railwaystation.infrastructure.Region;
+import railwaystation.infrastructure.ServingRegion;
 
 /**
  *
@@ -72,10 +73,16 @@ public class Activity {
             state = State.DOING;
             Passenger passenger;
             Platform platform;
+            ServingRegion region;
 
             switch (type) {
                 case FOLLOW_PASSENGER:
                     person.passivate(); // passenger should take care of its companions
+                    break;
+                case BUY_TICKET:
+                    region = (ServingRegion)person.currentRegion;
+                    region.addPersonToShortestQueue(person);
+                    person.waitInQueue();
                     break;
                 case WAIT_IN_WAITING_ROOM:
                     break;
@@ -90,7 +97,7 @@ public class Activity {
                     person.passivate();
                     break;
                 case ENTER_TRAIN:
-                    platform = person.train.getRealPlatform();
+                    platform = person.train.getPlatform(); // TODO! change to the real platform
                     platform.personLeaves(person);
                     break;
                 case LEAVE_TRAIN:

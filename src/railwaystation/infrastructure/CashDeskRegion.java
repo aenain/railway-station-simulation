@@ -6,8 +6,6 @@ package railwaystation.infrastructure;
 
 import java.util.LinkedList;
 import railwaystation.RailwayStation;
-import railwaystation.person.Passenger;
-import railwaystation.person.Person;
 
 /**
  *

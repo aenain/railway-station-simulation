@@ -9,6 +9,7 @@ import desmoj.core.simulator.TimeSpan;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import railwaystation.RailwayStation;
+import railwaystation.infrastructure.Desk;
 import railwaystation.infrastructure.Path;
 import railwaystation.infrastructure.Region;
 import railwaystation.infrastructure.Train;
@@ -28,6 +29,8 @@ public class Person extends SimProcess {
     protected Activity currentActivity;
     protected LinkedList<Activity.Type> futureActivities;
     protected Region currentRegion;
+    protected Desk currentDesk;
+    protected boolean waiting = false;
 
     public Person(RailwayStation station, String name) {
         super(station, name, true);
@@ -50,8 +53,34 @@ public class Person extends SimProcess {
         currentRegion = region;
     }
 
+    public void setCurrentDesk(Desk desk) {
+        currentDesk = desk;
+    }
+
     public Type getType() {
         return type;
+    }
+
+    public Activity.Type getCurrentActivityType() {
+        if (currentActivity == null) {
+            return null;
+        } else {
+            return currentActivity.type;
+        }
+    }
+
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
+    }
+
+    public boolean isWaiting() {
+        return waiting;
+    }
+
+    public void waitInQueue() {
+    }
+
+    public void waitInWaitingRoom() {
     }
 
     public void reachDestination() {

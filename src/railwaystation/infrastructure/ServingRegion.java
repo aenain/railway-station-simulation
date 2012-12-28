@@ -50,4 +50,12 @@ public class ServingRegion extends Region {
 
         return withShortestQueue;
     }
+
+    @Override
+    public void stackPeopleChange() {
+        for (Desk desk : desks) {
+            desk.stackPeopleChange();
+        }
+        // super.stackPeopleChange(); nie rejestrujemy dla regionow z okienkami
+    }
 }
