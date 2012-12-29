@@ -131,11 +131,13 @@ public class RailwayStation extends Model {
 
     protected void saveVisualizationResult() {
         JSONObject data = new JSONObject();
+        JSONObject result = new JSONObject();
 
         try {
             data.put("events", visualizationEvents);
             data.put("summary", visualizationSummary);
-            railwaystation.io.JSONWriter.write(outputStream, data);
+            result.put("simulation", data);
+            railwaystation.io.JSONWriter.write(outputStream, result);
         } catch (JSONException ex) {
             System.err.println("error saving json output");
         }

@@ -55,7 +55,11 @@ public class Configuration {
     }
 
     public void read() {
-        this.config = railwaystation.io.JSONReader.read(stream);
+        try {
+            this.config = railwaystation.io.JSONReader.read(stream).getJSONObject("simulation");
+        } catch (JSONException ex) {
+            System.err.println("error reading json configuration");
+        }
     }
 
     public void setParameters() {
