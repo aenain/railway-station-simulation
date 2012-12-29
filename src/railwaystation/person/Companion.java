@@ -21,7 +21,6 @@ public class Companion extends Person {
     public Companion(RailwayStation station, String name, Passenger passenger) {
         super(station, name, passenger.train);
         this.passenger = passenger;
-        train.addNotifyListener(this);
     }
 
     public void setPassenger(Passenger passenger) {

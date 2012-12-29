@@ -39,11 +39,13 @@ public class Generator {
 
         for (int i = 1; i <= count; i++) {
             passenger = new Passenger(station, train.getName() + "-arriving-passenger-" + i, train);
+            train.addNotifyListener(passenger);
             passenger.setType(Person.Type.ARRIVING_PASSENGER);
             companionCount = station.dist.companionCount();
             for (int j = 0; j < companionCount; j++) {
                 companion = new Companion(station, train.getName() + "-arriving-passenger-" + i + "-companion-" + (j + 1), passenger);
                 companion.setType(Person.Type.ARRIVING_COMPANION);
+                train.addNotifyListener(companion);
                 companion.activate(station.dist.companionComingTime(train, Person.Type.ARRIVING_COMPANION));
                 passenger.addCompanion(companion);
             }
@@ -59,11 +61,13 @@ public class Generator {
 
         for (int i = 1; i <= count; i++) {
             passenger = new Passenger(station, train.getName() + "-departuring-passenger-" + i, train);
+            train.addNotifyListener(passenger);
             passenger.setType(Person.Type.DEPARTURING_PASSENGER);
             companionCount = station.dist.companionCount();
             for (int j = 0; j < companionCount; j++) {
                 companion = new Companion(station, train.getName() + "-departuring-passenger-" + i + "-companion-" + (j + 1), passenger);
                 companion.setType(Person.Type.DEPARTURING_COMPANION);
+                train.addNotifyListener(companion);
                 companion.activate();
                 passenger.addCompanion(companion);
             }

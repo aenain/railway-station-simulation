@@ -24,7 +24,6 @@ public class Passenger extends Person {
         companions = new LinkedList();
         hasTicket = false;
         leadCompanions = false;
-        train.addNotifyListener(this);
     }
 
     public void setTicketPossession(boolean hasTicket) {
