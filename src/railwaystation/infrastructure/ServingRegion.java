@@ -43,7 +43,7 @@ public class ServingRegion extends Region {
         Desk withShortestQueue = desks.getFirst();
 
         for (Desk desk : desks) {
-            if (withShortestQueue.getWaitingCount() < desk.getWaitingCount()) {
+            if (withShortestQueue.count() < desk.count()) {
                 withShortestQueue = desk;
             }
         }
