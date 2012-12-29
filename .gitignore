@@ -6,3 +6,4 @@
 /traces/**/*.html
 /traces/**/*.txt
 /*.html
+/output.json*
