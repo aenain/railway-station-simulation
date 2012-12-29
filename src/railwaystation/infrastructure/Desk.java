@@ -10,7 +10,6 @@ import desmoj.core.simulator.SimProcess;
 import desmoj.core.simulator.TimeSpan;
 import org.json.JSONException;
 import org.json.JSONObject;
-import railwaystation.TimeTable;
 import railwaystation.person.Passenger;
 import railwaystation.person.Person;
 
@@ -31,6 +30,7 @@ public class Desk extends SimProcess {
         this.name = name;
         this.enclosingRegion = enclosingRegion;
         peopleToServe = new ProcessQueue(owner, name, true, true);
+        setSchedulingPriority(1);
     }
 
     public void addPerson(Person person) {
@@ -43,6 +43,7 @@ public class Desk extends SimProcess {
     public void removePerson(Person person) {
         if (person.equals(servedPerson)) {
             servedPerson = null;
+            cancel();
             activate();
         } else {
             peopleToServe.remove(person);
@@ -73,7 +74,7 @@ public class Desk extends SimProcess {
         person.setWaiting(false);
         person.setCurrentDesk(null);
         person.cancel(); // removes all next scheduled events.
-        person.activate();
+        person.activateAfter(this);
     }
 
     @Override
