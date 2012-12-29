@@ -6,6 +6,7 @@ package railwaystation;
 
 import desmoj.core.simulator.Experiment;
 import desmoj.core.simulator.Model;
+import desmoj.core.simulator.SimProcess;
 import desmoj.core.simulator.TimeInstant;
 import desmoj.core.simulator.TimeSpan;
 import java.io.File;
@@ -300,5 +301,11 @@ public class RailwayStation extends Model {
                 System.err.println("output file not found!");
             }
         }
+    }
+
+    public void d(SimProcess process, String message) {
+        System.err.print(TimeTable.timeToString(process.presentTime(), "seconds") + " " + process.getName());
+        System.err.print(" scheduled: " + process.isScheduled() + "\t\t");
+        System.err.println(message);
     }
 }
