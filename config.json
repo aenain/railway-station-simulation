@@ -28,9 +28,9 @@
         "max_selling_ticket_time": 6,
         "average_share_of_visitors": 25,
         "external_delay_info_time_span": 30,
-        "platform_count": 15,
-        "info_desk_count": 12,
-        "cash_desk_count": 11,
+        "platform_count": 4,
+        "info_desk_count": 2,
+        "cash_desk_count": 3,
         "scheduling_algorithm": 3,
         "waiting_room_capacity": 8000,
         "crowd_speed_function": null
