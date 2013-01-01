@@ -35,8 +35,8 @@ public class Distribution {
         comingSpanWithTicket = new DiscreteDistUniform(station, "coming-span-with-ticket", config.minComingTimeWithTicket.getTimeRounded(TimeUnit.MINUTES), config.maxComingTimeWithTicket.getTimeRounded(TimeUnit.MINUTES), true, true);
         comingSpanWithoutTicket = new DiscreteDistUniform(station, "coming-span-without-ticket", config.minComingTimeWithoutTicket.getTimeRounded(TimeUnit.MINUTES), config.maxComingTimeWithoutTicket.getTimeRounded(TimeUnit.MINUTES), true, true);
         companionComingSpan = new DiscreteDistUniform(station, "companion-coming-span", config.minCompanionComingTime.getTimeRounded(TimeUnit.MINUTES), config.maxCompanionComingTime.getTimeRounded(TimeUnit.MINUTES), true, true);
-        havingTicket = new BoolDistBernoulli(station, "having-ticket", config.havingTicketProbability / 100.0, true, true);
-        havingCompanion = new BoolDistBernoulli(station, "having-companion", config.havingCompanionProbability / 100.0, true, true);
+        havingTicket = new BoolDistBernoulli(station, "having-ticket", config.havingTicketProbability, true, true);
+        havingCompanion = new BoolDistBernoulli(station, "having-companion", config.havingCompanionProbability, true, true);
         companionCount = new DiscreteDistUniform(station, "companion-count", 1, config.maxCompanionCount, true, true);
 
         havingExternalDelay = new BoolDistBernoulli(station, "having-external-delay", config.externalDelayProbability / 100.0, true, true);
