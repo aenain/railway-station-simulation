@@ -12,7 +12,10 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONException;
 import org.json.JSONObject;
 import railwaystation.RailwayStation;
+import railwaystation.person.Companion;
+import railwaystation.person.Passenger;
 import railwaystation.person.Person;
+import railwaystation.person.Visitor;
 
 /**
  *
@@ -22,10 +25,12 @@ import railwaystation.person.Person;
  */
 public class Region extends SimProcess implements Visitable {
     protected ProcessQueue<Person> people;
+    protected int companionCount, passengerCount, visitorCount;
+
     protected LinkedList<Region> adjacentRegions;
     protected String name;
     protected RailwayStation station;
-    protected int lastStackedCount;
+    protected boolean peopleChanged;
     protected TimeSpan walkingTime;
 
     public Region(RailwayStation station, String name, Integer capacity) {
@@ -35,7 +40,7 @@ public class Region extends SimProcess implements Visitable {
         people.setQueueCapacity(capacity);
         adjacentRegions = new LinkedList();
         this.station = station;
-        lastStackedCount = 0;
+        peopleChanged = false;
         walkingTime = new TimeSpan(1, TimeUnit.MINUTES);
     }
 
@@ -55,6 +60,7 @@ public class Region extends SimProcess implements Visitable {
     @Override
     public void personLeaves(Person person) {
         people.remove(person);
+        changePeopleCount(person, -1);
     }
 
     @Override
@@ -77,6 +83,7 @@ public class Region extends SimProcess implements Visitable {
     @Override
     public void personEnters(Person person) {
         people.insert(person);
+        changePeopleCount(person, 1);
     }
 
     @Override
@@ -104,19 +111,31 @@ public class Region extends SimProcess implements Visitable {
     }
 
     public void stackPeopleChange() {
-        int currentCount = count();
-
-        if (lastStackedCount != currentCount) {
-            registerPeopleChange(currentCount);
-            lastStackedCount = currentCount;
+        if (peopleChanged) {
+            registerPeopleChange();
+            peopleChanged = false;
         }
     }
 
-    private void registerPeopleChange(int count) {
+    protected void changePeopleCount(Person person, int change) {
+        if (person instanceof Passenger) {
+            passengerCount = Math.max(passengerCount + change, 0);
+        } else if (person instanceof Companion) {
+            companionCount = Math.max(companionCount + change, 0);
+        } else if (person instanceof Visitor) {
+            visitorCount = Math.max(visitorCount + change, 0);
+        }
+        peopleChanged = true;
+    }
+
+    private void registerPeopleChange() {
         JSONObject data = new JSONObject();
         try {
             data.put("region", getName());
-            data.put("count", count);
+            data.put("count", count());
+            data.put("passengers", passengerCount);
+            data.put("companions", companionCount);
+            data.put("visitors", visitorCount);
             station.registerVisualizationEvent("people-change", data);
         } catch(JSONException ex) {
             System.err.println("error building event: people-change");

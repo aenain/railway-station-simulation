@@ -198,6 +198,7 @@ public class Train extends Region {
 
         while (! passengers.isEmpty()) {
             passenger = passengers.removeFirst();
+            peopleChanged = true;
             passenger.activate();
             hold(new TimeSpan(5, TimeUnit.SECONDS)); // czas wysiadania
         }
@@ -205,6 +206,7 @@ public class Train extends Region {
         while (! passengersReadyToGetIn.isEmpty()) {
             passenger = passengersReadyToGetIn.removeFirst();
             passengers.insert(passenger);
+            peopleChanged = true;
             passenger.activate();
             hold(new TimeSpan(5, TimeUnit.SECONDS)); // czas wsiadania
         }
@@ -234,7 +236,6 @@ public class Train extends Region {
         }
 
         listeners.clear();
-        otherPassengerCount += passengers.size(); // to prevent people-change event from triggering
 
         passengers.removeAll();
         passengersReadyToGetIn.removeAll(); // it should be empty but just to make sure
