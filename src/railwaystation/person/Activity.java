@@ -4,7 +4,6 @@
  */
 package railwaystation.person;
 
-import railwaystation.TimeTable;
 import railwaystation.infrastructure.Infrastructure;
 import railwaystation.infrastructure.Path;
 import railwaystation.infrastructure.Platform;
@@ -62,6 +61,9 @@ public class Activity {
 
     public void cancel() {
         state = State.CANCELLED;
+        if (person.path != null) {
+            person.path.cancel();
+        }
     }
 
     public boolean isCancelled() {
@@ -107,7 +109,10 @@ public class Activity {
                     passenger.currentRegion.personEnters(person);
                     for (Companion companion : passenger.companions) {
                         if (passenger.train.getCompanionsReadyForArrival().contains(companion)) {
+                            passenger.train.getCompanionsReadyForArrival().remove(companion);
                             companion.activate(); // niech followuje pasazera
+                        } else {
+                            companion.missTrain();
                         }
                     }
                     passenger.hold(platform.getWalkingTime());
@@ -120,6 +125,7 @@ public class Activity {
                     passenger = (Passenger) person;
                     for (Person companion : passenger.getFollowers()) {
                         companion.currentRegion = passenger.currentRegion;
+                        ((Companion)companion).setPassenger(null);
                         companion.activate();
                     }
                     passenger.leadCompanions = false;

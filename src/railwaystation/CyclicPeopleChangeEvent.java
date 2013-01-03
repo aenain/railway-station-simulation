@@ -30,6 +30,7 @@ public class CyclicPeopleChangeEvent extends ExternalEvent {
     public void eventRoutine() {
         infrastructure.flushRegionEvents();
         timeTable.flushTrainEvents();
+        station.logger.dumpThreads();
         CyclicPeopleChangeEvent event = new CyclicPeopleChangeEvent(station);
         event.setSchedulingPriority(getSchedulingPriority());
         event.schedule(INTERVAL);

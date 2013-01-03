@@ -7,7 +7,6 @@ package railwaystation.person;
 import desmoj.core.simulator.TimeOperations;
 import desmoj.core.simulator.TimeSpan;
 import java.util.Random;
-import railwaystation.Configuration;
 import railwaystation.RailwayStation;
 import railwaystation.infrastructure.Train;
 
@@ -18,22 +17,24 @@ import railwaystation.infrastructure.Train;
 public class Generator {
     private RailwayStation station;
     static private Random random;
+    private TimeSpan comingTimeSpan;
 
     public Generator(RailwayStation station) {
         this.station = station;
         random = new Random(System.currentTimeMillis());
     }
 
-    public void generateDelayed(Train train) {
-        Configuration config = station.config;
-        TimeSpan comingTimeSpan = config.getMaxComingTimeWithoutTicket();
-        if (config.getMaxComingTimeWithTicket().compareTo(comingTimeSpan) < 0) {
-            comingTimeSpan = config.getMaxComingTimeWithTicket();
+    public void findGreatestComingTimeSpan() {
+        comingTimeSpan = station.config.getMaxComingTimeWithoutTicket();
+        if (station.config.getMaxComingTimeWithTicket().compareTo(comingTimeSpan) > 0) {
+            comingTimeSpan = station.config.getMaxComingTimeWithTicket();
         }
-        if (config.getMaxCompanionComingTime().compareTo(comingTimeSpan) < 0) {
-            comingTimeSpan = config.getMaxCompanionComingTime();
+        if (station.config.getMaxCompanionComingTime().compareTo(comingTimeSpan) > 0) {
+            comingTimeSpan = station.config.getMaxCompanionComingTime();
         }
+    }
 
+    public void generateDelayed(Train train) {
         new GenerationEvent(station, train).schedule(TimeOperations.subtract(train.getArrivalAt(), comingTimeSpan));
     }
 
@@ -55,7 +56,6 @@ public class Generator {
 
         for (int i = 1; i <= count; i++) {
             passenger = new Passenger(station, train.getName() + "-arriving-passenger-" + i, train);
-            train.addNotifyListener(passenger);
             passenger.setType(Person.Type.ARRIVING_PASSENGER);
             companionCount = station.dist.companionCount();
             for (int j = 0; j < companionCount; j++) {
@@ -66,7 +66,10 @@ public class Generator {
                 passenger.addCompanion(companion);
             }
             train.addPassenger(passenger);
+            station.logger.changeThreads(Person.Type.ARRIVING_COMPANION, companionCount);
         }
+
+        station.logger.changeThreads(Person.Type.ARRIVING_PASSENGER, count);
     }
 
     private void generateDeparturing(Train train, int count) {
@@ -78,19 +81,22 @@ public class Generator {
         for (int i = 1; i <= count; i++) {
             passenger = new Passenger(station, train.getName() + "-departuring-passenger-" + i, train);
             train.addNotifyListener(passenger);
+            hasTicket = station.dist.hasTicket();
             passenger.setType(Person.Type.DEPARTURING_PASSENGER);
+            passenger.setTicketPossession(hasTicket);
+            passenger.activate(station.dist.passengerComingTime(train, hasTicket));
             companionCount = station.dist.companionCount();
             for (int j = 0; j < companionCount; j++) {
                 companion = new Companion(station, train.getName() + "-departuring-passenger-" + i + "-companion-" + (j + 1), passenger);
                 companion.setType(Person.Type.DEPARTURING_COMPANION);
                 train.addNotifyListener(companion);
-                companion.activate();
+                companion.activateBefore(passenger);
                 passenger.addCompanion(companion);
             }
-            hasTicket = station.dist.hasTicket();
-            passenger.setTicketPossession(hasTicket);
-            passenger.activate(station.dist.passengerComingTime(train, hasTicket));
+            station.logger.changeThreads(Person.Type.DEPARTURING_COMPANION, companionCount);
         }
+
+        station.logger.changeThreads(Person.Type.DEPARTURING_PASSENGER, count);
     }
 
     // returns a random integer number within <min, max>

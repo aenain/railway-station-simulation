@@ -47,7 +47,7 @@ public class Passenger extends Person {
 
     @Override
     public void waitInQueue() {
-        while (waiting && presentTime().compareTo(shouldGoToPlatformAt()) < 0) {
+        while (waiting && !currentActivity.isCancelled() && presentTime().compareTo(shouldGoToPlatformAt()) < 0) {
             hold(shouldGoToPlatformAt());
             // tu moze sprawdzac komunikaty czy cos
         }
@@ -83,9 +83,21 @@ public class Passenger extends Person {
                 // jesli nie moze czekac w poczekalni, to niech czeka w hallu
                 futureActivities.addFirst(Activity.Type.WAIT_IN_HALL);
                 currentActivity.cancel();
-                path.cancel();
             }
         }
+    }
+
+    public void missTrain() {
+        futureActivities.clear();
+        futureActivities.add(Activity.Type.LEAVE_STATION);
+        futureActivities.add(Activity.Type.UNBIND_COMPANIONS);
+
+        if (currentActivity != null) {
+            currentActivity.cancel();
+        }
+
+        cancel();
+        activate();
     }
 
     public LinkedList<Person> getFollowers() {

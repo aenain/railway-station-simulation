@@ -32,6 +32,7 @@ import railwaystation.infrastructure.Track;
 import railwaystation.infrastructure.Train;
 import railwaystation.person.Generator;
 import railwaystation.person.Person;
+import railwaystation.utilities.Logger;
 
 /**
  *
@@ -48,6 +49,7 @@ public class RailwayStation extends Model {
     public Configuration config;
     public Distribution dist;
     public Infrastructure structure;
+    public Logger logger;
 
     private TimeTable timeTable;
     private JSONArray visualizationEvents;
@@ -58,8 +60,11 @@ public class RailwayStation extends Model {
 
     public RailwayStation() {
         super(null, "railway-station", true, true);
+
         visualizationEvents = new JSONArray();
         visualizationSummary = new JSONObject();
+
+        logger = new Logger(this, Logger.Level.ERROR);
         timeTable = new TimeTable();
         structure = new Infrastructure(this);
         peopleGenerator = new Generator(this);
@@ -79,7 +84,12 @@ public class RailwayStation extends Model {
         experiment.tracePeriod(START_TIME, STOP_TIME);
         experiment.stop(STOP_TIME);
 
-        experiment.start();
+        try {
+            experiment.start();
+        } catch(OutOfMemoryError error) {
+            System.err.println(TimeTable.timeToString(model.presentTime(), "seconds"));
+        }
+
         experiment.report();
         experiment.finish();
 
@@ -220,6 +230,7 @@ public class RailwayStation extends Model {
     }
 
     public void generatePeople() {
+        peopleGenerator.findGreatestComingTimeSpan();
         for (Train train : timeTable.trains) {
             peopleGenerator.generateDelayed(train);
         }
@@ -276,6 +287,11 @@ public class RailwayStation extends Model {
             } else if (token.equals("-o")) {
                 expectOutput = true;
                 expectInput = false;
+            }
+            if (token.equals("--debug")) {
+                expectOutput = false;
+                expectInput = false;
+                logger.setLevel(Logger.Level.DEBUG);
             }
         }
 

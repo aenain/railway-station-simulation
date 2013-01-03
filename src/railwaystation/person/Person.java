@@ -61,6 +61,10 @@ public class Person extends SimProcess {
         return type;
     }
 
+    public Activity getCurrentActivity() {
+        return currentActivity;
+    }
+
     public Activity.Type getCurrentActivityType() {
         if (currentActivity == null) {
             return null;
@@ -100,6 +104,7 @@ public class Person extends SimProcess {
     public void lifeCycle() {
         createScenario();
         startActivities();
+        station.logger.changeThreads(type, -1);
     }
 
     public void createScenario() {

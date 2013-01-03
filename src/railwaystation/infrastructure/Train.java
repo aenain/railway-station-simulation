@@ -52,6 +52,10 @@ public class Train extends Region {
         listeners.add(person);
     }
 
+    public void removeNotifyListener(Person person) {
+        listeners.remove(person);
+    }
+
     public void setType(Type type) {
         this.type = type;
     }
@@ -198,31 +202,32 @@ public class Train extends Region {
 
         while (! passengers.isEmpty()) {
             passenger = passengers.removeFirst();
+            listeners.remove(passenger);
             peopleChanged = true;
             passenger.activate();
             hold(new TimeSpan(5, TimeUnit.SECONDS)); // czas wysiadania
         }
 
-        while (! passengersReadyToGetIn.isEmpty()) {
-            passenger = passengersReadyToGetIn.removeFirst();
-            passengers.insert(passenger);
-            peopleChanged = true;
-            passenger.activate();
-            hold(new TimeSpan(5, TimeUnit.SECONDS)); // czas wsiadania
-        }
-
-        if (presentTime().compareTo(departureAt) < 1) {
-            hold(departureAt);
+        while (presentTime().compareTo(departureAt) < 0 || !passengersReadyToGetIn.isEmpty()) {
+            if (! passengersReadyToGetIn.isEmpty()) {
+                passenger = passengersReadyToGetIn.removeFirst();
+                passengers.insert(passenger);
+                listeners.remove(passenger);
+                peopleChanged = true;
+                passenger.activate();
+                hold(new TimeSpan(5, TimeUnit.SECONDS)); // czas wsiadania
+            }
+            hold(new TimeSpan(1, TimeUnit.SECONDS));
         }
     }
 
     public void departure() {
         totalDelay = TimeOperations.diff(presentTime(), departureAt);
         registerPlatformDeparture();
-        hold(internalArrival);
         onPlatform = false;
-        leaveTrack();
         removePassengers();
+        hold(internalArrival);
+        leaveTrack();
     }
 
     public void leaveTrack() {
@@ -232,7 +237,20 @@ public class Train extends Region {
 
     public void removePassengers() {
         for (Passenger passenger : passengers) {
-            passenger.cancel();
+            // passenger.cancel();
+        }
+
+        Passenger passenger;
+        Person person;
+
+        for (Person listener : listeners) {
+            if (listener instanceof Passenger) {
+                ((Passenger)listener).missTrain();
+            }
+            /*
+             * ARRIVING_COMPANION - poszedl juz dalej
+             * DEPARTURING_COMPANION - pasazer o niego zadba(l)
+             */
         }
 
         listeners.clear();

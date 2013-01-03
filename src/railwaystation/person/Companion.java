@@ -31,6 +31,22 @@ public class Companion extends Person {
         return (currentActivity != null && currentActivity.type == Activity.Type.FOLLOW_PASSENGER);
     }
 
+    public void missTrain() {
+        train.removeNotifyListener(this);
+
+        if (type == Person.Type.ARRIVING_COMPANION) {
+            futureActivities.clear();
+            futureActivities.add(Activity.Type.LEAVE_STATION);
+
+            if (currentActivity != null) {
+                currentActivity.cancel();
+            }
+
+            cancel();
+            activate();
+        }
+    }
+
     @Override
     public void createScenario() {
         switch(type) {
