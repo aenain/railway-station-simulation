@@ -18,6 +18,8 @@ public class Passenger extends Person {
     protected LinkedList<Companion> companions;
     protected boolean hasTicket;
     protected boolean leadCompanions;
+    
+    protected static final int MAX_ACTIVITIES = 5;
 
     public Passenger(RailwayStation station, String name, Train train) {
         super(station, name, train);
@@ -104,6 +106,39 @@ public class Passenger extends Person {
             case ARRIVING_PASSENGER:
                 futureActivities.add(Activity.Type.LEAVE_TRAIN);
                 futureActivities.add(Activity.Type.BIND_COMPANIONS);
+                
+                int activitiesCount = Generator.rand(0, MAX_ACTIVITIES);
+                Activity lastActivity = new Activity(this, null);
+                for(int i = 0; i < activitiesCount; i++) {
+                    int nextActivityNo = Generator.rand(0, 5);
+                    switch(nextActivityNo) {
+                        case 0:
+                            futureActivities.add(Activity.Type.BUY_TICKET);
+                            lastActivity.setType(Activity.Type.BUY_TICKET);
+                            break;
+                        case 1:
+                            futureActivities.add(Activity.Type.COMPLAIN);
+                            lastActivity.setType(Activity.Type.COMPLAIN);
+                            break; 
+                        case 2:
+                            futureActivities.add(Activity.Type.GET_INFO);
+                            lastActivity.setType(Activity.Type.GET_INFO);
+                            break; 
+                        case 3:
+                            if(lastActivity.getType() != Activity.Type.WAIT_IN_HALL){
+                                futureActivities.add(Activity.Type.WAIT_IN_HALL);
+                                lastActivity.setType(Activity.Type.WAIT_IN_HALL);
+                            }
+                            break; 
+                        case 4:
+                            if(lastActivity.getType() != Activity.Type.WAIT_IN_WAITING_ROOM){
+                                futureActivities.add(Activity.Type.WAIT_IN_WAITING_ROOM);
+                                lastActivity.setType(Activity.Type.WAIT_IN_HALL);
+                            }
+                            break; 
+                    }
+                }
+                
                 futureActivities.add(Activity.Type.LEAVE_STATION);
                 futureActivities.add(Activity.Type.UNBIND_COMPANIONS);
                 break;

@@ -14,7 +14,7 @@ import railwaystation.infrastructure.Train;
  */
 public class Generator {
     private RailwayStation station;
-    private Random random;
+    static private Random random;
 
     public Generator(RailwayStation station) {
         this.station = station;
@@ -78,7 +78,7 @@ public class Generator {
     }
 
     // returns a random integer number within <min, max>
-    private int rand(int min, int max) {
+    static public int rand(int min, int max) {
         return random.nextInt(max - min + 1) + min;
     }
 }
