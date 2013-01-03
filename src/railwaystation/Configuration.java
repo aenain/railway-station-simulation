@@ -54,6 +54,18 @@ public class Configuration {
         return maxGoToPlatform;
     }
 
+    public TimeSpan getMaxCompanionComingTime() {
+        return maxCompanionComingTime;
+    }
+
+    public TimeSpan getMaxComingTimeWithTicket() {
+        return maxComingTimeWithTicket;
+    }
+
+    public TimeSpan getMaxComingTimeWithoutTicket() {
+        return maxComingTimeWithoutTicket;
+    }
+
     public void read() {
         try {
             this.config = railwaystation.io.JSONReader.read(stream).getJSONObject("simulation");

@@ -151,9 +151,8 @@ public class RailwayStation extends Model {
     @Override
     public void doInitialSchedules() {
         timeTable.generateTrains(this);
-        generatePeople();
         structure.activateDesks();
-
+        generatePeople();
         CyclicPeopleChangeEvent event = new CyclicPeopleChangeEvent(this);
         event.setSchedulingPriority(-1); // lower priority
         event.schedule(CyclicPeopleChangeEvent.INTERVAL);
@@ -207,6 +206,10 @@ public class RailwayStation extends Model {
         structure.bindRegions(hall, cashDeskRegion);
     }
 
+    public Generator getPeopleGenerator() {
+        return peopleGenerator;
+    }
+
     public TimeTable getTimeTable() {
         return timeTable;
     }
@@ -218,7 +221,7 @@ public class RailwayStation extends Model {
 
     public void generatePeople() {
         for (Train train : timeTable.trains) {
-            peopleGenerator.generate(train);
+            peopleGenerator.generateDelayed(train);
         }
     }
 

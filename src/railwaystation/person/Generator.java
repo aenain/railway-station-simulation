@@ -4,7 +4,10 @@
  */
 package railwaystation.person;
 
+import desmoj.core.simulator.TimeOperations;
+import desmoj.core.simulator.TimeSpan;
 import java.util.Random;
+import railwaystation.Configuration;
 import railwaystation.RailwayStation;
 import railwaystation.infrastructure.Train;
 
@@ -19,6 +22,19 @@ public class Generator {
     public Generator(RailwayStation station) {
         this.station = station;
         random = new Random(System.currentTimeMillis());
+    }
+
+    public void generateDelayed(Train train) {
+        Configuration config = station.config;
+        TimeSpan comingTimeSpan = config.getMaxComingTimeWithoutTicket();
+        if (config.getMaxComingTimeWithTicket().compareTo(comingTimeSpan) < 0) {
+            comingTimeSpan = config.getMaxComingTimeWithTicket();
+        }
+        if (config.getMaxCompanionComingTime().compareTo(comingTimeSpan) < 0) {
+            comingTimeSpan = config.getMaxCompanionComingTime();
+        }
+
+        new GenerationEvent(station, train).schedule(TimeOperations.subtract(train.getArrivalAt(), comingTimeSpan));
     }
 
     public void generate(Train train) {
