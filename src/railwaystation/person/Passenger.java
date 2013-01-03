@@ -110,7 +110,7 @@ public class Passenger extends Person {
                 int activitiesCount = Generator.rand(0, MAX_ACTIVITIES);
                 Activity lastActivity = new Activity(this, null);
                 for(int i = 0; i < activitiesCount; i++) {
-                    int nextActivityNo = Generator.rand(0, 5);
+                    int nextActivityNo = Generator.rand(0, 4);
                     switch(nextActivityNo) {
                         case 0:
                             futureActivities.add(Activity.Type.BUY_TICKET);
