@@ -5,14 +5,12 @@
 package railwaystation.person;
 
 import desmoj.core.simulator.SimProcess;
+import desmoj.core.simulator.TimeInstant;
 import desmoj.core.simulator.TimeSpan;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import railwaystation.RailwayStation;
-import railwaystation.infrastructure.Desk;
-import railwaystation.infrastructure.Path;
-import railwaystation.infrastructure.Region;
-import railwaystation.infrastructure.Train;
+import railwaystation.infrastructure.*;
 
 /**
  *
@@ -31,6 +29,9 @@ public class Person extends SimProcess {
     protected Region currentRegion;
     protected Desk currentDesk;
     protected boolean waiting = false;
+    
+    protected TimeSpan trainDelay;
+    protected Platform trainRealPlatform;   
 
     public Person(RailwayStation station, String name) {
         super(station, name, true);
@@ -43,6 +44,22 @@ public class Person extends SimProcess {
         this.station = station;
         this.train = train;
         futureActivities = new LinkedList();
+    }
+
+    public TimeSpan getTrainDelay() {
+        return trainDelay;
+    }
+
+    public void setTrainDelay(TimeSpan trainDelay) {
+        this.trainDelay = trainDelay;
+    }
+
+    public Platform getTrainRealPlatform() {
+        return trainRealPlatform;
+    }
+
+    public void setTrainRealPlatform(Platform trainRealPlatform) {
+        this.trainRealPlatform = trainRealPlatform;
     }
 
     public void setType(Type type) {

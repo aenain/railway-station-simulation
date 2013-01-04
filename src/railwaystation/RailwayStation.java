@@ -237,12 +237,15 @@ public class RailwayStation extends Model {
     }
 
     public void sendDelayNotification(Train train, LinkedList<Person> listeners) {
-        // TODO! przekaz informacje zainteresowanym pasazerom
-        
+        for(Person listener : listeners) {
+            listener.setTrainDelay(train.getTotalDelay());
+        }
     }
 
     public void sendPlatformChangeNotification(Train train, LinkedList<Person> listeners) {
-        // TODO! przekaz informacje zainteresowanym pasazerom
+        for(Person listener : listeners) {
+            listener.setTrainRealPlatform(train.getRealPlatform());
+        }
     }
 
     public Track getBestTrack(Train train) {

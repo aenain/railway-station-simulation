@@ -69,6 +69,24 @@ public class Activity {
     public boolean isCancelled() {
         return (state == State.CANCELLED);
     }
+    
+    void checkGoToPlatform() {
+        if(person instanceof Passenger) {
+            ((Passenger)person).checkGoToPlatform();
+        }
+        else if(person instanceof Companion) {
+            ((Companion)person).checkGoToPlatform();
+        }
+    }
+    
+    void checkGoOutFromPlatform() {
+        if(person instanceof Passenger ) {
+            ((Passenger)person).checkGoOutFromPlatform();
+        }
+        else if(person instanceof Companion) {
+            ((Companion)person).checkGoOutFromPlatform();
+        }
+    }
 
     public void start() {
         if (!isCancelled()) {
@@ -82,15 +100,21 @@ public class Activity {
                     person.passivate(); // passenger should take care of its companions
                     break;
                 case BUY_TICKET:
+                    checkGoToPlatform();
+                    
                     region = (ServingRegion)person.currentRegion;
                     region.addPersonToShortestQueue(person);
                     person.waitInQueue();
                     break;
                 case WAIT_IN_WAITING_ROOM:
+                    checkGoToPlatform();
                     break;
                 case WAIT_IN_HALL:
+                    checkGoToPlatform();
                     break;
                 case WAIT_ON_PLATFORM:
+                    checkGoOutFromPlatform();
+                    
                     if (person instanceof Passenger) {
                         person.train.addPassengerReadyToGetIn((Passenger) person);
                     } else if (person.type == Person.Type.ARRIVING_COMPANION) {
@@ -99,7 +123,7 @@ public class Activity {
                     person.passivate();
                     break;
                 case ENTER_TRAIN:
-                    platform = person.train.getPlatform(); // TODO! change to the real platform
+                    platform = (person.getTrainRealPlatform() == null ? person.train.getPlatform() : person.getTrainRealPlatform()); // TODO! change to the real platform
                     platform.personLeaves(person);
                     break;
                 case LEAVE_TRAIN:
@@ -138,6 +162,14 @@ public class Activity {
                     break;
                 case LEAVE_STATION:
                     destination.personLeaves(person);
+                    break;
+                case GET_INFO:
+                    checkGoToPlatform();
+                    
+                    break;
+                case COMPLAIN: 
+                    checkGoToPlatform();
+                    
                     break;
                 default:
 

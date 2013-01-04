@@ -56,6 +56,14 @@ public class Train extends Region {
         listeners.remove(person);
     }
 
+    public TimeSpan getTotalDelay() {
+        return totalDelay;
+    }
+
+    public void setTotalDelay(TimeSpan totalDelay) {
+        this.totalDelay = totalDelay;
+    }
+
     public void setType(Type type) {
         this.type = type;
     }
