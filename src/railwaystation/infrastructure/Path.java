@@ -88,30 +88,13 @@ public class Path {
     protected static LinkedList<Region> regionsBetween(Region start, Region destination) {
         Infrastructure structure = start.station.structure;
         LinkedList<Region> regions = new LinkedList();
-
-        Queue<Region> Q = new LinkedList<Region>();
-        HashSet<Region> vis = new HashSet<Region>();
-        HashMap<Region, Region> p = new HashMap<Region, Region>();
         
-        Q.add(start);
-        vis.add(start);
-        
-        while(!Q.isEmpty()) {
-            Region front = Q.poll();
-            
-            for(Region adj : front.adjacentRegions) {
-                if(!vis.contains(adj)) {
-                    Q.add(adj);
-                    vis.add(adj);
-                    p.put(adj, front);
-                    if(adj == destination) {
-                        break;
-                    }
-                }
-            }
+        if(!structure.arePathsComputed()){
+            structure.computeAllPaths();
         }
         
         Region step = destination;
+        HashMap<Region, Region> p = structure.getPathsFrom(start);
         while(true) {
             step = p.get(step);
             if(step == start) {
@@ -119,39 +102,6 @@ public class Path {
             }
             regions.addFirst(step);
         }
-        /*if (start.equals(destination) || start.adjacentRegions.contains(destination)) {
-            return regions;
-        }
-
-        if (start.equals(structure.entryRegion)) {
-            return regionsBetweenHallAndRegion(destination);
-        }
-
-        if (destination.equals(structure.entryRegion)) {
-            return regionsBetweenRegionAndHall(start);
-        }
-
-        if (start instanceof Subway && destination instanceof Subway) {
-            regions = regionsBetweenSubways((Subway)start, (Subway)destination);
-        } else if (start instanceof Subway && destination instanceof Platform) {
-            regions = regionsBetweenSubwayAndPlatform((Subway)start, (Platform)destination);
-        } else if (start instanceof Platform && destination instanceof Subway) {
-            regions = regionsBetweenPlatformAndSubway((Platform)start, (Subway)destination);
-        } else if (start instanceof Platform && destination instanceof Platform) {
-            regions = regionsBetweenPlatforms((Platform)start, (Platform)destination);
-        } else if (start.adjacentRegions.contains(structure.entryRegion)) {
-            regions.add(structure.entryRegion);
-            ListIterator<Region> it = regionsBetweenHallAndRegion(destination).listIterator();
-            while (it.hasNext()) {
-                regions.add(it.next());
-            }
-        } else if(destination.adjacentRegions.contains(structure.entryRegion)) {
-            ListIterator<Region> it = regionsBetweenRegionAndHall(start).listIterator();
-            while (it.hasNext()) {
-                regions.add(it.next());
-            }
-            regions.add(structure.entryRegion);
-        }*/
 
         return regions;
     }

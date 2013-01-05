@@ -4,7 +4,8 @@
  */
 package railwaystation.infrastructure;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.util.Map.Entry;
 import railwaystation.RailwayStation;
 
 /**
@@ -20,6 +21,9 @@ public class Infrastructure {
     protected ServingRegion informationDeskRegion;
     protected ArrayList<Platform> platforms;
     protected ArrayList<Subway> subways;
+    
+    protected static boolean computedPaths = false;
+    protected static HashMap<Region, HashMap<Region, Region>> paths = new HashMap<Region, HashMap<Region, Region>>();
 
     public Infrastructure(RailwayStation station) {
         entryRegion = null;
@@ -27,6 +31,51 @@ public class Infrastructure {
         this.station = station;
         platforms = new ArrayList();
         subways = new ArrayList();
+    }
+    
+    public void computePaths(Region start) {
+        HashSet<Region> vis = new HashSet<Region>();
+        Queue<Region> q = new LinkedList<Region>();
+        HashMap<Region, Region> p = new HashMap<Region, Region>();
+        
+        q.add(start);
+        vis.add(start);
+        
+        while(!q.isEmpty()) {
+            Region v = q.remove();
+            for(Region adj : v.adjacentRegions) {
+                if(!vis.contains(adj)) {
+                    vis.add(adj);
+                    q.add(adj);
+                    p.put(adj, v);
+                }
+            }
+        }
+        paths.put(start, p);        
+    }
+    
+    public boolean arePathsComputed() {
+        return computedPaths;
+    }
+    
+    public HashMap<Region, Region> getPathsFrom(Region start) {
+        return paths.get(start);
+    }
+    
+    public void computeAllPaths() {
+        ArrayList<Region> regions = new ArrayList<Region>();
+        regions.add(entryRegion);
+        regions.add(waitingRoom);
+        regions.add(firstSubway);
+        regions.add(cashDeskRegion);
+        regions.add(informationDeskRegion);
+        regions.addAll(platforms);
+        regions.addAll(subways);
+        
+        for(Region region : regions) {
+            computePaths(region);
+        }
+        computedPaths = true;
     }
 
     public Region createRegion(String name, int capacity) {
