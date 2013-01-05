@@ -82,7 +82,7 @@ public class Infrastructure {
         Platform platform = null;
 
         for (Integer i = 1; i <= platformCount; i++) {
-            subway = new Region(station, "tunnel-" + i.toString(), MAX_CAPACITY);
+            subway = new Subway(station, i);
             subways.add(subway);
 
             if (i == 1) {
