@@ -19,7 +19,7 @@ public class Infrastructure {
     protected CashDeskRegion cashDeskRegion;
     protected ServingRegion informationDeskRegion;
     protected ArrayList<Platform> platforms;
-    protected ArrayList<Region> subways;
+    protected ArrayList<Subway> subways;
 
     public Infrastructure(RailwayStation station) {
         entryRegion = null;
@@ -78,7 +78,7 @@ public class Infrastructure {
     }
 
     public void createPlatforms(int platformCount) {
-        Region subway, previousSubway;
+        Subway subway, previousSubway;
         Platform platform = null;
 
         for (Integer i = 1; i <= platformCount; i++) {
@@ -89,7 +89,7 @@ public class Infrastructure {
                 firstSubway = subway;
             }
             if (platform != null) {
-                previousSubway = platform.getAdjacentRegions().getFirst();
+                previousSubway = (Subway)platform.getAdjacentRegions().getFirst();
                 bindRegions(subway, previousSubway);
                 bindRegions(subway, platform);
             }
@@ -107,7 +107,7 @@ public class Infrastructure {
     }
 
     // 1..platforms.count
-    public Region getSubway(int i) {
+    public Subway getSubway(int i) {
         if (i == 0) { i = 1; }
         return subways.get(i - 1); // indices start from 0
     }
