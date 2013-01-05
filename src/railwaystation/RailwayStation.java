@@ -24,12 +24,7 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import railwaystation.infrastructure.CashDeskRegion;
-import railwaystation.infrastructure.Infrastructure;
-import railwaystation.infrastructure.Region;
-import railwaystation.infrastructure.ServingRegion;
-import railwaystation.infrastructure.Track;
-import railwaystation.infrastructure.Train;
+import railwaystation.infrastructure.*;
 import railwaystation.person.Generator;
 import railwaystation.person.Person;
 import railwaystation.utilities.Logger;
@@ -174,6 +169,16 @@ public class RailwayStation extends Model {
         initDistribution();
 
         buildInfrastructure();
+        Path path;
+        path = Path.findBetween(structure.getWaitingRoom(), structure.getPlatform(3));
+        path.dump();
+        path = Path.findBetween(structure.getWaitingRoom(), structure.getCashDeskRegion());
+        path.dump();
+        path = Path.findBetween(structure.getPlatform(3), structure.getPlatform(3));
+        path.dump();
+        path = Path.findBetween(structure.getPlatform(1), structure.getPlatform(3));
+        path.dump();
+
         readSchedule();
     }
 
