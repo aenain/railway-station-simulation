@@ -34,8 +34,8 @@
         "cash_desk_count": 3,
         "scheduling_algorithm": "wait",
         "waiting_room_capacity": 200,
-        "hall_length": 40,
-        "subway_length": 40,
-        "subway_width": 40
+        "hall_length": 40.0,
+        "subway_length": 40.0,
+        "subway_width": 40.0
     }
 }

@@ -29,6 +29,8 @@ public class Configuration {
     protected int[] visitorComingDist;
     protected double[] companionCountDist, crowdSpeedDist;
 
+    protected double subwayLength, subwayWidth, hallLength;
+
     private InputStream stream;
     private JSONObject config;
 
@@ -115,6 +117,10 @@ public class Configuration {
             for (int i = 0; i < distribution.length(); i++) {
                 crowdSpeedDist[i] = distribution.getDouble(i);
             }
+
+            subwayLength = config.getDouble("subway_length");
+            subwayWidth = config.getDouble("subway_width");
+            hallLength = config.getDouble("hall_length");
 
             platformCount = config.getInt("platform_count");
             infoDeskCount = config.getInt("info_desk_count");
