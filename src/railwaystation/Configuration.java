@@ -7,6 +7,7 @@ package railwaystation;
 import desmoj.core.simulator.TimeSpan;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,14 +18,16 @@ import org.json.JSONObject;
 public class Configuration {
     protected TimeSpan minGoToWaitingRoom, maxGoToPlatform, externalDelayInfoSpan;
     protected TimeSpan minCompanionComingTime, maxCompanionComingTime, minComingTimeWithTicket, maxComingTimeWithTicket, minComingTimeWithoutTicket, maxComingTimeWithoutTicket;
-    protected double complainingProbability, havingCompanionProbability, havingTicketProbability, shareOfVisitors, externalDelayProbability;
-    protected int platformCount, cashDeskCount, infoDeskCount, waitingRoomCapacity, maxCompanionCount;
+    protected double complainingProbability, buyingTicketProbability, gettingInformationProbability, externalDelayProbability;
+    protected int platformCount, cashDeskCount, infoDeskCount, waitingRoomCapacity;
     protected int minArrivingPassengerCount, maxArrivingPassengerCount, minDeparturingPassengerCount, maxDeparturingPassengerCount; // per train
     protected TimeSpan internalArrivalDuration, defaultPlatformWaitingTime, minExternalDelay, maxExternalDelay; // ride from semaphore to the platform | how long should a train wait for passengers on a platform
     protected TimeSpan minSellingTicketTime, maxSellingTicketTime, minServingInformationTime, maxServingInformationTime;
 
     protected CrowdSpeed crowdSpeed;
     protected SchedulingAlgorithm schedulingAlgorithm;
+    protected int[] visitorComingDist;
+    protected double[] companionCountDist, crowdSpeedDist;
 
     private InputStream stream;
     private JSONObject config;
@@ -78,6 +81,7 @@ public class Configuration {
         if (config == null) { read(); }
 
         try {
+            JSONArray distribution;
             minGoToWaitingRoom = new TimeSpan(config.getInt("go_to_waiting_room_min_time_span"), TimeUnit.MINUTES);
             maxGoToPlatform = new TimeSpan(config.getInt("go_to_platform_max_time_span"), TimeUnit.MINUTES);
             externalDelayInfoSpan = new TimeSpan(config.getInt("external_delay_info_time_span"), TimeUnit.MINUTES);
@@ -90,11 +94,27 @@ public class Configuration {
             maxComingTimeWithoutTicket = new TimeSpan(config.getInt("max_coming_time_span_without_ticket"), TimeUnit.MINUTES);
 
             complainingProbability = config.getInt("average_probability_of_complaining") / 100.0;
-            havingCompanionProbability = config.getInt("average_probability_of_having_companion") / 100.0;
-            maxCompanionCount = config.getInt("max_companion_count");
-            havingTicketProbability = config.getInt("average_probability_of_having_ticket") / 100.0;
-            shareOfVisitors = config.getInt("average_share_of_visitors") / 100.0;
+            gettingInformationProbability = config.getInt("average_probability_of_getting_information") / 100.0;
+            buyingTicketProbability = config.getInt("average_probability_of_buying_ticket") / 100.0;
             externalDelayProbability = config.getInt("average_probability_of_external_delay") / 100.0;
+
+            distribution = config.getJSONArray("companion_count_distribution");
+            companionCountDist = new double[distribution.length()];
+            for (int i = 0; i < distribution.length(); i++) {
+                companionCountDist[i] = distribution.getDouble(i);
+            }
+
+            distribution = config.getJSONArray("visitor_coming_distribution");
+            visitorComingDist = new int[distribution.length()];
+            for (int i = 0; i < distribution.length(); i++) {
+                visitorComingDist[i] = distribution.getInt(i);
+            }
+
+            distribution = config.getJSONArray("crowd_speed_distribution");
+            crowdSpeedDist = new double[distribution.length()];
+            for (int i = 0; i < distribution.length(); i++) {
+                crowdSpeedDist[i] = distribution.getDouble(i);
+            }
 
             platformCount = config.getInt("platform_count");
             infoDeskCount = config.getInt("info_desk_count");

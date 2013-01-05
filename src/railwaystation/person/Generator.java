@@ -76,15 +76,15 @@ public class Generator {
         Passenger passenger;
         Companion companion;
         int companionCount;
-        boolean hasTicket;
+        boolean buysTicket;
 
         for (int i = 1; i <= count; i++) {
             passenger = new Passenger(station, train.getName() + "-departuring-passenger-" + i, train);
             train.addNotifyListener(passenger);
-            hasTicket = station.dist.hasTicket();
+            buysTicket = station.dist.buysTicket();
             passenger.setType(Person.Type.DEPARTURING_PASSENGER);
-            passenger.setTicketPossession(hasTicket);
-            passenger.activate(station.dist.passengerComingTime(train, hasTicket));
+            passenger.setTicketPossession(!buysTicket);
+            passenger.activate(station.dist.passengerComingTime(train, !buysTicket));
             companionCount = station.dist.companionCount();
             for (int j = 0; j < companionCount; j++) {
                 companion = new Companion(station, train.getName() + "-departuring-passenger-" + i + "-companion-" + (j + 1), passenger);
