@@ -39,16 +39,16 @@ public class Distribution {
         comingSpanWithTicket = new DiscreteDistUniform(station, "coming-span-with-ticket", config.minComingTimeWithTicket.getTimeRounded(TimeUnit.MINUTES), config.maxComingTimeWithTicket.getTimeRounded(TimeUnit.MINUTES), true, true);
         comingSpanWithoutTicket = new DiscreteDistUniform(station, "coming-span-without-ticket", config.minComingTimeWithoutTicket.getTimeRounded(TimeUnit.MINUTES), config.maxComingTimeWithoutTicket.getTimeRounded(TimeUnit.MINUTES), true, true);
         companionComingSpan = new DiscreteDistUniform(station, "companion-coming-span", config.minCompanionComingTime.getTimeRounded(TimeUnit.MINUTES), config.maxCompanionComingTime.getTimeRounded(TimeUnit.MINUTES), true, true);
-        buyingTicket = new BoolDistBernoulli(station, "buying-ticket", config.buyingTicketProbability / 100.0, true, true);
-        gettingInformation = new BoolDistBernoulli(station, "getting-information", config.gettingInformationProbability / 100.0, true, true);
-        complaining = new BoolDistBernoulli(station, "complaining", config.complainingProbability / 100.0, true, true);
+        buyingTicket = new BoolDistBernoulli(station, "buying-ticket", config.buyingTicketProbability, true, true);
+        gettingInformation = new BoolDistBernoulli(station, "getting-information", config.gettingInformationProbability, true, true);
+        complaining = new BoolDistBernoulli(station, "complaining", config.complainingProbability, true, true);
         companionCount = new DiscreteDistEmpirical(station, "companion-count", true, true);
         populateCompanionCountDist(config.companionCountDist);
 
         visitorComingDist = config.visitorComingDist;
         crowdSpeedDist = config.crowdSpeedDist;
 
-        havingExternalDelay = new BoolDistBernoulli(station, "having-external-delay", config.externalDelayProbability / 100.0, true, true);
+        havingExternalDelay = new BoolDistBernoulli(station, "having-external-delay", config.externalDelayProbability, true, true);
         externalDelay = new DiscreteDistUniform(station, "external-delay", config.minExternalDelay.getTimeRounded(TimeUnit.MINUTES), config.maxExternalDelay.getTimeRounded(TimeUnit.MINUTES), true, true);
         sellingTicketTime = new DiscreteDistUniform(station, "selling-ticket-time", config.minSellingTicketTime.getTimeRounded(TimeUnit.MINUTES), config.maxSellingTicketTime.getTimeRounded(TimeUnit.MINUTES), true, true);
         servingInformationTime = new DiscreteDistUniform(station, "serving-information-time", config.minServingInformationTime.getTimeRounded(TimeUnit.MINUTES), config.maxServingInformationTime.getTimeRounded(TimeUnit.MINUTES), true, true);
