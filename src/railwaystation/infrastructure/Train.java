@@ -17,6 +17,7 @@ import railwaystation.TimeTable;
 import railwaystation.person.Companion;
 import railwaystation.person.Passenger;
 import railwaystation.person.Person;
+import railwaystation.person.TrainOrientedPerson;
 
 /**
  *
@@ -33,7 +34,7 @@ public class Train extends Region {
     protected TimeSpan externalDelay = TimeSpan.ZERO, semaphoreDelay = TimeSpan.ZERO, totalDelay = TimeSpan.ZERO, internalArrival;
     protected String source, destination;
     protected Type type;
-    protected LinkedList<Person> listeners;
+    protected LinkedList<TrainOrientedPerson> listeners;
     protected ProcessQueue<Passenger> passengersReadyToGetIn; // they are waiting on the right platform
     protected ProcessQueue<Companion> companionsReadyForArrival; // they are waiting on the right platform
     protected boolean onPlatform;
@@ -48,12 +49,21 @@ public class Train extends Region {
         onPlatform = false;
     }
 
-    public void addNotifyListener(Person person) {
+    public void addNotifyListener(TrainOrientedPerson person) {
         listeners.add(person);
     }
 
-    public void removeNotifyListener(Person person) {
+    public void removeNotifyListener(TrainOrientedPerson person) {
         listeners.remove(person);
+    }
+
+    // zwraca obecnie znane opoznienie, ale nie jest to opoznienie ostateczne
+    public TimeSpan getDelay() {
+        if (totalDelay != null) {
+            return totalDelay;
+        } else {
+            return TimeOperations.add(externalDelay, semaphoreDelay);
+        }
     }
 
     public TimeSpan getTotalDelay() {
@@ -346,7 +356,7 @@ public class Train extends Region {
             }
             data.put("scheduledAt", TimeTable.timeToString(scheduledAt, "minutes"));
 
-            long delayInSeconds = TimeOperations.add(externalDelay, semaphoreDelay).getTimeRounded(TimeUnit.SECONDS);
+            long delayInSeconds = getDelay().getTimeRounded(TimeUnit.SECONDS);
             data.put("delay", delayInSeconds);
         } catch (JSONException ex) {
             System.err.println("error building event: train-change");

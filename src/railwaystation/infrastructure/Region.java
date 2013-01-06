@@ -25,7 +25,7 @@ import railwaystation.person.Visitor;
  */
 public class Region extends SimProcess implements Visitable {
     protected ProcessQueue<Person> people;
-    protected int companionCount, passengerCount, visitorCount;
+    protected int companionCount = 0, passengerCount = 0, visitorCount = 0;
 
     protected LinkedList<Region> adjacentRegions;
     protected String name;
@@ -70,6 +70,12 @@ public class Region extends SimProcess implements Visitable {
         }
     }
 
+    public void companionsLeave(LinkedList<Companion> leavingCompanions) {
+        for (Companion companion : leavingCompanions) {
+            personLeaves(companion);
+        }
+    }
+
     @Override
     public boolean canPersonEnter() {
         return canPeopleEnter(1);
@@ -90,6 +96,12 @@ public class Region extends SimProcess implements Visitable {
     public void peopleEnter(LinkedList<Person> enteringPeople) {
         for (Person person : enteringPeople) {
             personEnters(person);
+        }
+    }
+
+    public void companionsEnter(LinkedList<Companion> enteringCompanions) {
+        for (Companion companion : enteringCompanions) {
+            personEnters(companion);
         }
     }
 
@@ -119,11 +131,11 @@ public class Region extends SimProcess implements Visitable {
 
     protected void changePeopleCount(Person person, int change) {
         if (person instanceof Passenger) {
-            passengerCount = Math.max(passengerCount + change, 0);
+            passengerCount += change;
         } else if (person instanceof Companion) {
-            companionCount = Math.max(companionCount + change, 0);
+            companionCount += change;
         } else if (person instanceof Visitor) {
-            visitorCount = Math.max(visitorCount + change, 0);
+            visitorCount += change;
         }
         peopleChanged = true;
     }
@@ -136,6 +148,7 @@ public class Region extends SimProcess implements Visitable {
             data.put("passengers", passengerCount);
             data.put("companions", companionCount);
             data.put("visitors", visitorCount);
+            // station.d(this, "all: " + count() + "\tpassengers: " + passengerCount + "\tcompanions: " + companionCount);
             station.registerVisualizationEvent("people-change", data);
         } catch(JSONException ex) {
             System.err.println("error building event: people-change");

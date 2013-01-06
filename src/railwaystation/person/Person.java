@@ -5,7 +5,6 @@
 package railwaystation.person;
 
 import desmoj.core.simulator.SimProcess;
-import desmoj.core.simulator.TimeInstant;
 import desmoj.core.simulator.TimeSpan;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
@@ -22,44 +21,17 @@ public class Person extends SimProcess {
     };
     protected Type type;
     protected Path path;
-    protected Train train;
     protected RailwayStation station;
     protected Activity currentActivity;
     protected LinkedList<Activity.Type> futureActivities;
     protected Region currentRegion;
     protected Desk currentDesk;
     protected boolean waiting = false;
-    
-    protected TimeSpan trainDelay;
-    protected Platform trainRealPlatform;   
 
     public Person(RailwayStation station, String name) {
         super(station, name, true);
         this.station = station;
         futureActivities = new LinkedList();
-    }
-
-    public Person(RailwayStation station, String name, Train train) {
-        super(station, name, true);
-        this.station = station;
-        this.train = train;
-        futureActivities = new LinkedList();
-    }
-
-    public TimeSpan getTrainDelay() {
-        return trainDelay;
-    }
-
-    public void setTrainDelay(TimeSpan trainDelay) {
-        this.trainDelay = trainDelay;
-    }
-
-    public Platform getTrainRealPlatform() {
-        return trainRealPlatform;
-    }
-
-    public void setTrainRealPlatform(Platform trainRealPlatform) {
-        this.trainRealPlatform = trainRealPlatform;
     }
 
     public void setType(Type type) {
@@ -68,6 +40,10 @@ public class Person extends SimProcess {
 
     public void setCurrentRegion(Region region) {
         currentRegion = region;
+    }
+
+    public Region getCurrentRegion(Region region) {
+        return currentRegion;
     }
 
     public void setCurrentDesk(Desk desk) {
@@ -98,22 +74,24 @@ public class Person extends SimProcess {
         return waiting;
     }
 
-    public void waitInQueue() {
-    }
-
-    public void waitInWaitingRoom() {
-    }
-
     public void reachDestination() {
         while (path.hasNextRegion()) {
             if (path.getNextRegion().canPersonEnter()) {
                 path.getCurrentRegion().personLeaves(this);
                 path.goToNextRegion();
                 path.getCurrentRegion().personEnters(this);
+                currentRegion = path.getCurrentRegion();
                 hold(path.getCurrentRegionWalkingTime());
             } else {
-                hold(new TimeSpan(1, TimeUnit.MINUTES));
+                hold(new TimeSpan(15, TimeUnit.SECONDS));
             }
+        }
+    }
+
+    public void waitInQueue() {
+        if (waiting && !currentActivity.isCancelled()) {
+            // czeka az zostanie obsluzony
+            passivate();
         }
     }
 

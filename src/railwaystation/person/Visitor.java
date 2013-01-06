@@ -15,7 +15,7 @@ public class Visitor extends Person {
     protected static final int MAX_ACTIVITIES = 5;
     
     public Visitor(RailwayStation station, String name) {
-        super(station, name, null);
+        super(station, name);
     }
     
     @Override

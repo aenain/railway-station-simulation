@@ -90,8 +90,8 @@ public class Generator {
                 companion = new Companion(station, train.getName() + "-departuring-passenger-" + i + "-companion-" + (j + 1), passenger);
                 companion.setType(Person.Type.DEPARTURING_COMPANION);
                 train.addNotifyListener(companion);
-                companion.activateBefore(passenger);
                 passenger.addCompanion(companion);
+                companion.activateBefore(passenger);
             }
             station.logger.changeThreads(Person.Type.DEPARTURING_COMPANION, companionCount);
         }

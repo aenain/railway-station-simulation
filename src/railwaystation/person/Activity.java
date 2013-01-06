@@ -4,6 +4,7 @@
  */
 package railwaystation.person;
 
+import java.util.LinkedList;
 import railwaystation.infrastructure.Infrastructure;
 import railwaystation.infrastructure.Path;
 import railwaystation.infrastructure.Platform;
@@ -52,7 +53,7 @@ public class Activity {
     public void goToDestination() {
         resolveDestination();
         state = State.WALKING;
-
+        // person.station.d(person, "going activity: " + type + " current: " + person.currentRegion);
         if (person.currentRegion != null && destination != null) {
             person.path = Path.findBetween(person.currentRegion, destination);
             person.reachDestination();
@@ -69,29 +70,13 @@ public class Activity {
     public boolean isCancelled() {
         return (state == State.CANCELLED);
     }
-    
-    void checkGoToPlatform() {
-        if(person instanceof Passenger) {
-            ((Passenger)person).checkGoToPlatform();
-        }
-        else if(person instanceof Companion) {
-            ((Companion)person).checkGoToPlatform();
-        }
-    }
-    
-    void checkGoOutFromPlatform() {
-        if(person instanceof Passenger ) {
-            ((Passenger)person).checkGoOutFromPlatform();
-        }
-        else if(person instanceof Companion) {
-            ((Companion)person).checkGoOutFromPlatform();
-        }
-    }
 
     public void start() {
         if (!isCancelled()) {
             state = State.DOING;
+            // person.station.d(person, "doing activity: " + type + " current: " + person.currentRegion);
             Passenger passenger;
+            Companion companion;
             Platform platform;
             ServingRegion region;
 
@@ -100,43 +85,47 @@ public class Activity {
                     person.passivate(); // passenger should take care of its companions
                     break;
                 case BUY_TICKET:
-                    checkGoToPlatform();
-                    
                     region = (ServingRegion)person.currentRegion;
                     region.addPersonToShortestQueue(person);
                     person.waitInQueue();
                     break;
                 case WAIT_IN_WAITING_ROOM:
-                    checkGoToPlatform();
+                    if (person instanceof TrainOrientedPerson) {
+                        ((TrainOrientedPerson)person).waitInWaitingRoom();
+                    }
                     break;
                 case WAIT_IN_HALL:
-                    checkGoToPlatform();
+                    if (person instanceof TrainOrientedPerson) {
+                        ((TrainOrientedPerson)person).waitInHall();
+                    }
                     break;
                 case WAIT_ON_PLATFORM:
-                    checkGoOutFromPlatform();
-                    
                     if (person instanceof Passenger) {
-                        person.train.addPassengerReadyToGetIn((Passenger) person);
+                        passenger = (Passenger)person;
+                        passenger.train.addPassengerReadyToGetIn(passenger);
                     } else if (person.type == Person.Type.ARRIVING_COMPANION) {
-                        person.train.addCompanionReadyForArrival((Companion) person);
+                        companion = (Companion)person;
+                        companion.train.addCompanionReadyForArrival(companion);
                     }
                     person.passivate();
                     break;
                 case ENTER_TRAIN:
-                    platform = (person.getTrainRealPlatform() == null ? person.train.getPlatform() : person.getTrainRealPlatform()); // TODO! change to the real platform
+                    platform = (Platform)person.currentRegion;
                     platform.personLeaves(person);
+                    // tu mozna wygenerowac followerom dalsze aktywnosci.
                     break;
                 case LEAVE_TRAIN:
                     passenger = (Passenger) person;
                     platform = passenger.train.getRealPlatform();
                     passenger.currentRegion = platform;
                     passenger.currentRegion.personEnters(person);
-                    for (Companion companion : passenger.companions) {
-                        if (passenger.train.getCompanionsReadyForArrival().contains(companion)) {
-                            passenger.train.getCompanionsReadyForArrival().remove(companion);
-                            companion.activate(); // niech followuje pasazera
+                    for (Companion compan : passenger.companions) {
+                        if (passenger.train.getCompanionsReadyForArrival().contains(compan)) {
+                            passenger.train.getCompanionsReadyForArrival().remove(compan);
+                            compan.activate(); // niech followuje pasazera
                         } else {
-                            companion.missTrain();
+                            compan.missTrain();
+                            passenger.train.removeNotifyListener(compan);
                         }
                     }
                     passenger.hold(platform.getWalkingTime());
@@ -147,29 +136,34 @@ public class Activity {
                     break;
                 case UNBIND_COMPANIONS:
                     passenger = (Passenger) person;
-                    for (Person companion : passenger.getFollowers()) {
-                        companion.currentRegion = passenger.currentRegion;
-                        ((Companion)companion).setPassenger(null);
-                        companion.activate();
-                    }
+                    LinkedList<Companion> followers = passenger.getFollowers();
                     passenger.leadCompanions = false;
+                    for (Companion follower : followers) {
+                        follower.currentRegion = passenger.currentRegion;
+                        follower.setPassenger(null);
+                        follower.activate();
+                    }
                     break;
                 case ENTER_STATION:
                     Region hall = person.station.structure.getEntryRegion();
                     person.currentRegion = hall;
                     person.currentRegion.personEnters(person);
-                    person.hold(person.currentRegion.getWalkingTime());
+                    if (person.futureActivities.getFirst() != Activity.Type.FOLLOW_PASSENGER) {
+                        person.hold(person.currentRegion.getWalkingTime());
+                    }
                     break;
                 case LEAVE_STATION:
                     destination.personLeaves(person);
                     break;
                 case GET_INFO:
-                    checkGoToPlatform();
-                    
+                    region = (ServingRegion)person.currentRegion;
+                    region.addPersonToShortestQueue(person);
+                    person.waitInQueue();
                     break;
-                case COMPLAIN: 
-                    checkGoToPlatform();
-                    
+                case COMPLAIN:
+                    region = (ServingRegion)person.currentRegion;
+                    region.addPersonToShortestQueue(person);
+                    person.waitInQueue();
                     break;
                 default:
 
@@ -187,7 +181,8 @@ public class Activity {
             case WAIT_ON_PLATFORM:
             case ENTER_TRAIN:
             case LEAVE_TRAIN:
-                destination = person.train.getPlatform(); // TODO! change to the real platform
+                TrainOrientedPerson orientedPerson = (TrainOrientedPerson)person;
+                destination = orientedPerson.getTrainRealPlatform() != null ? orientedPerson.getTrainRealPlatform() : orientedPerson.train.getPlatform();
                 break;
             case WAIT_IN_HALL:
             case ENTER_STATION:

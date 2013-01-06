@@ -26,7 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import railwaystation.infrastructure.*;
 import railwaystation.person.Generator;
-import railwaystation.person.Person;
+import railwaystation.person.TrainOrientedPerson;
 import railwaystation.utilities.Logger;
 
 /**
@@ -241,14 +241,14 @@ public class RailwayStation extends Model {
         }
     }
 
-    public void sendDelayNotification(Train train, LinkedList<Person> listeners) {
-        for(Person listener : listeners) {
-            listener.setTrainDelay(train.getTotalDelay());
+    public void sendDelayNotification(Train train, LinkedList<TrainOrientedPerson> listeners) {
+        for(TrainOrientedPerson listener : listeners) {
+            listener.setTrainDelay(train.getDelay());
         }
     }
 
-    public void sendPlatformChangeNotification(Train train, LinkedList<Person> listeners) {
-        for(Person listener : listeners) {
+    public void sendPlatformChangeNotification(Train train, LinkedList<TrainOrientedPerson> listeners) {
+        for(TrainOrientedPerson listener : listeners) {
             listener.setTrainRealPlatform(train.getRealPlatform());
         }
     }

@@ -56,6 +56,11 @@ public class Path {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Path: " + currentRegion + " " + regionsToVisit;
+    }
+
     public void cancel() {
         cancelled = true;
     }
