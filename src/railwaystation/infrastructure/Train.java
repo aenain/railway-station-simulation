@@ -31,7 +31,7 @@ public class Train extends Region {
     protected Track track, realTrack;
     protected TimeInstant arrivalAt, departureAt; // scheduled
     protected TimeInstant realSemaphoreArrivalAt;
-    protected TimeSpan externalDelay = TimeSpan.ZERO, semaphoreDelay = TimeSpan.ZERO, totalDelay = TimeSpan.ZERO, internalArrival;
+    protected TimeSpan externalDelay = TimeSpan.ZERO, semaphoreDelay = TimeSpan.ZERO, totalDelay = null, internalArrival;
     protected String source, destination;
     protected Type type;
     protected LinkedList<TrainOrientedPerson> listeners;
@@ -328,9 +328,10 @@ public class Train extends Region {
 
     // if it's delayed or it's platform has changed
     protected boolean trainChanged() {
-        return TimeSpan.ZERO.compareTo(externalDelay) < 0 ||
-               TimeSpan.ZERO.compareTo(semaphoreDelay) < 0 ||
-               !(realPlatform == null || platform.equals(realPlatform));
+        boolean delayed = !externalDelay.equals(TimeSpan.ZERO) || !semaphoreDelay.equals(TimeSpan.ZERO),
+                platformChanged = realPlatform != null && !platform.equals(realPlatform);
+
+        return  delayed || platformChanged;
     }
 
     protected void registerTrainChange() {
@@ -358,6 +359,8 @@ public class Train extends Region {
 
             long delayInSeconds = getDelay().getTimeRounded(TimeUnit.SECONDS);
             data.put("delay", delayInSeconds);
+
+            station.registerVisualizationEvent("train-change", data);
         } catch (JSONException ex) {
             System.err.println("error building event: train-change");
         }
