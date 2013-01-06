@@ -123,7 +123,6 @@ public class TrainOrientedPerson extends Person {
     }
 
     public void missTrain() {
-        System.err.println("MIIIIISSSSSSS!");
         if (train != null) {
             train = null;
         }
