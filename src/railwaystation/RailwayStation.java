@@ -169,16 +169,6 @@ public class RailwayStation extends Model {
         initDistribution();
 
         buildInfrastructure();
-        Path path;
-        path = Path.findBetween(structure.getWaitingRoom(), structure.getPlatform(3));
-        path.dump();
-        path = Path.findBetween(structure.getWaitingRoom(), structure.getCashDeskRegion());
-        path.dump();
-        path = Path.findBetween(structure.getPlatform(3), structure.getPlatform(3));
-        path.dump();
-        path = Path.findBetween(structure.getPlatform(1), structure.getPlatform(3));
-        path.dump();
-
         readSchedule();
     }
 
