@@ -4,12 +4,8 @@
  */
 package railwaystation.io;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
+import java.util.zip.GZIPOutputStream;
 import org.json.JSONObject;
 
 /**
@@ -48,5 +44,52 @@ public class JSONWriter {
                 }
             } catch (IOException ex) {}
         }
-    } 
+    }
+    
+    public static void makeGzip(String jsonFileName, String gzipFileName) {
+        BufferedWriter bufferedWriter = null;
+        BufferedReader bufferedReader = null;
+
+        try {
+
+            //Construct the BufferedWriter object
+            bufferedWriter = new BufferedWriter(
+                    new OutputStreamWriter(
+                    new GZIPOutputStream(new FileOutputStream(gzipFileName))));
+
+            //Construct the BufferedReader object
+            bufferedReader = new BufferedReader(new FileReader(jsonFileName));
+
+            String line = null;
+
+            // from the input file to the GZIP output file
+            while ((line = bufferedReader.readLine()) != null) {
+                bufferedWriter.write(line);
+                bufferedWriter.newLine();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //Close the BufferedWrter
+            if (bufferedWriter != null) {
+                try {
+                    bufferedWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            //Close the BufferedReader
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

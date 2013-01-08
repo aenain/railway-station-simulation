@@ -132,62 +132,15 @@ public class RailwayStation extends Model {
     protected void saveVisualizationResult() {
         JSONObject data = new JSONObject();
         JSONObject result = new JSONObject();
-        BufferedWriter bufferedWriter = null;
-        BufferedReader bufferedReader = null;
-        boolean jsonWroteOk = false;
 
         try {
             data.put("events", visualizationEvents);
             data.put("summary", visualizationSummary);
             result.put("simulation", data);
             railwaystation.io.JSONWriter.write(outputStream, result);
-            jsonWroteOk = true;
+            railwaystation.io.JSONWriter.makeGzip(OUTPUT_FILENAME, OUTPUT_GZIP_FILENAME);
         } catch (JSONException ex) {
             System.err.println("error saving json output");
-        }
-
-        if (jsonWroteOk) {
-            try {
-
-                //Construct the BufferedWriter object
-                bufferedWriter = new BufferedWriter(
-                        new OutputStreamWriter(
-                        new GZIPOutputStream(new FileOutputStream(OUTPUT_GZIP_FILENAME))));
-
-                //Construct the BufferedReader object
-                bufferedReader = new BufferedReader(new FileReader(OUTPUT_FILENAME));
-
-                String line = null;
-
-                // from the input file to the GZIP output file
-                while ((line = bufferedReader.readLine()) != null) {
-                    bufferedWriter.write(line);
-                    bufferedWriter.newLine();
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                //Close the BufferedWrter
-                if (bufferedWriter != null) {
-                    try {
-                        bufferedWriter.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                //Close the BufferedReader
-                if (bufferedReader != null) {
-                    try {
-                        bufferedReader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
         }
     }
 
