@@ -102,9 +102,9 @@ public class Generator {
     
     public void generateVisitors(int count) {
         Visitor visitor;
-        TimeSpan dt = new TimeSpan(rand(0, 3599), TimeUnit.SECONDS);
         
         for(int i = 0; i < count; i++) {
+            TimeSpan dt = new TimeSpan(rand(0, 3599), TimeUnit.SECONDS);
             visitor = new Visitor(station, "visitor");
             visitor.activate(dt);
         }
