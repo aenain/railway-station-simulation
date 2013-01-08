@@ -33,10 +33,10 @@ public class RailwayStation extends Model {
 
     public static final String CONFIG_FILENAME = "config.json",
             OUTPUT_FILENAME = "output.json",
-            OUTPUT_GZIP_FILENAME = "output.json.gz",
             SCHEDULE_FILENAME = "schedule.json";
     public static final TimeInstant START_TIME = new TimeInstant(0, TimeUnit.HOURS),
             STOP_TIME = new TimeInstant(24, TimeUnit.HOURS);
+    private boolean compressOutput = false;
     public Configuration config;
     public Distribution dist;
     public Infrastructure structure;
@@ -140,7 +140,6 @@ public class RailwayStation extends Model {
             data.put("summary", visualizationSummary);
             result.put("simulation", data);
             railwaystation.io.JSONWriter.write(outputStream, result);
-            railwaystation.io.JSONWriter.makeGzip(OUTPUT_FILENAME, OUTPUT_GZIP_FILENAME);
         } catch (JSONException ex) {
             System.err.println("error saving json output");
         }
@@ -295,6 +294,7 @@ public class RailwayStation extends Model {
             }
         }
 
+        compressOutput = true;
         setStreams(input, output);
     }
 
@@ -320,9 +320,16 @@ public class RailwayStation extends Model {
                 output = OUTPUT_FILENAME;
             }
             try {
-                File outputFile = new File(output);
-                outputStream = new FileOutputStream(outputFile);
-            } catch (FileNotFoundException ex) {
+                File outputFile;
+
+                if (compressOutput) {
+                    outputFile = new File(output + ".gz");
+                    outputStream = new GZIPOutputStream(new FileOutputStream(outputFile));
+                } else {
+                    outputFile = new File(output);
+                    outputStream = new FileOutputStream(outputFile);
+                }
+            } catch (IOException ex) {
                 System.err.println("output file not found!");
             }
         }
