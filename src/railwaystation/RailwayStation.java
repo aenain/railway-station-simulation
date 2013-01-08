@@ -9,18 +9,13 @@ import desmoj.core.simulator.Model;
 import desmoj.core.simulator.SimProcess;
 import desmoj.core.simulator.TimeInstant;
 import desmoj.core.simulator.TimeSpan;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,18 +29,17 @@ import railwaystation.utilities.Logger;
  * @author artur
  */
 public class RailwayStation extends Model {
+
     public static final String CONFIG_FILENAME = "config.json",
-                               OUTPUT_FILENAME = "output.json",
-                               SCHEDULE_FILENAME = "schedule.json";
-
+            OUTPUT_FILENAME = "output.json",
+            OUTPUT_GZIP_FILENAME = "output.json.gz",
+            SCHEDULE_FILENAME = "schedule.json";
     public static final TimeInstant START_TIME = new TimeInstant(0, TimeUnit.HOURS),
-                                    STOP_TIME = new TimeInstant(24, TimeUnit.HOURS);
-
+            STOP_TIME = new TimeInstant(24, TimeUnit.HOURS);
     public Configuration config;
     public Distribution dist;
     public Infrastructure structure;
     public Logger logger;
-
     private TimeTable timeTable;
     private JSONArray visualizationEvents;
     private JSONObject visualizationSummary;
@@ -64,6 +58,7 @@ public class RailwayStation extends Model {
         structure = new Infrastructure(this);
         peopleGenerator = new Generator(this);
     }
+
     /**
      * @param args the command line arguments
      */
@@ -81,7 +76,7 @@ public class RailwayStation extends Model {
 
         try {
             experiment.start();
-        } catch(OutOfMemoryError error) {
+        } catch (OutOfMemoryError error) {
             System.err.println(TimeTable.timeToString(model.presentTime(), "seconds"));
         }
 
@@ -121,12 +116,12 @@ public class RailwayStation extends Model {
             trains = new JSONObject();
             trains.put("count", 0);
             trains.put("platformChanges", 0);
-                delays = new JSONObject();
-                    averageDelays = new JSONObject();
-                    averageDelays.put("semaphore", 0); // seconds
-                    averageDelays.put("platform", 0); // seconds
-                    averageDelays.put("external", 0); // seconds
-                delays.put("average", averageDelays);
+            delays = new JSONObject();
+            averageDelays = new JSONObject();
+            averageDelays.put("semaphore", 0); // seconds
+            averageDelays.put("platform", 0); // seconds
+            averageDelays.put("external", 0); // seconds
+            delays.put("average", averageDelays);
             trains.put("delay", delays);
             visualizationSummary.put("trains", trains);
         } catch (JSONException ex) {
@@ -137,14 +132,62 @@ public class RailwayStation extends Model {
     protected void saveVisualizationResult() {
         JSONObject data = new JSONObject();
         JSONObject result = new JSONObject();
+        BufferedWriter bufferedWriter = null;
+        BufferedReader bufferedReader = null;
+        boolean jsonWroteOk = false;
 
         try {
             data.put("events", visualizationEvents);
             data.put("summary", visualizationSummary);
             result.put("simulation", data);
             railwaystation.io.JSONWriter.write(outputStream, result);
+            jsonWroteOk = true;
         } catch (JSONException ex) {
             System.err.println("error saving json output");
+        }
+
+        if (jsonWroteOk) {
+            try {
+
+                //Construct the BufferedWriter object
+                bufferedWriter = new BufferedWriter(
+                        new OutputStreamWriter(
+                        new GZIPOutputStream(new FileOutputStream(OUTPUT_GZIP_FILENAME))));
+
+                //Construct the BufferedReader object
+                bufferedReader = new BufferedReader(new FileReader(OUTPUT_FILENAME));
+
+                String line = null;
+
+                // from the input file to the GZIP output file
+                while ((line = bufferedReader.readLine()) != null) {
+                    bufferedWriter.write(line);
+                    bufferedWriter.newLine();
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                //Close the BufferedWrter
+                if (bufferedWriter != null) {
+                    try {
+                        bufferedWriter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                //Close the BufferedReader
+                if (bufferedReader != null) {
+                    try {
+                        bufferedReader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 
@@ -179,7 +222,8 @@ public class RailwayStation extends Model {
 
         try {
             inputStream.close();
-        } catch (IOException ex) {}
+        } catch (IOException ex) {
+        }
     }
 
     private void initDistribution() {
@@ -232,13 +276,13 @@ public class RailwayStation extends Model {
     }
 
     public void sendDelayNotification(Train train, LinkedList<TrainOrientedPerson> listeners) {
-        for(TrainOrientedPerson listener : listeners) {
+        for (TrainOrientedPerson listener : listeners) {
             listener.setTrainDelay(train.getDelay());
         }
     }
 
     public void sendPlatformChangeNotification(Train train, LinkedList<TrainOrientedPerson> listeners) {
-        for(TrainOrientedPerson listener : listeners) {
+        for (TrainOrientedPerson listener : listeners) {
             listener.setTrainRealPlatform(train.getRealPlatform());
         }
     }
@@ -300,7 +344,9 @@ public class RailwayStation extends Model {
         if ("STDIN".equals(input)) {
             inputStream = System.in;
         } else {
-            if (input == null) { input = CONFIG_FILENAME; }
+            if (input == null) {
+                input = CONFIG_FILENAME;
+            }
             try {
                 File configFile = new File(input);
                 inputStream = new FileInputStream(configFile);
@@ -312,7 +358,9 @@ public class RailwayStation extends Model {
         if ("STDOUT".equals(output)) {
             outputStream = System.out;
         } else {
-            if (output == null) { output = OUTPUT_FILENAME; }
+            if (output == null) {
+                output = OUTPUT_FILENAME;
+            }
             try {
                 File outputFile = new File(output);
                 outputStream = new FileOutputStream(outputFile);
