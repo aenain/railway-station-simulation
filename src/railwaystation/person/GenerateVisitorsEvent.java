@@ -7,12 +7,8 @@ package railwaystation.person;
 import desmoj.core.simulator.ExternalEvent;
 import desmoj.core.simulator.TimeSpan;
 import java.util.concurrent.TimeUnit;
-import railwaystation.CyclicPeopleChangeEvent;
 import railwaystation.Distribution;
 import railwaystation.RailwayStation;
-import railwaystation.TimeTable;
-import railwaystation.infrastructure.Infrastructure;
-import railwaystation.infrastructure.Train;
 
 /**
  *

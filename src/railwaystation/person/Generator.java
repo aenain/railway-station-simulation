@@ -106,6 +106,7 @@ public class Generator {
         for(int i = 0; i < count; i++) {
             TimeSpan dt = new TimeSpan(rand(0, 3599), TimeUnit.SECONDS);
             visitor = new Visitor(station, "visitor");
+            visitor.setType(Person.Type.VISITOR);
             visitor.activate(dt);
         }
     }
