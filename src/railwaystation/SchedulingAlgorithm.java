@@ -4,10 +4,13 @@
  */
 package railwaystation;
 
+import railwaystation.infrastructure.Track;
+import railwaystation.infrastructure.Train;
+
 /**
  *
  * @author artur
  */
 public interface SchedulingAlgorithm {
-    
+    Track getFreeTrackForTrain(Train train);
 }

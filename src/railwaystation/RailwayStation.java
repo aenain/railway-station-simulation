@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import railwaystation.infrastructure.*;
+import railwaystation.person.GenerateVisitorsEvent;
 import railwaystation.person.Generator;
 import railwaystation.person.TrainOrientedPerson;
 import railwaystation.utilities.Logger;
@@ -57,6 +58,7 @@ public class RailwayStation extends Model {
         timeTable = new TimeTable();
         structure = new Infrastructure(this);
         peopleGenerator = new Generator(this);
+        
     }
 
     /**
@@ -157,6 +159,9 @@ public class RailwayStation extends Model {
         CyclicPeopleChangeEvent event = new CyclicPeopleChangeEvent(this);
         event.setSchedulingPriority(-1); // lower priority
         event.schedule(CyclicPeopleChangeEvent.INTERVAL);
+        
+        GenerateVisitorsEvent genVisEvent = new GenerateVisitorsEvent(this, dist);
+        genVisEvent.schedule(new TimeSpan(0));
     }
 
     @Override

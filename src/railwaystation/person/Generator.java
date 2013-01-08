@@ -7,6 +7,7 @@ package railwaystation.person;
 import desmoj.core.simulator.TimeOperations;
 import desmoj.core.simulator.TimeSpan;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import railwaystation.RailwayStation;
 import railwaystation.infrastructure.Train;
 
@@ -97,6 +98,16 @@ public class Generator {
         }
 
         station.logger.changeThreads(Person.Type.DEPARTURING_PASSENGER, count);
+    }
+    
+    public void generateVisitors(int count) {
+        Visitor visitor;
+        TimeSpan dt = new TimeSpan(rand(0, 3599), TimeUnit.SECONDS);
+        
+        for(int i = 0; i < count; i++) {
+            visitor = new Visitor(station, "visitor");
+            visitor.activate(dt);
+        }
     }
 
     // returns a random integer number within <min, max>

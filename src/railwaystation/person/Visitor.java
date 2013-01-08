@@ -12,7 +12,7 @@ import railwaystation.RailwayStation;
  */
 public class Visitor extends Person {
     
-    protected static final int MAX_ACTIVITIES = 5;
+    protected static final int MAX_ACTIVITIES = 3;
     
     public Visitor(RailwayStation station, String name) {
         super(station, name);
@@ -21,22 +21,17 @@ public class Visitor extends Person {
     @Override
     public void createScenario() {
         
+        futureActivities.add(Activity.Type.ENTER_STATION);
+        
         int activitiesCount = Generator.rand(0, MAX_ACTIVITIES);
-        Activity lastActivity = new Activity(this, null);
         for(int i = 0; i < activitiesCount; i++) {
-            int nextActivityNo = Generator.rand(0, 2);
+            int nextActivityNo = Generator.rand(0, 1);
             switch(nextActivityNo) {
                 case 0:
                     futureActivities.add(Activity.Type.BUY_TICKET);
-                    lastActivity.setType(Activity.Type.BUY_TICKET);
                     break;
                 case 1:
-                    futureActivities.add(Activity.Type.COMPLAIN);
-                    lastActivity.setType(Activity.Type.COMPLAIN);
-                    break; 
-                case 2:
                     futureActivities.add(Activity.Type.GET_INFO);
-                    lastActivity.setType(Activity.Type.GET_INFO);
                     break; 
             }
         }
