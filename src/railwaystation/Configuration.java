@@ -107,13 +107,13 @@ public class Configuration {
             distribution = config.getJSONArray("companion_count_distribution");
             companionCountDist = new double[distribution.length()];
             for (int i = 0; i < distribution.length(); i++) {
-                companionCountDist[i] = distribution.getDouble(i);
+                companionCountDist[i] = Math.max(0, distribution.getDouble(i));
             }
 
             distribution = config.getJSONArray("visitor_coming_distribution");
             visitorComingDist = new int[distribution.length()];
             for (int i = 0; i < distribution.length(); i++) {
-                visitorComingDist[i] = distribution.getInt(i);
+                visitorComingDist[i] = Math.max(distribution.getInt(i), 0);
             }
 
             distribution = config.getJSONArray("crowd_speed_distribution");
@@ -146,7 +146,7 @@ public class Configuration {
             minServingInformationTime = new TimeSpan(config.getInt("min_serving_information_time"), TimeUnit.MINUTES);
             maxServingInformationTime = new TimeSpan(config.getInt("max_serving_information_time"), TimeUnit.MINUTES);
 
-            String schedulingAlgoName = config.getString("scheduling_algorithm_name");
+            String schedulingAlgoName = config.getString("scheduling_algorithm");
             if(schedulingAlgoName.equals("wait")) {
                 schedulingAlgorithm = new WaitSchedulingAlgorithm();
             }
