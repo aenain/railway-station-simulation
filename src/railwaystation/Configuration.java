@@ -59,6 +59,10 @@ public class Configuration {
         return maxGoToPlatform;
     }
 
+    public TimeSpan getMinTimeToGoToWaitingRoom() {
+        return minGoToWaitingRoom;
+    }
+
     public TimeSpan getMaxCompanionComingTime() {
         return maxCompanionComingTime;
     }

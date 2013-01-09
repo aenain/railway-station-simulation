@@ -90,13 +90,9 @@ public class Activity {
                     person.waitInQueue();
                     break;
                 case WAIT_IN_WAITING_ROOM:
-                    if (person instanceof TrainOrientedPerson) {
-                        ((TrainOrientedPerson)person).waitInWaitingRoom();
-                    }
-                    break;
                 case WAIT_IN_HALL:
                     if (person instanceof TrainOrientedPerson) {
-                        ((TrainOrientedPerson)person).waitInHall();
+                        ((TrainOrientedPerson)person).waitInMainBuilding();
                     }
                     break;
                 case WAIT_ON_PLATFORM:
@@ -110,24 +106,34 @@ public class Activity {
                     person.passivate();
                     break;
                 case ENTER_TRAIN:
-                    platform = (Platform)person.currentRegion;
-                    platform.personLeaves(person);
+                    passenger = (Passenger) person;
+                    passenger.hasPurposeToGoToPlatform = false;
+                    platform = (Platform)passenger.currentRegion;
+                    platform.personLeaves(passenger);
+                    for (Companion compan : passenger.getFollowers()) {
+                        compan.hasPurposeToGoToPlatform = false;
+                        compan.activate();
+                    }
                     // tu mozna wygenerowac followerom dalsze aktywnosci.
                     break;
                 case LEAVE_TRAIN:
                     passenger = (Passenger) person;
+                    passenger.hasPurposeToGoToPlatform = false;
                     platform = passenger.train.getRealPlatform();
                     passenger.currentRegion = platform;
                     passenger.currentRegion.personEnters(person);
                     for (Companion compan : passenger.companions) {
                         if (passenger.train.getCompanionsReadyForArrival().contains(compan)) {
                             passenger.train.getCompanionsReadyForArrival().remove(compan);
+                            compan.hasPurposeToGoToPlatform = false;
                             compan.activate(); // niech followuje pasazera
                         } else {
                             compan.missTrain();
                             passenger.train.removeNotifyListener(compan);
                         }
                     }
+
+                    passenger.train = null;
                     passenger.hold(platform.getWalkingTime());
                     break;
                 case BIND_COMPANIONS:

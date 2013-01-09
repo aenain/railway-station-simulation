@@ -67,13 +67,9 @@ public class Generator {
                 passenger.addCompanion(companion);
             }
             train.addPassenger(passenger);
-            station.logger.changeThreads(Person.Type.ARRIVING_COMPANION, companionCount);
-            
             allCompanions += companionCount;
         }
 
-        station.logger.changeThreads(Person.Type.ARRIVING_PASSENGER, count);
-        
         station.getSummary().addArrivingPassengersAndCompanions(count, allCompanions);
     }
 
@@ -98,12 +94,8 @@ public class Generator {
                 passenger.addCompanion(companion);
                 companion.activateBefore(passenger);
             }
-            station.logger.changeThreads(Person.Type.DEPARTURING_COMPANION, companionCount);
-            
             allCompanions += companionCount;
         }
-
-        station.logger.changeThreads(Person.Type.DEPARTURING_PASSENGER, count);
         
         station.getSummary().addDeparturingPassengersAndCompanions(count, allCompanions);
     }

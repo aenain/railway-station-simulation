@@ -18,9 +18,11 @@ public class Logger {
     private HashMap<Person.Type, Integer> threads = new HashMap();
     private boolean threadChanged = false;
     private Level level;
+    private RailwayStation station;
 
     public Logger(RailwayStation station, Level level) {
         this.level = level;
+        this.station = station;
         threads.put(Person.Type.ARRIVING_PASSENGER, new Integer(0));
         threads.put(Person.Type.ARRIVING_COMPANION, new Integer(0));
         threads.put(Person.Type.DEPARTURING_PASSENGER, new Integer(0));
@@ -46,7 +48,7 @@ public class Logger {
 
     public void dumpThreads() {
         if (threadChanged && isSevereEnough(Level.DEBUG)) {
-            System.err.println(threads);
+            System.err.println(station.presentTime() + " " + threads);
             threadChanged = false;
         }
     }

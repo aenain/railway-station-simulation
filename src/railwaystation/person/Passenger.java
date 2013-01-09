@@ -42,20 +42,28 @@ public class Passenger extends TrainOrientedPerson {
     public void reachDestination() {
         LinkedList<Companion> followers;
         while (path.hasNextRegion()) {
-            followers = getFollowers();
-            if (path.getNextRegion().canPeopleEnter(followers.size() + 1)) {
-                currentRegion = path.getCurrentRegion();
-                currentRegion.personLeaves(this);
-                currentRegion.companionsLeave(followers);
-                path.goToNextRegion();
-                currentRegion = path.getCurrentRegion();
-                currentRegion.personEnters(this);
-                currentRegion.companionsEnter(followers);
-                hold(path.getCurrentRegionWalkingTime());
-            } else {
-                // jesli nie moze czekac w poczekalni, to niech czeka w hallu
-                futureActivities.addFirst(Activity.Type.WAIT_IN_HALL);
-                currentActivity.cancel();
+            currentRegion = path.getCurrentRegion();
+
+            if (shouldGoToPlatform()) {
+                cancelCurrentActivityAndWaitOnPlatform();
+            }
+
+            if (! path.isCancelled()) {
+                followers = getFollowers();
+
+                if (path.getNextRegion().canPeopleEnter(followers.size() + 1)) {
+                    currentRegion.personLeaves(this);
+                    currentRegion.companionsLeave(followers);
+                    path.goToNextRegion();
+                    currentRegion = path.getCurrentRegion();
+                    currentRegion.personEnters(this);
+                    currentRegion.companionsEnter(followers);
+                    hold(path.getCurrentRegionWalkingTime());
+                } else {
+                    // jesli nie moze czekac w poczekalni, to niech czeka w hallu
+                    futureActivities.addFirst(Activity.Type.WAIT_IN_HALL);
+                    currentActivity.cancel();
+                }
             }
         }
     }

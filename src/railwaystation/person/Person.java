@@ -97,6 +97,7 @@ public class Person extends SimProcess {
 
     @Override
     public void lifeCycle() {
+        station.logger.changeThreads(type, +1);
         createScenario();
         startActivities();
         station.logger.changeThreads(type, -1);

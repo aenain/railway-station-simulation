@@ -22,6 +22,7 @@ public class TrainOrientedPerson extends Person {
     protected Train train;
     protected TimeSpan trainDelay;
     protected Platform trainRealPlatform;
+    protected boolean hasPurposeToGoToPlatform = true;
 
     public TrainOrientedPerson(RailwayStation station, String name, Train train) {
         super(station, name);
@@ -55,7 +56,7 @@ public class TrainOrientedPerson extends Person {
     public void setTrainRealPlatform(Platform trainRealPlatform) {
         this.trainRealPlatform = trainRealPlatform;
         if (currentActivity != null && currentActivity.type == Activity.Type.WAIT_ON_PLATFORM) {
-            switch(currentActivity.state) {
+            switch (currentActivity.state) {
                 case WALKING:
                     path.changeDestination(trainRealPlatform);
                     break;
@@ -67,10 +68,95 @@ public class TrainOrientedPerson extends Person {
         }
     }
 
-    public TimeInstant shouldGoToPlatformAt() {
-        if (train == null) {
-            return END_OF_THE_DAY;
+    @Override
+    public void reachDestination() {
+        while (path.hasNextRegion()) {
+            currentRegion = path.getCurrentRegion();
+
+            if (shouldGoToPlatform()) {
+                cancelCurrentActivityAndWaitOnPlatform();
+            }
+
+            if (! path.isCancelled()) {
+                if (path.getNextRegion().canPersonEnter()) {
+                    currentRegion.personLeaves(this);
+                    path.goToNextRegion();
+                    currentRegion = path.getCurrentRegion();
+                    currentRegion.personEnters(this);
+                    hold(path.getCurrentRegionWalkingTime());
+                } else {
+                    // jesli nie moze czekac w poczekalni, to niech czeka w hallu
+                    futureActivities.addFirst(Activity.Type.WAIT_IN_HALL);
+                    currentActivity.cancel();
+                }
+            }
         }
+    }
+
+    protected void cancelCurrentActivityAndWaitOnPlatform() {
+        if (getCurrentActivityType() != Activity.Type.WAIT_ON_PLATFORM) {
+            if (futureActivities.contains(Activity.Type.WAIT_ON_PLATFORM)) {
+                while (!futureActivities.isEmpty() && futureActivities.getFirst() != Activity.Type.WAIT_ON_PLATFORM) {
+                    futureActivities.removeFirst();
+                }
+            } else {
+                futureActivities.addFirst(Activity.Type.WAIT_ON_PLATFORM);
+            }
+            currentActivity.cancel();
+        }
+    }
+
+    protected boolean canGoToWaitingRoom() {
+        boolean nextActivityIsWaitingOnPlatform = !futureActivities.isEmpty() && futureActivities.getFirst() == Activity.Type.WAIT_ON_PLATFORM;
+        return nextActivityIsWaitingOnPlatform && hasTimeToGoToWaitingRoom();
+    }
+
+    protected boolean hasTimeToGoToWaitingRoom() {
+        TimeInstant canGoUntil = canGoToWaitingRoomUntil();
+
+        if (canGoUntil != null) {
+            return presentTime().compareTo(canGoUntil) < 1;
+        } else {
+            return false;
+        }
+    }
+
+    public TimeInstant canGoToWaitingRoomUntil() {
+        TimeInstant eventAt = getTrainEventAt();
+
+        if (eventAt != null) {
+            return TimeOperations.subtract(eventAt, station.config.getMinTimeToGoToWaitingRoom());
+        } else {
+            return null;
+        }
+    }
+
+    protected boolean shouldGoToPlatform() {
+        TimeInstant shouldGoAt = shouldGoToPlatformAt();
+
+        if (shouldGoAt != null) {
+            return hasPurposeToGoToPlatform && presentTime().compareTo(shouldGoAt) >= 0;
+        } else {
+            return false;
+        }
+    }
+
+    public TimeInstant shouldGoToPlatformAt() {
+        TimeInstant eventAt = getTrainEventAt();
+
+        if (eventAt != null) {
+            return TimeOperations.subtract(eventAt, station.config.getMaxTimeToGoToPlatform());
+        } else {
+            return null;
+        }
+    }
+
+    // zwraca godzine interesujacego nas eventu: przyjazdu lub odjazdu pociagu
+    public TimeInstant getTrainEventAt() {
+        if (train == null) {
+            return null;
+        }
+
         TimeSpan delay = (trainDelay == null ? new TimeSpan(0) : trainDelay);
         TimeInstant referenceTime;
 
@@ -85,20 +171,21 @@ public class TrainOrientedPerson extends Person {
                 break;
         }
 
-        return TimeOperations.subtract(TimeOperations.add(referenceTime, delay), station.config.getMaxTimeToGoToPlatform());
-    }
-    
-    boolean shouldGoToPlatform() {
-        if (train == null) { return false; }
-        return presentTime().compareTo(shouldGoToPlatformAt()) >= 0;
+        return TimeOperations.add(referenceTime, delay);
     }
 
     // gdy juz nie jest zwiazany z pociagiem bedzie czekal az zostanie obsluzony
     @Override
     public void waitInQueue() {
-        while (waiting && !currentActivity.isCancelled() && presentTime().compareTo(shouldGoToPlatformAt()) < 0) {
-            hold(shouldGoToPlatformAt());
-            // tu moze sprawdzac komunikaty czy cos
+        TimeInstant until;
+
+        while (waiting && !currentActivity.isCancelled() && !shouldGoToPlatform()) {
+            until = shouldGoToPlatformAt();
+            if (until != null) {
+                hold(until);
+            } else {
+                passivate();
+            }
         }
         // nie zostal jeszcze obsluzony
         if (waiting) {
@@ -107,18 +194,16 @@ public class TrainOrientedPerson extends Person {
     }
 
     // gdy juz nie jest zwiazany z pociagiem bedzie czekal w nieskonczonosc
-    public void waitInWaitingRoom() {
-        while (!shouldGoToPlatform()) {
-            hold(shouldGoToPlatformAt());
-            // tu moze sprawdzac komunikaty czy cos
-        }
-    }
+    public void waitInMainBuilding() {
+        TimeInstant until;
 
-    // gdy juz nie jest zwiazany z pociagiem bedzie czekal w nieskonczonosc
-    public void waitInHall() {
         while (!shouldGoToPlatform()) {
-            hold(shouldGoToPlatformAt());
-            // tu moze sprawdzac komunikaty czy cos
+            until = shouldGoToPlatformAt();
+            if (until != null) {
+                hold(until);
+            } else {
+                passivate();
+            }
         }
     }
 
@@ -126,6 +211,8 @@ public class TrainOrientedPerson extends Person {
         if (train != null) {
             train = null;
         }
+
+        hasPurposeToGoToPlatform = false;
 
         futureActivities.clear();
         if (station.dist.complains()) {
@@ -153,5 +240,17 @@ public class TrainOrientedPerson extends Person {
         trainRealPlatform = train.getRealPlatform();
 
         super.lifeCycle();
+    }
+
+    @Override
+    public void startActivities() {
+        while (!futureActivities.isEmpty()) {
+            if (canGoToWaitingRoom()) {
+                futureActivities.addFirst(Activity.Type.WAIT_IN_WAITING_ROOM);
+            }
+            currentActivity = new Activity(this, futureActivities.removeFirst());
+            currentActivity.goToDestination();
+            currentActivity.start();
+        }
     }
 }

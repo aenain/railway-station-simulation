@@ -80,7 +80,7 @@ public class RailwayStation extends Model {
         try {
             experiment.start();
         } catch (OutOfMemoryError error) {
-            System.err.println(TimeTable.timeToString(model.presentTime(), "seconds"));
+            System.err.println(TimeTable.timeToString(model.presentTime(), "seconds") + " - too many people on the station!");
         }
 
         experiment.report();
