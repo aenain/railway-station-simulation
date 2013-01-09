@@ -27,7 +27,6 @@ public class Distribution {
     private DiscreteDistUniform externalDelay;
     private DiscreteDistEmpirical companionCount;
     private int[] visitorComingDist;
-    private double[] crowdSpeedDist;
     private BoolDistBernoulli buyingTicket, gettingInformation, complaining, havingExternalDelay;
 
     public Distribution(RailwayStation station) {
@@ -46,7 +45,6 @@ public class Distribution {
         populateCompanionCountDist(config.companionCountDist);
 
         visitorComingDist = config.visitorComingDist;
-        crowdSpeedDist = config.crowdSpeedDist;
 
         havingExternalDelay = new BoolDistBernoulli(station, "having-external-delay", config.externalDelayProbability, true, true);
         externalDelay = new DiscreteDistUniform(station, "external-delay", config.minExternalDelay.getTimeRounded(TimeUnit.MINUTES), config.maxExternalDelay.getTimeRounded(TimeUnit.MINUTES), true, true);
@@ -62,20 +60,6 @@ public class Distribution {
 
     public int companionCount() {
         return companionCount.sample().intValue();
-    }
-
-    // peopleOnSquareMeter zawiera też osobę, dla której będziemy sprawdzać
-    public double crowdSpeed(double peopleOnSquareMeter) {
-        if (peopleOnSquareMeter >= crowdSpeedDist.length - 1) {
-            return crowdSpeedDist[crowdSpeedDist.length - 1];
-        }
-
-        double x0 = Math.floor(peopleOnSquareMeter),
-               x1 = Math.ceil(peopleOnSquareMeter),
-               y0 = crowdSpeedDist[(int)x0],
-               y1 = crowdSpeedDist[(int)x1];
-
-        return linearInterpolation(x0, y0, x1, y1, peopleOnSquareMeter);
     }
 
     // zwraca liczbę visitorów, którzy w przeciągu 1h od zadanej godziny przyszli na dworzec
