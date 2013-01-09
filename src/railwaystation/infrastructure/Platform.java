@@ -32,4 +32,8 @@ public class Platform extends Region {
         if (i == 0) { i = 1; }
         return tracks.get(i - 1);
     }
+
+    public ArrayList<Track> getTracks() {
+        return tracks;
+    }
 }

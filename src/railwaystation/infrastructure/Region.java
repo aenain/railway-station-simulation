@@ -118,6 +118,10 @@ public class Region extends SimProcess implements Visitable {
         return name;
     }
 
+    public RailwayStation getStation() {
+        return station;
+    }
+
     public int count() {
         return people.length();
     }

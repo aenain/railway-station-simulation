@@ -190,6 +190,8 @@ public class Train extends Region {
     }
 
     protected void arriveToSemaphore() {
+        //System.out.println("Podjazd pod semafor");
+        
         realSemaphoreArrivalAt = presentTime();
         realTrack = station.getBestTrack(this);
         realPlatform = realTrack.getPlatform();
@@ -204,6 +206,8 @@ public class Train extends Region {
 
     // opuszczenie semafora i wjazd na peron
     public void arriveToPlatform() {
+        //System.out.println("Wjazd na tor");
+        
         semaphoreDelay = TimeOperations.diff(presentTime(), realSemaphoreArrivalAt);
         registerSemaphoreDeparture();
         if (! realPlatform.equals(platform)) {
@@ -211,6 +215,8 @@ public class Train extends Region {
             station.sendPlatformChangeNotification(this, listeners);
             
             station.getSummary().addPlatformChanges(1);
+            
+            //System.out.println("Wjechal na inny peron niz planowany");
         }
         hold(internalArrival);
     }
@@ -247,6 +253,8 @@ public class Train extends Region {
     }
 
     public void departure() {
+        //System.out.println("Odjazd z peronu");
+        
         totalDelay = TimeOperations.diff(presentTime(), departureAt);
         registerPlatformDeparture();
         onPlatform = false;
@@ -260,7 +268,12 @@ public class Train extends Region {
     }
 
     public void leaveTrack() {
-        track.removeTrain(this);
+        realTrack.removeTrain(this);
+        realTrack = null;
+        
+        if(track.trains.contains(this)) {
+            track.removeTrain(this);
+        }
         track = null;
     }
 

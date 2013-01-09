@@ -9,8 +9,13 @@ import railwaystation.infrastructure.Train;
 
 /**
  *
- * @author artur
+ * @author KaMyLuS
  */
-public interface SchedulingAlgorithm {
-    Track getTrackForTrain(Train train);
+public class WaitSchedulingAlgorithm implements SchedulingAlgorithm {
+
+    @Override
+    public Track getTrackForTrain(Train train) {
+        return train.getTrack();
+    }
+    
 }

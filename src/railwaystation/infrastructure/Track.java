@@ -37,6 +37,9 @@ public class Track {
     }
 
     public void removeTrain(Train train) {
+        if(!trains.contains(train)) {
+            System.err.println("Blad usuwania pociagu...");
+        }
         trains.remove(train);
         registerWaitingTrainsChange();
         if (! trains.isEmpty()) {

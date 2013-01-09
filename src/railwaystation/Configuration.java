@@ -146,9 +146,13 @@ public class Configuration {
             minServingInformationTime = new TimeSpan(config.getInt("min_serving_information_time"), TimeUnit.MINUTES);
             maxServingInformationTime = new TimeSpan(config.getInt("max_serving_information_time"), TimeUnit.MINUTES);
 
-            /*
-                crowdSpeed, schedulingAlgorithm
-             */
+            String schedulingAlgoName = config.getString("scheduling_algorithm_name");
+            if(schedulingAlgoName.equals("wait")) {
+                schedulingAlgorithm = new WaitSchedulingAlgorithm();
+            }
+            else if(schedulingAlgoName.equals("random")) {
+                schedulingAlgorithm = new FirstFreeSchedulingAlgorithm();
+            }
         } catch (JSONException ex) {
             System.err.println("error parsing json configuration");
         }

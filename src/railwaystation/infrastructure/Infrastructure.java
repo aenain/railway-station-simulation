@@ -94,6 +94,10 @@ public class Infrastructure {
         return region;
     }
 
+    public ArrayList<Platform> getPlatforms() {
+        return platforms;
+    }
+
     public void setEntryRegion(Region entryRegion) {
         this.entryRegion = entryRegion;
     }

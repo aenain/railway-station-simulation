@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import railwaystation.infrastructure.Platform;
 import railwaystation.infrastructure.Track;
 import railwaystation.infrastructure.Train;
+import railwaystation.person.Generator;
 
 /**
  *
@@ -91,7 +92,7 @@ public class TimeTable {
                     platformNumber = raw.optInt("platform", 1);
                     // TODO! cos wymyslic, zeby to przestawiac na inne perony lepiej
                     if (station.config.platformCount < platformNumber) {
-                        platformNumber = 1;
+                        platformNumber = Generator.rand(1, station.config.platformCount);
                     }
                     Platform platform = station.structure.getPlatform(platformNumber);
                     Track track = platform.getTrack(raw.optInt("rail", 1));

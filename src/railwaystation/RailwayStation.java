@@ -60,6 +60,7 @@ public class RailwayStation extends Model {
         structure = new Infrastructure(this);
         peopleGenerator = new Generator(this);
         summary = new Summary(this);
+        
     }
 
     /**
@@ -81,7 +82,7 @@ public class RailwayStation extends Model {
             experiment.start();
         } catch (OutOfMemoryError error) {
             System.err.println(TimeTable.timeToString(model.presentTime(), "seconds") + " - too many people on the station!");
-        }
+        } 
 
         experiment.report();
         experiment.finish();
@@ -218,7 +219,7 @@ public class RailwayStation extends Model {
     }
 
     public Track getBestTrack(Train train) {
-        return train.getTrack(); // TODO! zwroc najlepszy tor (algorytm powinien brac pod uwage przypisany tor :P)
+        return config.schedulingAlgorithm.getTrackForTrain(train);
     }
 
     public void registerVisualizationEvent(String type, JSONObject data) {
