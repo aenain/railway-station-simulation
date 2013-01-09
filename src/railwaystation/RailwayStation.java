@@ -70,12 +70,11 @@ public class RailwayStation extends Model {
         RailwayStation model = new RailwayStation();
         model.parseOptions(args);
 
-        Experiment experiment = new Experiment("Railway Station Daily Simulation");
+        Experiment experiment = new Experiment("Railway Station Daily Simulation", false);
         model.connectToExperiment(experiment);
 
         experiment.setShowProgressBar(false);
         experiment.setSilent(true);
-        experiment.tracePeriod(START_TIME, STOP_TIME);
         experiment.stop(STOP_TIME);
 
         try {
@@ -84,7 +83,6 @@ public class RailwayStation extends Model {
             System.err.println(TimeTable.timeToString(model.presentTime(), "seconds") + " - too many people on the station!");
         } 
 
-        experiment.report();
         experiment.finish();
         
         model.computeSummary();
