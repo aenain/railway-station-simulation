@@ -53,7 +53,7 @@ public class Generator {
     private void generateArriving(Train train, int count) {
         Passenger passenger;
         Companion companion;
-        int companionCount;
+        int companionCount, allCompanions = 0;
 
         for (int i = 1; i <= count; i++) {
             passenger = new Passenger(station, train.getName() + "-arriving-passenger-" + i, train);
@@ -68,15 +68,19 @@ public class Generator {
             }
             train.addPassenger(passenger);
             station.logger.changeThreads(Person.Type.ARRIVING_COMPANION, companionCount);
+            
+            allCompanions += companionCount;
         }
 
         station.logger.changeThreads(Person.Type.ARRIVING_PASSENGER, count);
+        
+        station.getSummary().addArrivingPassengersAndCompanions(count, allCompanions);
     }
 
     private void generateDeparturing(Train train, int count) {
         Passenger passenger;
         Companion companion;
-        int companionCount;
+        int companionCount, allCompanions = 0, allWithoutTickets = 0;
         boolean buysTicket;
 
         for (int i = 1; i <= count; i++) {
@@ -95,9 +99,13 @@ public class Generator {
                 companion.activateBefore(passenger);
             }
             station.logger.changeThreads(Person.Type.DEPARTURING_COMPANION, companionCount);
+            
+            allCompanions += companionCount;
         }
 
         station.logger.changeThreads(Person.Type.DEPARTURING_PASSENGER, count);
+        
+        station.getSummary().addDeparturingPassengersAndCompanions(count, allCompanions);
     }
     
     public void generateVisitors(int count) {
@@ -109,6 +117,8 @@ public class Generator {
             visitor.setType(Person.Type.VISITOR);
             visitor.activate(dt);
         }
+        
+        station.getSummary().addVisitors(count);
     }
 
     // returns a random integer number within <min, max>

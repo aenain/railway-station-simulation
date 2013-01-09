@@ -134,6 +134,7 @@ public class TrainOrientedPerson extends Person {
 
         futureActivities.add(Activity.Type.LEAVE_STATION);
         if (this instanceof Passenger) {
+            station.getSummary().addPassengersMissedTrain(1);
             futureActivities.add(Activity.Type.UNBIND_COMPANIONS);
         }
 

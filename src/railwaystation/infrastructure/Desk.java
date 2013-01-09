@@ -61,6 +61,42 @@ public class Desk extends SimProcess {
         return peopleToServe.size();
     }
 
+    public ProcessQueue<Person> getPeopleToServe() {
+        return peopleToServe;
+    }
+
+    public int getCompanionCount() {
+        return companionCount;
+    }
+
+    public int getComplainCount() {
+        return complainCount;
+    }
+
+    public int getPassengerCount() {
+        return passengerCount;
+    }
+
+    public boolean isPeopleChanged() {
+        return peopleChanged;
+    }
+
+    public int getServedInfoCount() {
+        return servedInfoCount;
+    }
+
+    public Person getServedPerson() {
+        return servedPerson;
+    }
+
+    public int getSoldTicketCount() {
+        return soldTicketCount;
+    }
+
+    public int getVisitorCount() {
+        return visitorCount;
+    }
+
     protected void serve(Person person) {
         switch(person.getCurrentActivityType()) {
             case COMPLAIN:

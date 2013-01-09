@@ -51,6 +51,10 @@ public class ServingRegion extends Region {
         return withShortestQueue;
     }
 
+    public LinkedList<Desk> getDesks() {
+        return desks;
+    }
+
     @Override
     public void stackPeopleChange() {
         for (Desk desk : desks) {

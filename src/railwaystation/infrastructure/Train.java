@@ -209,6 +209,8 @@ public class Train extends Region {
         if (! realPlatform.equals(platform)) {
             registerTrainChange();
             station.sendPlatformChangeNotification(this, listeners);
+            
+            station.getSummary().addPlatformChanges(1);
         }
         hold(internalArrival);
     }
@@ -217,6 +219,7 @@ public class Train extends Region {
     public void transferPassengers() {
         Passenger passenger;
         onPlatform = true;
+        int withoutTickets = 0;
 
         while (! passengers.isEmpty()) {
             passenger = passengers.removeFirst();
@@ -234,9 +237,13 @@ public class Train extends Region {
                 peopleChanged = true;
                 passenger.activate();
                 hold(new TimeSpan(5, TimeUnit.SECONDS)); // czas wsiadania
+                
+                if(!passenger.getTicketPossession()) withoutTickets++;
             }
             hold(new TimeSpan(1, TimeUnit.SECONDS));
         }
+        
+        station.getSummary().addDeparturingPassengersWithoutTickets(withoutTickets);
     }
 
     public void departure() {
@@ -246,6 +253,10 @@ public class Train extends Region {
         removePassengers();
         hold(internalArrival);
         leaveTrack();
+        
+        TimeSpan platformDelay = (totalDelay == null ? TimeSpan.ZERO : 
+                TimeOperations.diff(totalDelay, TimeOperations.add(externalDelay, semaphoreDelay)));
+        station.getSummary().addTrain(1, semaphoreDelay, platformDelay, externalDelay, totalDelay);
     }
 
     public void leaveTrack() {

@@ -47,6 +47,7 @@ public class RailwayStation extends Model {
     private InputStream inputStream;
     private OutputStream outputStream;
     private Generator peopleGenerator;
+    private static Summary summary;
 
     public RailwayStation() {
         super(null, "railway-station", true, true);
@@ -58,7 +59,7 @@ public class RailwayStation extends Model {
         timeTable = new TimeTable();
         structure = new Infrastructure(this);
         peopleGenerator = new Generator(this);
-        
+        summary = new Summary(this);
     }
 
     /**
@@ -84,56 +85,21 @@ public class RailwayStation extends Model {
 
         experiment.report();
         experiment.finish();
-
-        model.prepareVisualizationSummary();
+        
+        summary.computeAll();
+        //model.prepareVisualizationSummary();
         model.saveVisualizationResult();
     }
 
     protected void prepareVisualizationSummary() {
-        JSONObject data, trains, delays, averageDelays;
-
-        try {
-            // cash desks
-            data = new JSONObject();
-            data.put("soldTickets", 0);
-            data.put("averageWaitingTime", 0); // seconds
-            visualizationSummary.put("cashDesks", data);
-
-            // info desks
-            data = new JSONObject();
-            data.put("servedInformations", 0);
-            data.put("complaints", 0);
-            data.put("averageWaitingTime", 0); // seconds
-            visualizationSummary.put("infoDesks", data);
-
-            // people
-            data = new JSONObject();
-            data.put("arriving", 0);
-            data.put("departuring", 0);
-            visualizationSummary.put("passengers", data);
-            visualizationSummary.put("companions", 0);
-            visualizationSummary.put("visitors", 0);
-
-            // trains
-            trains = new JSONObject();
-            trains.put("count", 0);
-            trains.put("platformChanges", 0);
-            delays = new JSONObject();
-            averageDelays = new JSONObject();
-            averageDelays.put("semaphore", 0); // seconds
-            averageDelays.put("platform", 0); // seconds
-            averageDelays.put("external", 0); // seconds
-            delays.put("average", averageDelays);
-            trains.put("delay", delays);
-            visualizationSummary.put("trains", trains);
-        } catch (JSONException ex) {
-            System.err.println("error preparing json summary");
-        }
+        //
     }
 
     protected void saveVisualizationResult() {
         JSONObject data = new JSONObject();
         JSONObject result = new JSONObject();
+        
+        visualizationSummary = summary.prepareVisualizationSummary();
 
         try {
             data.put("events", visualizationEvents);
@@ -218,6 +184,14 @@ public class RailwayStation extends Model {
 
     public TimeTable getTimeTable() {
         return timeTable;
+    }
+
+    public Infrastructure getStructure() {
+        return structure;
+    }
+
+    public Summary getSummary() {
+        return summary;
     }
 
     public void readSchedule() {
