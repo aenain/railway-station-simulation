@@ -41,13 +41,13 @@ public class RailwayStation extends Model {
     public Distribution dist;
     public Infrastructure structure;
     public Logger logger;
+    public Summary summary;
     private TimeTable timeTable;
     private JSONArray visualizationEvents;
     private JSONObject visualizationSummary;
     private InputStream inputStream;
     private OutputStream outputStream;
     private Generator peopleGenerator;
-    private static Summary summary;
 
     public RailwayStation() {
         super(null, "railway-station", true, true);
@@ -86,19 +86,18 @@ public class RailwayStation extends Model {
         experiment.report();
         experiment.finish();
         
-        summary.computeAll();
-        //model.prepareVisualizationSummary();
+        model.computeSummary();
         model.saveVisualizationResult();
     }
 
-    protected void prepareVisualizationSummary() {
-        //
+    protected void computeSummary() {
+        summary.computeAll();
     }
 
     protected void saveVisualizationResult() {
         JSONObject data = new JSONObject();
         JSONObject result = new JSONObject();
-        
+
         visualizationSummary = summary.prepareVisualizationSummary();
 
         try {
