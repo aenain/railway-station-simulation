@@ -73,7 +73,7 @@ public class RailwayStation extends Model {
         Experiment experiment = new Experiment("Railway Station Daily Simulation", false);
         model.connectToExperiment(experiment);
 
-        experiment.setShowProgressBar(false);
+        experiment.setShowProgressBar(true);
         experiment.setSilent(true);
         experiment.stop(STOP_TIME);
 
