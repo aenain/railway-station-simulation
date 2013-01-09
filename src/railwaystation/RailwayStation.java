@@ -244,6 +244,7 @@ public class RailwayStation extends Model {
         ListIterator<String> it = arguments.listIterator();
         boolean expectInput = false, expectOutput = false;
         String input = null, output = null, token;
+        compressOutput = true;
 
         while (it.hasNext()) {
             token = it.next();
@@ -260,15 +261,18 @@ public class RailwayStation extends Model {
             } else if (token.equals("-o")) {
                 expectOutput = true;
                 expectInput = false;
-            }
-            if (token.equals("--debug")) {
+            } else {
                 expectOutput = false;
                 expectInput = false;
-                logger.setLevel(Logger.Level.DEBUG);
+
+                if (token.equals("--debug")) {
+                    logger.setLevel(Logger.Level.DEBUG);
+                } else if (token.equals("--no-compress")) {
+                    compressOutput = false;
+                }
             }
         }
 
-        compressOutput = true;
         setStreams(input, output);
     }
 
