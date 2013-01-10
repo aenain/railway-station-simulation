@@ -6,7 +6,7 @@
 # i zapisuje go na HEROKU jako rezultat stworzonej chwilę wcześniej symulacji.
 
 # sciezki na HEROKU
-SIMULATION_URL='http://stark-wave-4578.herokuapp.com'
+SIMULATION_URL='http://railway-station.herokuapp.com'
 API_ENDPOINT="$SIMULATION_URL/api/simulations"
 
 # sciezki lokalne
