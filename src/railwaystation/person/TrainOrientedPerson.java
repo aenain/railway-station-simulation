@@ -158,20 +158,24 @@ public class TrainOrientedPerson extends Person {
         }
 
         TimeSpan delay = (trainDelay == null ? new TimeSpan(0) : trainDelay);
-        TimeInstant referenceTime;
+        TimeInstant time, delayedArrivalAt = TimeOperations.add(train.getArrivalAt(), delay);
 
         switch (type) {
             case ARRIVING_COMPANION:
-                referenceTime = train.getArrivalAt();
+                time = delayedArrivalAt;
                 break;
             case DEPARTURING_COMPANION:
             case DEPARTURING_PASSENGER:
             default:
-                referenceTime = train.getDepartureAt();
+                if (train.getDepartureAt().compareTo(delayedArrivalAt) < 0) {
+                    time = train.getDepartureAt();
+                } else {
+                    time = delayedArrivalAt;
+                }
                 break;
         }
 
-        return TimeOperations.add(referenceTime, delay);
+        return time;
     }
 
     // gdy juz nie jest zwiazany z pociagiem bedzie czekal az zostanie obsluzony
